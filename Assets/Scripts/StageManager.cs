@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour
     public GameObject[] stagePrefabs;
 
     public GameObject currentStage;
-    Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
+    List<Room> currentRooms = new List<Room>();
     //Dictionary<int, Person> currentPersons = new Dictionary<int, Person>();
 
     public static StageManager instance;
@@ -42,10 +42,7 @@ public class StageManager : MonoBehaviour
         currentStage = GameObject.Instantiate(stagePrefabs[stage]) as GameObject;
         currentStage.transform.parent = transform;
 
-        foreach (Room r in GetComponentsInChildren<Room>())
-        {
-            currentRooms.Add(r.id, r);
-        }
+        currentRooms.AddRange(GetComponentsInChildren<Room>());
 
         //foreach (Person r in GetComponentsInChildren<Room>())
         //{
@@ -59,6 +56,10 @@ public class StageManager : MonoBehaviour
         if (currentStage == null) return false;
 
         // Check room connect conditions
+        foreach (Room r in currentRooms)
+        {
+
+        }
         return true;
     }
 }
