@@ -65,6 +65,18 @@ public class Room : MonoBehaviour
     }
     */
 
+    public void SetMoveRoom(bool input) {
+        isMoving = input;
+
+        foreach (Door d in doors)
+            d.Search();
+    }
+
+    public void MoveRoom(Vector2 input) {
+        transform.Translate(new Vector3(input.x, 0f, input.y));
+    }
+
+
 
 
     private void Start() {

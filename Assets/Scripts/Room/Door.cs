@@ -17,13 +17,13 @@ public class Door : MonoBehaviour
 
     public void Search() {
         connectedRoom = null;
-        Collider[] cols = Physics.OverlapSphere(transform.position, radius, LayerMask.NameToLayer("Door"));
+        Collider[] cols = Physics.OverlapSphere(transform.position, 1f);
         if(cols.Length > 0) {
             Collider tar = null;
             float min = float.MaxValue;
             foreach(Collider c in cols) {
                 Door d = c.GetComponent<Door>();
-                if (d && !d.selfRoom.isMoving && Vector3.Angle(transform.forward, d.transform.forward) > 175f) {
+                if (d && !d.selfRoom.isMoving && Vector3.Angle(transform.forward, d.transform.forward) > 175f && !selfRoom.isMoving) {
                     if (Vector3.Distance(transform.position, c.transform.position) < min) {
                         tar = c;
                         min = Vector3.Distance(transform.position, c.transform.position);
