@@ -11,23 +11,41 @@ public class Room : MonoBehaviour
 
     public bool isMoving { get; private set; }
 
+    [SerializeField]
     List<Door> doors;
 
-    
+    public List<Room> GetConnectedRooms() {
+        List<Room> returnList = new List<Room>();
+        foreach (Door d in doors)
+            if (d.connectedRoom != null)
+                returnList.Add(d.connectedRoom);
+
+        return returnList;
+    }
+
+    /* rubbish, no use
     public List<Room> SearchConnectedRooms(Room from, List<Room> excludedRooms = null) {
-        List<Room> returnArray = new List<Room>();
+        List<Room> returnList = new List<Room>();
         foreach(Door d in doors) {
             if((from != null && from != d.connectedRoom)) {
                 if(excludedRooms != null) {
                     if (!excludedRooms.Contains(d.connectedRoom))
-                        returnArray.AddRange(SearchConnectedRooms(this, excludedRooms));
+                        returnList.AddRange(SearchConnectedRooms(this, excludedRooms));
                 }else
-                    returnArray.AddRange(SearchConnectedRooms(this, excludedRooms));
+                    returnList.AddRange(SearchConnectedRooms(this, excludedRooms));
 
             }
         }
 
-        return returnArray;
+        return returnList;
+    }
+    */
+
+
+
+    private void Start() {
+        foreach (Door d in doors)
+            d.SetRoom(this);
     }
 
 }
