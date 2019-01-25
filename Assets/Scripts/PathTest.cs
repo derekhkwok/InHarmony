@@ -16,13 +16,15 @@ public class PathTest : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        p = new NavMeshPath();
-        agent.CalculatePath(target.position, p);
+        agent.SetDestination(target.position);
+        p = agent.path;
     }
-
+/*
     private void OnDrawGizmos() {
-
-        foreach (Vector3 v in p.corners)
+        p = agent.path;
+        Debug.Log(p.status);
+        foreach (Vector3 v in p.corners) {
             Gizmos.DrawSphere(v, 1f);
-    }
+        }
+    }*/
 }
