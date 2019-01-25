@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    int currentStage = 0;
 
     public static GameManager instance;
 
@@ -26,9 +25,8 @@ public class GameManager : MonoBehaviour
     public void StartStage(int stage)
     {
         //TODO: Stage script to start
+        StageManager.instance.InitStage(stage);
     }
-
-    public void EndStage() { }
 
 
 }
