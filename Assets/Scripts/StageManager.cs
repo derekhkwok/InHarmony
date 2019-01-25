@@ -42,10 +42,15 @@ public class StageManager : MonoBehaviour
         currentStage = GameObject.Instantiate(stagePrefabs[stage]) as GameObject;
         currentStage.transform.parent = transform;
 
-        foreach (Room r in GetComponentInChildren<Room>())
+        foreach (Room r in GetComponentsInChildren<Room>())
         {
-
+            //currentRooms.Add(r.roomID, r);
         }
+
+        //foreach (Person r in GetComponentsInChildren<Room>())
+        //{
+        //    currentRooms.Add(r.roomID, r);
+        //}
 
     }
 
@@ -65,6 +70,6 @@ public class StageManager : MonoBehaviour
             result.Add(step, new List<int>());
         }
 
-        foreach
+        //foreach
     }
 }
