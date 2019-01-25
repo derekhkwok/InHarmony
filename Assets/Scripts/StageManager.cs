@@ -45,7 +45,7 @@ public class StageManager : MonoBehaviour
         currentRooms.AddRange(GetComponentsInChildren<Room>());
         foreach (Room r in GetComponentsInChildren<Room>())
         {
-            currentRooms.Add(r.id, r);
+            currentRooms.Add(r);
         }
 
     }
