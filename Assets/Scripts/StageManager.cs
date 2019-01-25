@@ -44,7 +44,7 @@ public class StageManager : MonoBehaviour
 
         foreach (Room r in GetComponentsInChildren<Room>())
         {
-            //currentRooms.Add(r.roomID, r);
+            currentRooms.Add(r.id, r);
         }
 
         //foreach (Person r in GetComponentsInChildren<Room>())
@@ -54,22 +54,14 @@ public class StageManager : MonoBehaviour
 
     }
 
-    public Dictionary<int, List<int>> StartSearchTree(int roomID, List<int> excludeRooms)
+    public bool CheckWin()
     {
-        Dictionary<int, List<int>> result = new Dictionary<int, List<int>>();
-        SearchTree(roomID, excludeRooms, result, 0);
-        return result;
+        if (currentStage == null) return false;
 
-    }
+        // Check room connect conditions
 
-    void SearchTree(int roomID, List<int> excludeRooms, Dictionary<int, List<int>> result, int step)
-    {
-        step++;
-        if(!result.ContainsKey(step))
-        {
-            result.Add(step, new List<int>());
-        }
 
-        //foreach
+
+        return true;
     }
 }
