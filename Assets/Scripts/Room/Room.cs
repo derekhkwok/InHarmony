@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    public int id { get; private set; }
+    public void SetID(int input) {
+        id = input;
+    }
+
+    public bool isMoving { get; private set; }
+
     List<Door> doors;
 
     
