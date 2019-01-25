@@ -10,8 +10,7 @@ public class Room : MonoBehaviour
     }
 
     public bool isMoving { get; private set; }
-
-    [SerializeField]
+    
     List<Door> doors;
     [SerializeField]
     List<int> excludedRooms, mustConnectedRooms;
@@ -69,6 +68,7 @@ public class Room : MonoBehaviour
 
 
     private void Start() {
+        doors = new List<Door>(GetComponentsInChildren<Door>());
         foreach (Door d in doors)
             d.SetRoom(this);
     }
