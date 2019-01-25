@@ -9,10 +9,11 @@ public class StageManager : MonoBehaviour
     public GameObject[] stagePrefabs;
 
     public GameObject currentStage;
-    Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
+    List<Room> currentRooms = new List<Room>();
     //Dictionary<int, Person> currentPersons = new Dictionary<int, Person>();
 
     public static StageManager instance;
+    public bool isWon = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,14 +23,17 @@ public class StageManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        isWon = false;
         instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (isWon)
+        {
+            // TODO: check for animation ends
+        }
     }
 
     public void InitStage(int stage)
@@ -39,37 +43,37 @@ public class StageManager : MonoBehaviour
             Destroy(currentStage);
             currentStage = null;
         }
-        currentStage = GameObject.Instantiate(stagePrefabs[stage]) as GameObject;
+        currentStage = Instantiate(stagePrefabs[stage]) as GameObject;
         currentStage.transform.parent = transform;
+        isWon = false;
 
+        currentRooms.AddRange(GetComponentsInChildren<Room>());
         foreach (Room r in GetComponentsInChildren<Room>())
         {
-            //currentRooms.Add(r.roomID, r);
+            currentRooms.Add(r);
         }
 
-        //foreach (Person r in GetComponentsInChildren<Room>())
-        //{
-        //    currentRooms.Add(r.roomID, r);
-        //}
-
     }
 
-    public Dictionary<int, List<int>> StartSearchTree(int roomID, List<int> excludeRooms)
+    public bool CheckWin()
     {
-        Dictionary<int, List<int>> result = new Dictionary<int, List<int>>();
-        SearchTree(roomID, excludeRooms, result, 0);
-        return result;
+        if (currentStage == null) return false;
 
-    }
-
-    void SearchTree(int roomID, List<int> excludeRooms, Dictionary<int, List<int>> result, int step)
-    {
-        step++;
-        if(!result.ContainsKey(step))
+        // Check room connect conditions
+        foreach (Room r in currentRooms)
         {
-            result.Add(step, new List<int>());
+            if (!r.CheckRoomValid()) return false;
         }
 
-        //foreach
+        //TODO: shut down inputs and wait for the animation ends
+        isWon = true;
+        Debug.LogWarning("[GAME] YOU WIN!");
+        return true;
+    }
+
+    public void CompleteStage()
+    {
+        Debug.LogWarning("[GAME] CONGRATULATIONS!");
+        Destroy(currentStage);
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+
+    [SerializeField]
+    float radius = 0.1f;
+
     public Room selfRoom { get; private set; }
     public void SetRoom(Room input) {
         selfRoom = input;
@@ -13,13 +17,13 @@ public class Door : MonoBehaviour
 
     public void Search() {
         connectedRoom = null;
-        Collider[] cols = Physics.OverlapSphere(transform.position, 0.1f);
+        Collider[] cols = Physics.OverlapSphere(transform.position, 1f);
         if(cols.Length > 0) {
             Collider tar = null;
             float min = float.MaxValue;
             foreach(Collider c in cols) {
                 Door d = c.GetComponent<Door>();
-                if (d && !d.selfRoom.isMoving) {
+                if (d && !d.selfRoom.isMoving && Vector3.Angle(transform.forward, d.transform.forward) > 175f && !selfRoom.isMoving) {
                     if (Vector3.Distance(transform.position, c.transform.position) < min) {
                         tar = c;
                         min = Vector3.Distance(transform.position, c.transform.position);
@@ -30,5 +34,10 @@ public class Door : MonoBehaviour
             if(tar != null)
                 connectedRoom = tar.GetComponent<Door>().selfRoom;
         }
+    }
+
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawSphere(transform.position, radius);
     }
 }
