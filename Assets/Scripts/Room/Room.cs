@@ -13,6 +13,10 @@ public class Room : MonoBehaviour
 
     [SerializeField]
     List<Door> doors;
+    [SerializeField]
+    List<int> excludedRooms, mustConnectedRooms;
+    [SerializeField]
+    int minNumConnectedRoom;
 
     public List<Room> GetConnectedRooms() {
         List<Room> returnList = new List<Room>();
@@ -21,6 +25,27 @@ public class Room : MonoBehaviour
                 returnList.Add(d.connectedRoom);
 
         return returnList;
+    }
+
+    public bool CheckRoomValid() {
+        bool returnBool = true;
+        List<Room> rm = GetConnectedRooms();
+        if (rm.Count >= minNumConnectedRoom)
+            returnBool = false;
+
+        List<int> mustConnect = new List<int>(mustConnectedRooms);
+        foreach (Room r in rm) {
+            if (excludedRooms.Contains(r.id))
+                returnBool = false;
+
+            if (mustConnect.Contains(r.id))
+                mustConnect.Remove(r.id);
+        }
+        if (mustConnect.Count > 0)
+            returnBool = false;
+
+        return returnBool;
+
     }
 
     /* rubbish, no use

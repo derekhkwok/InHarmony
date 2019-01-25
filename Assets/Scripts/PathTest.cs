@@ -21,6 +21,7 @@ public class PathTest : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
+
         foreach (Vector3 v in p.corners)
             Gizmos.DrawSphere(v, 1f);
     }
