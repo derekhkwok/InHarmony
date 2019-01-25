@@ -57,7 +57,7 @@ public class StageManager : MonoBehaviour
         // Check room connect conditions
         foreach (Room r in currentRooms)
         {
-
+            if (!r.CheckRoomValid()) return false;
         }
         return true;
     }
