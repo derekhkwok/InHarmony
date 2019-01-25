@@ -42,17 +42,10 @@ public class StageManager : MonoBehaviour
         currentStage = GameObject.Instantiate(stagePrefabs[stage]) as GameObject;
         currentStage.transform.parent = transform;
 
-<<<<<<< HEAD
-/*        foreach (Room r in GetComponentInChildren<Room>())
-        {
-
-        }*/
-=======
         foreach (Room r in GetComponentsInChildren<Room>())
         {
-            //currentRooms.Add(r.roomID, r);
+            currentRooms.Add(r.id, r);
         }
->>>>>>> 69581751b524cf0a8ced0432db73e38bc0c40072
 
         //foreach (Person r in GetComponentsInChildren<Room>())
         //{
@@ -61,26 +54,11 @@ public class StageManager : MonoBehaviour
 
     }
 
-    public Dictionary<int, List<int>> StartSearchTree(int roomID, List<int> excludeRooms)
+    public bool CheckWin()
     {
-        Dictionary<int, List<int>> result = new Dictionary<int, List<int>>();
-        SearchTree(roomID, excludeRooms, result, 0);
-        return result;
+        if (currentStage == null) return false;
 
-    }
-
-    void SearchTree(int roomID, List<int> excludeRooms, Dictionary<int, List<int>> result, int step)
-    {
-        step++;
-        if(!result.ContainsKey(step))
-        {
-            result.Add(step, new List<int>());
-        }
-
-<<<<<<< HEAD
-//        foreach
-=======
-        //foreach
->>>>>>> 69581751b524cf0a8ced0432db73e38bc0c40072
+        // Check room connect conditions
+        return true;
     }
 }
