@@ -29,9 +29,9 @@ public class Player: MonoBehaviour {
     private NavMeshHit hit;
 
     void Start(){
-        navMeshPath = new NavMeshPath();
-        gameObject.transform.position = start.position;
-        RoomUpdated();
+        //navMeshPath = new NavMeshPath();
+        //gameObject.transform.position = start.position;
+        //RoomUpdated();
         //navMeshPath = agent.path;
         //agent.destination = goal.position;
 
@@ -54,12 +54,16 @@ public class Player: MonoBehaviour {
             IsRoomUpdated = false;
         }
 
-        //Debug.Log(Vector3.Distance(goal.position, gameObject.transform.position));
-        if(Vector3.Distance(goal.position, gameObject.transform.position) < 2f) {
-            Transform temp = start;
-            start = goal;
-            goal = temp;
-            RoomUpdated();
+        if (goal != null)
+        {
+            //Debug.Log(Vector3.Distance(goal.position, gameObject.transform.position));
+            if (Vector3.Distance(goal.position, gameObject.transform.position) < 2f)
+            {
+                Transform temp = start;
+                start = goal;
+                goal = temp;
+                RoomUpdated();
+            }
         }
 
         //if middle rooms to destinations are removed; walk back to starting room
@@ -71,13 +75,14 @@ public class Player: MonoBehaviour {
     }
 
     public void RoomUpdated() {
-        int currMovingRoom = 0;
-        //currRoom = InputManager.currentRoom;
-        if(currMovingRoom == roomSourceID || currMovingRoom == currentRoomIn) {
-            gameObject.transform.position = start.position;
+        Room currMovingRoom = InputManager.GetInstance().currentRoom;
+        if(currMovingRoom != null) {
+            if(currMovingRoom.id == roomSourceID || currMovingRoom.id == currentRoomIn) {
+                gameObject.transform.position = start.position;
+            }
         }
         navMeshPath = new NavMeshPath();
-        agent.destination = goal.position;
+        agent.destination = goal == null ? start.position : goal.position;
         navMeshPath = agent.path;
         //Debug.Log((NavMesh.SamplePosition(gameObject.transform.position, out hit, 10f, 1)));
         //Debug.Log(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath));
@@ -104,6 +109,39 @@ public class Player: MonoBehaviour {
         }
     }
 
-    
+    public void InitPlayer( Transform _start, Transform _goal )
+    {
+        start = _start;
+        goal = _goal;
+        navMeshPath = new NavMeshPath();
+        gameObject.transform.position = start.position;
+        RoomUpdated();
+    }
+
+    public void SetupPlayerIDAndRoomID( int _playerID, int _belongRoomID)
+    {
+        playerID = _playerID;
+        roomSourceID = _belongRoomID;
+    }
+
+    public void SetUpPlayerCondition( string _case, string _target )
+    {
+        if (excludedRoomID == null) excludedRoomID = new List<int>();
+        if (excludedPersonID == null) excludedPersonID = new List<int>();
+
+        switch(_case)
+        {
+            case ">":
+                roomTargetID = int.Parse(_target.Replace("r", ""));
+                break;
+
+            case "x":
+                if (_target[0].ToString() == "r")
+                    excludedRoomID.Add(int.Parse(_target.Replace("r", "")));
+                else if (_target[0].ToString() == "p")
+                    excludedPersonID.Add(int.Parse(_target.Replace("p", "")));
+                break;
+        }
+    }
     //Called 
 }
