@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UI_Condition : MonoBehaviour
 {
+    public static UI_Condition Instance;
+
     public PlayerManager[] players;
     public Room[] rooms;
     List<string> conditions;
@@ -17,17 +19,19 @@ public class UI_Condition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<string> testUI = new List<string>()
-        {
-            "p1|>|r1",
-            "p1|x|p2",
-            "r1|x|r2",
-            "r1|c|d2",
-            "r1|c|r4",
+        Instance = this;
 
-        };
+        //List<string> testUI = new List<string>()
+        //{
+        //    "p1|>|r1",
+        //    "p1|x|p2",
+        //    "r1|x|r2",
+        //    "r1|c|d2",
+        //    "r1|c|r4",
 
-        TurnStringToUI(testUI);
+        //};
+
+        //TurnStringToUI(testUI);
     }
 
     public void Init()
@@ -92,7 +96,7 @@ public class UI_Condition : MonoBehaviour
         TurnStringToUI(conditions);
     }
 
-    void TurnStringToUI( List<string> _conditions)
+    public void TurnStringToUI( List<string> _conditions)
     {
         //print string from as UI conditon
         foreach (string con in _conditions)

@@ -43,6 +43,15 @@ public class StageManager : MonoBehaviour
             Destroy(currentStage);
             currentStage = null;
         }
+
+        //Get Stage Info
+        List<string> roomsAndPerson = StageInfo.stageRooms[stage];
+
+        //Get Stage Condition - show On UI
+        List<string> stageCondition = StageInfo.stageCondition[stage];
+        UI_Condition.Instance.TurnStringToUI(stageCondition);
+
+
         currentStage = Instantiate(stagePrefabs[stage]) as GameObject;
         currentStage.transform.parent = transform;
         isWon = false;
