@@ -17,7 +17,7 @@ public class Door : MonoBehaviour
 
     public void Search() {
         connectedRoom = null;
-        Collider[] cols = Physics.OverlapSphere(transform.position, 1f, 1<<9);
+        Collider[] cols = Physics.OverlapSphere(transform.position, radius, 1<<9);
         if(cols.Length > 0) {
             Collider tar = null;
             float min = float.MaxValue;
