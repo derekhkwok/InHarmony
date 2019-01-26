@@ -35,20 +35,20 @@ public partial class StageManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (isWon && !isEnding)
-        {
-            // TODO: check for animation ends
-            //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
-            //if (playerReached.Length == currentPersons.Count)
-            //{
-            //    isEnding = true;
-            //    StartCoroutine(CompleteStage());
-            //}
+    //void Update()
+    //{
+    //    if (isWon && !isEnding)
+    //    {
+    //        // TODO: check for animation ends
+    //        //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
+    //        //if (playerReached.Length == currentPersons.Count)
+    //        //{
+    //        //    isEnding = true;
+    //        //    StartCoroutine(CompleteStage());
+    //        //}
 
-        }
-    }
+    //    }
+    //}
 
     public void InitStage(int stage)
     {
@@ -162,6 +162,7 @@ public partial class StageManager : MonoBehaviour
 
         isWon = true;
         Debug.LogWarning("[GAME] YOU WIN!");
+        StartCoroutine(CompleteStage());
         return true;
     }
 
@@ -171,11 +172,6 @@ public partial class StageManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //TODO: Animation
     }
-
-    //public List<Room> GetCurrentRoom()
-    //{
-    //    return currentRooms;
-    //}
 
     void OnClickEndStage() 
     {
@@ -209,9 +205,4 @@ public partial class StageManager : MonoBehaviour
         foreach (KeyValuePair<int, Player> p in currentPersons)
             p.Value.RoomUpdated();
     }
-
-    //public List<Room> GetCurrentRoom()
-    //{
-    //    return currentRooms;
-    //}
 }
