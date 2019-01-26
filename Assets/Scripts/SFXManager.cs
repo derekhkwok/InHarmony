@@ -13,6 +13,11 @@ public class SFXManager : MonoBehaviour
         WELCOME,
         BTNPRESS,
         TRANSITION,
+        buildingCollapse,
+        buildingCollapse2,
+        powerUp,
+        powerUp2,
+        jump
     }
 
     void Awake()
