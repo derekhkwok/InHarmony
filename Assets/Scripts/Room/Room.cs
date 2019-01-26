@@ -12,7 +12,7 @@ public class Room : MonoBehaviour
 
     public bool isMoving { get; private set; }
     
-    List<Door> doors;
+    public List<Door> doors { get; private set; }
     [SerializeField]
     public List<int> excludedRooms, mustConnectedRooms;
     [SerializeField]
@@ -33,7 +33,7 @@ public class Room : MonoBehaviour
     public bool CheckRoomValid() {
         bool returnBool = true;
         List<Room> rm = GetConnectedRooms();
-        if (rm.Count >= minNumConnectedRoom)
+        if (rm.Count < minNumConnectedRoom)
             returnBool = false;
 
         List<int> mustConnect = new List<int>(mustConnectedRooms);
@@ -51,24 +51,28 @@ public class Room : MonoBehaviour
 
     }
     
-
-    /* rubbish, no use
     public List<Room> SearchConnectedRooms(Room from, List<Room> excludedRooms = null) {
         List<Room> returnList = new List<Room>();
-        foreach(Door d in doors) {
-            if((from != null && from != d.connectedRoom)) {
-                if(excludedRooms != null) {
-                    if (!excludedRooms.Contains(d.connectedRoom))
-                        returnList.AddRange(SearchConnectedRooms(this, excludedRooms));
-                }else
-                    returnList.AddRange(SearchConnectedRooms(this, excludedRooms));
+        returnList.Add(this);
+        if (excludedRooms == null)
+            excludedRooms = new List<Room>();
+        excludedRooms.Add(this);
 
+        foreach (Door d in doors) {
+            if (d.connectedDoor != null) {
+                Debug.Log("hihi search");
+                if ((from != null && from != d.connectedRoom)) {
+                    if (excludedRooms != null) {
+                        if (!excludedRooms.Contains(d.connectedRoom))
+                            returnList.AddRange(d.connectedRoom.SearchConnectedRooms(this, excludedRooms));
+                    } else
+                        returnList.AddRange(d.connectedRoom.SearchConnectedRooms(this, excludedRooms));
+                }
             }
         }
 
         return returnList;
     }
-    */
 
     public void UpdateConnectedRoom() {
         foreach (Door d in doors)

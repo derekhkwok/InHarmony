@@ -196,8 +196,11 @@ public class InputManager : MonoBehaviour
         if(Input.GetMouseButtonUp(0)) {
             if (currentRoom != null) {
                 currentRoom.SetMoveRoom(false);
+                Room temp = currentRoom;
                 currentRoom = null;
                 StageManager.instance.UpdateRoomConnection();
+                StageManager.instance.RoomSniping(temp);
+                StageManager.instance.CheckWin();
             }
         }
         //var mousex : float = Input.GetAxis("Mouse X");
