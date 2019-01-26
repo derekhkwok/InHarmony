@@ -81,8 +81,10 @@ public class Player: MonoBehaviour {
         if(!agent.enabled) agent.enabled = true;
         Room currMovingRoom = InputManager.Instance.currentRoom;
         if(currMovingRoom != null) {
-            if(currMovingRoom.id == roomSourceID || currMovingRoom.id == currentRoomIn) {
+            if(currMovingRoom.id == currentRoomIn) {
                 gameObject.transform.position = start.position;
+            } else if(currMovingRoom.id == roomSourceID) {
+                gameObject.transform.localPosition = start.localPosition;
             }
         }
         navMeshPath = new NavMeshPath();
