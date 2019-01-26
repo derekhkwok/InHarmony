@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class StageInfo
 {
+    public static int maxLv = 5;
     public static List<string>[] stageRooms = new List<string>[]{
         // "Rnum|Pnum", Pnum > 0 means Person{Pnum} belongs Room{Rnum}, also means start point
         null, //stage 0 , means nothing

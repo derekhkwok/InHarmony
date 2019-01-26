@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
+    public static int latestClearedLv = 0;
 
     private void Start()
     {
@@ -28,5 +29,9 @@ public class GameManager : MonoBehaviour
         StageManager.instance.InitStage(stage);
     }
 
+    public static void EndStage(int clearedStage)
+    {
+        latestClearedLv = clearedStage;
+    }
 
 }
