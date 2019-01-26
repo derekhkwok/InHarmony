@@ -52,6 +52,8 @@ public partial class StageManager : MonoBehaviour
 
     public void InitStage(int stage)
     {
+        stage = 5;
+
         if (inited) return;
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
@@ -166,15 +168,8 @@ public partial class StageManager : MonoBehaviour
 
         UI_Condition.Instance.WinDestoryObject();
         Debug.LogWarning("[GAME] YOU WIN!");
-        StartCoroutine(CompleteStage());
+        Congret_Prefab congret = Congret_Prefab.Create(() => { MainMenuView.SummonMenu(); });
         return true;
-    }
-
-    IEnumerator CompleteStage()
-    {
-        Debug.LogWarning("[GAME] STAGE CLEAR! CONGRATULATIONS!");
-        yield return new WaitForSeconds(1f);
-        //TODO: Animation
     }
 
     void OnClickEndStage() 
@@ -199,7 +194,6 @@ public partial class StageManager : MonoBehaviour
         currentPersons = null;
 
         GameManager.RefreshMaxClearedStage(currentLv);
-        Congret_Prefab congret = Congret_Prefab.Create(() => { MainMenuView.SummonMenu(); });
     }
 
     public void UpdateRoomConnection() {

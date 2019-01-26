@@ -31,6 +31,8 @@ public class MainMenuView : MonoBehaviour
     public GameObject car1;
     public GameObject car2;
 
+    public GameObject creditGO;
+
     //private BoxCollider navArea;
 
     public static MainMenuView instance;
@@ -40,6 +42,8 @@ public class MainMenuView : MonoBehaviour
         {
             instance = Instantiate(Resources.Load("MainMenu_VP"), new Vector3( 0f, 7f, 0f ), Quaternion.identity, null ) as MainMenuView;
         }
+
+        instance.creditGO.SetActive(true);
         return instance;
     }
 
@@ -89,6 +93,7 @@ public class MainMenuView : MonoBehaviour
         }
         if ( isFirstEnter )
         {
+            //GameManager.instance.camOriPos = 
             isFirstEnter = false;
             startAnim.Play();
             Invoke("DropTile", 2f);
@@ -275,8 +280,8 @@ public class MainMenuView : MonoBehaviour
         //navArea.enabled = true;
         yield return new WaitForSeconds(0.5f);
         // Enterstage
+        creditGO.SetActive(false);
         StageManager.instance.InitStage(id);
-
         Destroy(this.gameObject);
     }
 

@@ -10693,6 +10693,8 @@ MonoBehaviour:
   parent: {fileID: 2300801745443200157}
   car1: {fileID: 314375808}
   car2: {fileID: 459431973}
+  creditGO: {fileID: 6865445518200766218, guid: d99d70eeaa8f44375b9e3cbdcb3ad451,
+    type: 3}
 --- !u!111 &7276225369489987056
 Animation:
   m_ObjectHideFlags: 0
