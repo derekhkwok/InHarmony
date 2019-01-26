@@ -15,6 +15,8 @@ public class StageManager : MonoBehaviour
     public GameObject[] personGO;
     public GameObject[] roomGO;
 
+    private bool inited = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,9 @@ public class StageManager : MonoBehaviour
 
     public void InitStage(int stage)
     {
+        if (inited) return;
+        inited = true;
+
         currentRooms = new Dictionary<int, Room>();
         currentPersons = new Dictionary<int, Player>();
 
@@ -104,6 +109,7 @@ public class StageManager : MonoBehaviour
 
         //TODO: shut down inputs and wait for the animation ends
         isWon = true;
+        inited = false;
         Debug.LogWarning("[GAME] YOU WIN!");
         return true;
     }
