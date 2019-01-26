@@ -25,8 +25,6 @@ public class StageManager : MonoBehaviour
         }
         isWon = false;
         instance = this;
-
-        InitStage(1);
     }
 
     // Update is called once per frame
