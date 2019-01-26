@@ -161,6 +161,8 @@ public partial class StageManager : MonoBehaviour
         }
 
         isWon = true;
+
+        UI_Condition.Instance.WinDestoryObject();
         Debug.LogWarning("[GAME] YOU WIN!");
         return true;
     }
@@ -206,6 +208,8 @@ public partial class StageManager : MonoBehaviour
         foreach(KeyValuePair<int, Room> r in currentRooms) {
             r.Value.UpdateConnectedRoom();
         }
+
+        UI_Condition.Instance.CheckingPassConditionUI();
     }
 
     //public List<Room> GetCurrentRoom()
