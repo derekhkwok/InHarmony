@@ -136,7 +136,7 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if (myPath.Last() != p.roomTargetID) // not reaching target
+            if (myPath.Count <= 0 || myPath.Last() != p.roomTargetID) // not reaching target
             {
                 isValid = false;
             }
@@ -209,5 +209,26 @@ public partial class StageManager : MonoBehaviour
             p.Value.RoomUpdated();
 
         UI_Condition.Instance.CheckingPassConditionUI();
+    }
+
+    Transform tempParent = null;
+
+    public void RoomSniping(Room draggedRoom) {
+        foreach(Door d in draggedRoom.doors) {
+            if (d.connectedRoom != null) {
+                List<Room> roomNeedToMove = d.connectedRoom.SearchConnectedRooms(draggedRoom);
+                roomNeedToMove.Add(d.connectedRoom);
+                if (tempParent == null)
+                    tempParent = new GameObject().GetComponent<Transform>();
+                tempParent.position = d.connectedDoor.transform.position;
+                foreach (Room r in roomNeedToMove) {
+                    r.transform.parent = tempParent;
+                }
+                tempParent.position = d.transform.position;
+                foreach (Room r in roomNeedToMove) {
+                    r.transform.parent = null;
+                }
+            }
+        }
     }
 }

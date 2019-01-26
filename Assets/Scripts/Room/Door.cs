@@ -14,6 +14,7 @@ public class Door : MonoBehaviour
     }
 
     public Room connectedRoom { get; private set; }
+    public Door connectedDoor { get; private set; }
 
     public void Search() {
         connectedRoom = null;
@@ -31,8 +32,10 @@ public class Door : MonoBehaviour
                 }
             }
 
-            if(tar != null)
+            if (tar != null) {
                 connectedRoom = tar.GetComponent<Door>().selfRoom;
+                connectedDoor = tar.GetComponent<Door>();
+            }
         }
     }
 
