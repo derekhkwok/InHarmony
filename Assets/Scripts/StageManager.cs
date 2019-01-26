@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour
     Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
     Dictionary<int, Player> currentPersons = new Dictionary<int, Player>();
 
-    public static StageManager instance;
+    public static StageManager instance { get; private set; }
     public bool isWon = false;
 
     public GameObject[] personGO;
@@ -106,6 +106,8 @@ public class StageManager : MonoBehaviour
         {
             if (!r.CheckRoomValid()) return false;
         }
+
+        // TODO: Player connection
 
         //TODO: shut down inputs and wait for the animation ends
         isWon = true;
