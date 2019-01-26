@@ -11,7 +11,7 @@ public class Player: MonoBehaviour {
     public List<int> excludedRoomID;
     public List<int> excludedPersonID;
     public bool isRoomPathValid = true;
-    public List<Room> roomList = new List<Room>();
+    public List<int> roomList = new List<int>();
     public NavMeshAgent agent;
     public bool IsRoomUpdated = false;
 
@@ -100,10 +100,10 @@ public class Player: MonoBehaviour {
                 //Debug.DrawRay(ray.origin, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * ray.direction * 50f, Color.red, 5f);
                 if(Physics.Raycast(ray, out hit, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * 50f)){
                     //Debug.Log(hit.collider.name);
-                    Room hitRoom = hit.collider.transform.parent.parent.parent.GetComponent<Room>();
+                    Room hitRoom = hit.collider.transform.GetComponent<Room>();
                     if(hitRoom != null) {
-                        if(!roomList.Contains(hitRoom)){
-                            roomList.Add(hitRoom);
+                        if(!roomList.Contains(hitRoom.id)){
+                            roomList.Add(hitRoom.id);
                         }
                     }
                 }
