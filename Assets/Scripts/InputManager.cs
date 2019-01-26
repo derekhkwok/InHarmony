@@ -56,6 +56,9 @@ public class InputManager : MonoBehaviour
                         if (temp) {
                             currentRoom = temp;
                             currentRoom.SetMoveRoom(true);
+
+                            StageManager.instance.UpdateRoomConnection();
+
                             holdRoomTime = 0f;
                             holdRoom = false;
                         }
@@ -71,6 +74,8 @@ public class InputManager : MonoBehaviour
                     if(currentRoom != null && holdRoom == false) {
                         currentRoom.SetMoveRoom(false);
                         currentRoom = null;
+
+                        StageManager.instance.UpdateRoomConnection();
                     }
                     break;
 
@@ -84,10 +89,10 @@ public class InputManager : MonoBehaviour
                         {
                             UI_RotateButton.Instance.gameObject.SetActive(true);
                             UI_RotateButton.Instance.SetRotateAction( ()=> {
-                                if (currentRoom != null)
-                                    currentRoom.transform.eulerAngles =
-                                        new Vector3(0f, 90f, 0f) + currentRoom.transform.eulerAngles;
-                            }, Input.GetTouch(0).position);
+                                if (UI_RotateButton.Instance.targetRoom != null)
+                                    UI_RotateButton.Instance.targetRoom.transform.eulerAngles =
+                                        new Vector3(0f, 90f, 0f) + UI_RotateButton.Instance.targetRoom.transform.eulerAngles;
+                            }, Input.GetTouch(0).position, currentRoom);
                         }
                         holdRoom = true;
                     }
@@ -125,6 +130,7 @@ public class InputManager : MonoBehaviour
                 if(temp) {
                     currentRoom = temp;
                     currentRoom.SetMoveRoom(true);
+                    StageManager.instance.UpdateRoomConnection();
                     holdRoomTime = 0f;
                     holdRoom = false;
                     lastMousePos = Input.mousePosition;
@@ -138,10 +144,10 @@ public class InputManager : MonoBehaviour
                     if (!holdRoom) {
                         UI_RotateButton.Instance.gameObject.SetActive(true);
                         UI_RotateButton.Instance.SetRotateAction(() => {
-                            if (currentRoom != null)
-                                currentRoom.transform.eulerAngles =
-                                    new Vector3(0f, 90f, 0f) + currentRoom.transform.eulerAngles;
-                        }, currentRoom.transform.position);
+                            if (UI_RotateButton.Instance.targetRoom != null)
+                                UI_RotateButton.Instance.targetRoom.transform.eulerAngles =
+                                    new Vector3(0f, 90f, 0f) + UI_RotateButton.Instance.targetRoom.transform.eulerAngles;
+                        }, currentRoom.transform.position, currentRoom);
                     }
                     holdRoom = true;
                 }
@@ -159,6 +165,7 @@ public class InputManager : MonoBehaviour
             if (currentRoom != null) {
                 currentRoom.SetMoveRoom(false);
                 currentRoom = null;
+                StageManager.instance.UpdateRoomConnection();
             }
         }
         //var mousex : float = Input.GetAxis("Mouse X");
