@@ -195,7 +195,7 @@ public partial class StageManager : MonoBehaviour
         currentPersons = null;
 
         GameManager.RefreshMaxClearedStage(currentLv);
-        MainMenuView.SummonMenu();
+        Congret_Prefab congret = Congret_Prefab.Create(() => { MainMenuView.SummonMenu(); });
     }
 
     public void UpdateRoomConnection() {
