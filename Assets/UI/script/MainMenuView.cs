@@ -56,6 +56,8 @@ public class MainMenuView : MonoBehaviour
 
         instance = this;
 
+        InputManager.Instance.ResetCamSetting();
+
         currentLv = GameManager.maxClearedLv + 1;
 
         //navArea = GameObject.Find("NavArea").GetComponent<BoxCollider>() ;
