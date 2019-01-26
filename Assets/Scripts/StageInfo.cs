@@ -18,7 +18,7 @@ public class StageInfo
         null, //stage 0 , means nothing
         new List<string>{ "p1|>|r1" }, //stage 1,
         new List<string>{ "p1|>|r4", "p2|>|r4", "p2|x|r3"}, //stage 2
-        new List<string>{ "p4|>|r6", "p2|x|p3", "p1|>|r4", "p2|>|r7" }, //stage 3
+        new List<string>{ "r4|c|r6", "p4|>|r6", "p2|x|p3", "p1|>|r4", "p2|>|r7" }, //stage 3
         new List<string>{ "r7|c|d2", "r3|c|d2", "r8|c|d2", "r4|c|d2", "r5|c|d2"}, //stage 4
         new List<string>{ "p1|>|r10", "p1|x|p2", "p2|>|r7", "p3|x|p4", "p3|>r9",
                           "r9|x|r7", "r6|x|r5", "r6|c|d2" }, //stage 5

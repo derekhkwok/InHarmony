@@ -85,4 +85,23 @@ public class Room : MonoBehaviour
             d.SetRoom(this);
     }
 
+    public void SetUpRoomsCondition( string _case, string _target )
+    {
+        if (excludedRooms == null) excludedRooms = new List<int>();
+        if (mustConnectedRooms == null) mustConnectedRooms = new List<int>();
+
+        switch (_case) {
+            case "x":
+                excludedRooms.Add(int.Parse(_target.Replace("r", "")));
+                break;
+
+            case "c":
+                if (_target != "d2")
+                    mustConnectedRooms.Add(int.Parse(_target.Replace("r", "")));
+                else
+                    minNumConnectedRoom = 2;
+                break;
+        }
+    }
+
 }
