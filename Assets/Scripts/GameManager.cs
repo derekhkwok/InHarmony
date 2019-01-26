@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    public Vector3 camOriPos;
+    public Vector3 camOriScale;
     public static GameManager instance;
     public static int maxClearedLv = 0;
 

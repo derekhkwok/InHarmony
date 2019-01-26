@@ -17,6 +17,7 @@ public class Congret_Prefab : MonoBehaviour
 
     private void Start()
     {
+        SFXManager.instance.PlaySFX(SFXManager.SFX.victory);
         Invoke("EnableEnterBtn", 2f);
     }
 

@@ -93,6 +93,7 @@ public class MainMenuView : MonoBehaviour
         }
         if ( isFirstEnter )
         {
+            //GameManager.instance.camOriPos = 
             isFirstEnter = false;
             startAnim.Play();
             Invoke("DropTile", 2f);

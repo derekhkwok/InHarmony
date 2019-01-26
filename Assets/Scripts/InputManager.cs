@@ -46,6 +46,10 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void ZoomCameraByStage(int stage)
+    {
+        targetCam.orthographicSize = Mathf.Clamp(zoomStart -1 + stage, zoomMin, zoomMax);
+    }
 
     // Update is called once per frame
     void Update()
