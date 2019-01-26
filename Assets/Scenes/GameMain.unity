@@ -262,6 +262,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42897805}
   m_CullTransparentMesh: 0
+--- !u!1 &91487691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91487692}
+  m_Layer: 0
+  m_Name: BackGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &91487692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91487691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.004999995, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &118866631 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7385247342022841148, guid: 1b91699f4c8164467bc79c970e7061ec,
@@ -279,6 +309,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainMenu_VP
+      objectReference: {fileID: 0}
+    - target: {fileID: 4948696250528919822, guid: 67c8b2819e0599b40b9f2d9fab58f98d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2601801631185731213, guid: 67c8b2819e0599b40b9f2d9fab58f98d,
         type: 3}
@@ -476,6 +511,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SFXManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723879486386131687, guid: 71301ad3f6fc3b34fba5e793c4076091,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8723879486386131738, guid: 71301ad3f6fc3b34fba5e793c4076091,
         type: 3}
@@ -1103,8 +1143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f2c8ab212d7c24381d220723fe1aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDrag: 0
   raycastCam: {fileID: 1749862271}
-  currentRoom: {fileID: 0}
 --- !u!1001 &260315079345781409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1116,6 +1156,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpriteManger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8264118051385516735, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2334803892127588236, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
         type: 3}
@@ -1368,6 +1413,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: '[Game Manager]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968816940997212338, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6310525959441109459, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
