@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-
     [Header("Stage Library")]
     public GameObject[] stagePrefabs;
-
-    public GameObject currentStage;
     Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
-    Dictionary<int, PlayerManager> currentPersons = new Dictionary<int, PlayerManager>();
+    Dictionary<int, Player> currentPersons = new Dictionary<int, Player>();
 
     public static StageManager instance;
     public bool isWon = false;
@@ -41,14 +38,8 @@ public class StageManager : MonoBehaviour
 
     public void InitStage(int stage)
     {
-        if (currentStage != null)
-        {
-            Destroy(currentStage);
-            currentStage = null;
-        }
-
         currentRooms = new Dictionary<int, Room>();
-        currentPersons = new Dictionary<int, PlayerManager>();
+        currentPersons = new Dictionary<int, Player>();
 
         //Get Stage Info
         List<string> roomsAndPerson = StageInfo.stageRooms[stage];
@@ -65,9 +56,9 @@ public class StageManager : MonoBehaviour
             if (tmpPersonID > 0)
             {
                 GameObject tempPlayerManager = Instantiate(personGO[tmpPersonID]);
-                PlayerManager _tempPlayer = tempPlayerManager.GetComponent<PlayerManager>();
+                Player _tempPlayer = tempPlayerManager.GetComponent<Player>();
                 currentPersons.Add(tmpPersonID, _tempPlayer);
-                _tempPlayer.SetupPlayerIDAndBelongRoom(tmpPersonID, tmpRoomID);
+                _tempPlayer.SetupPlayerIDAndRoomID(tmpPersonID, tmpRoomID);
             }
         }
 
@@ -95,8 +86,6 @@ public class StageManager : MonoBehaviour
 
     public bool CheckWin()
     {
-        if (currentStage == null) return false;
-
         // Check room connect conditions
         foreach (Room r in currentRooms.Values)
         {
@@ -112,7 +101,22 @@ public class StageManager : MonoBehaviour
     public void CompleteStage()
     {
         Debug.LogWarning("[GAME] CONGRATULATIONS!");
-        Destroy(currentStage);
+
+        if (currentRooms != null)
+        {
+            foreach (Room r in currentRooms.Values)
+            {
+                Destroy(r);
+            }
+        }
+
+        if (currentPersons != null)
+        {
+            foreach (Player p in currentPersons.Values)
+            {
+                Destroy(p);
+            }
+        }
     }
 
     //public List<Room> GetCurrentRoom()

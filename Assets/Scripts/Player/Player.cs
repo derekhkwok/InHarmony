@@ -104,6 +104,30 @@ public class Player: MonoBehaviour {
         }
     }
 
-    
+    public void SetupPlayerIDAndRoomID( int _playerID, int _belongRoomID)
+    {
+        playerID = _playerID;
+        roomSourceID = _belongRoomID;
+    }
+
+    public void SetUpPlayerCondition( string _case, string _target )
+    {
+        if (excludedRoomID == null) excludedRoomID = new List<int>();
+        if (excludedPersonID == null) excludedPersonID = new List<int>();
+
+        switch(_case)
+        {
+            case ">":
+                roomTargetID = int.Parse(_target.Replace("r", ""));
+                break;
+
+            case "x":
+                if (_target[0].ToString() == "r")
+                    excludedRoomID.Add(int.Parse(_target.Replace("r", "")));
+                else if (_target[0].ToString() == "p")
+                    excludedPersonID.Add(int.Parse(_target.Replace("p", "")));
+                break;
+        }
+    }
     //Called 
 }

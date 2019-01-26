@@ -935,6 +935,82 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: personGO.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: personGO.Array.data[0]
+      value: 
+      objectReference: {fileID: 6516716153949735022, guid: d2b71b36b076d9d489a5c2d623f5d110,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[1]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[2]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[3]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[4]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[5]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[6]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[7]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[8]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[9]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
+    - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: roomGO.Array.data[10]
+      value: 
+      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dbd74291d0434ef7a5a9c64c2668efe, type: 3}
 --- !u!1001 &7385247341906661883
