@@ -52,6 +52,8 @@ public class StageManager : MonoBehaviour
             int tmpPersonID = int.Parse(info.Split('|')[1]);
 
             GameObject tempRoom = Instantiate(roomGO[tmpRoomID]);
+            tempRoom.transform.position = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-3f, 3f));
+            tempRoom.transform.eulerAngles = new Vector3(0f, Random.Range(0, 4) * 90f, 0f);
             Room _tempRoom = tempRoom.GetComponent<Room>();
             currentRooms.Add(tmpRoomID, _tempRoom);
 
