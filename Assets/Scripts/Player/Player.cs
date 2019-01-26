@@ -66,7 +66,7 @@ public class Player: MonoBehaviour {
             angrayParticle.gameObject.SetActive(false);
             sadParticle.gameObject.SetActive(true);
             successParticle.gameObject.SetActive(false);
-
+            sadParticle.Play();
             playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
         } else {
             playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
@@ -79,7 +79,7 @@ public class Player: MonoBehaviour {
                     angrayParticle.gameObject.SetActive(true);
                     sadParticle.gameObject.SetActive(false);
                     successParticle.gameObject.SetActive(false);
-
+                    angrayParticle.Play();
                     playerFace.GetComponent<SpriteRenderer>().sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 6);
                     break;
                 }
@@ -112,6 +112,7 @@ public class Player: MonoBehaviour {
         angrayParticle.gameObject.SetActive(false);
         sadParticle.gameObject.SetActive(false);
         successParticle.gameObject.SetActive(true);
+        successParticle.Play();
     }
 
     public void RestPosition(Vector3 newPos) {
