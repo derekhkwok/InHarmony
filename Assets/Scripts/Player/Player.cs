@@ -54,12 +54,16 @@ public class Player: MonoBehaviour {
             IsRoomUpdated = false;
         }
 
-        //Debug.Log(Vector3.Distance(goal.position, gameObject.transform.position));
-        if(Vector3.Distance(goal.position, gameObject.transform.position) < 2f) {
-            Transform temp = start;
-            start = goal;
-            goal = temp;
-            RoomUpdated();
+        if (goal != null)
+        {
+            //Debug.Log(Vector3.Distance(goal.position, gameObject.transform.position));
+            if (Vector3.Distance(goal.position, gameObject.transform.position) < 2f)
+            {
+                Transform temp = start;
+                start = goal;
+                goal = temp;
+                RoomUpdated();
+            }
         }
 
         //if middle rooms to destinations are removed; walk back to starting room
