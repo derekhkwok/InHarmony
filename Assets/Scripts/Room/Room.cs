@@ -78,7 +78,7 @@ public class Room : MonoBehaviour
     }
 
     public void MoveRoom(Vector2 input) {
-        transform.Translate(new Vector3(input.x, 0f, input.y));
+        transform.position = new Vector3(input.x, 0f, input.y);
     }
 
 
