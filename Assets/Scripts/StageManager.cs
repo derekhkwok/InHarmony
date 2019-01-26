@@ -171,6 +171,9 @@ public partial class StageManager : MonoBehaviour
         isWon = true;
 
         UI_Condition.Instance.WinDestoryObject();
+        foreach ( Player player in currentPersons.Values) {
+            player.Win();
+        }
         Debug.LogWarning("[GAME] YOU WIN!");
         Congret_Prefab congret = Congret_Prefab.Create(() => { OnClickEndStage(); });
         return true;
