@@ -201,4 +201,14 @@ public class StageManager : MonoBehaviour
         MainMenuView.SummonMenu();
     }
 
+    public void UpdateRoomConnection() {
+        foreach(KeyValuePair<int, Room> r in currentRooms) {
+            r.Value.UpdateConnectedRoom();
+        }
+    }
+
+    //public List<Room> GetCurrentRoom()
+    //{
+    //    return currentRooms;
+    //}
 }
