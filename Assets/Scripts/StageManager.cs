@@ -9,11 +9,14 @@ public class StageManager : MonoBehaviour
     public GameObject[] stagePrefabs;
 
     public GameObject currentStage;
-    List<Room> currentRooms = new List<Room>();
-    //Dictionary<int, Person> currentPersons = new Dictionary<int, Person>();
+    Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
+    Dictionary<int, PlayerManager> currentPersons = new Dictionary<int, PlayerManager>();
 
     public static StageManager instance;
     public bool isWon = false;
+
+    public GameObject[] personGO;
+    public GameObject[] roomGO;
 
     // Start is called before the first frame update
     void Start()
@@ -44,24 +47,50 @@ public class StageManager : MonoBehaviour
             currentStage = null;
         }
 
+        currentRooms = new Dictionary<int, Room>();
+        currentPersons = new Dictionary<int, PlayerManager>();
+
         //Get Stage Info
         List<string> roomsAndPerson = StageInfo.stageRooms[stage];
+
+        foreach (string info in roomsAndPerson)
+        {
+            int tmpRoomID = int.Parse(info.Split('|')[0]);
+            int tmpPersonID = int.Parse(info.Split('|')[1]);
+
+            GameObject tempRoom = Instantiate(roomGO[tmpRoomID]);
+            Room _tempRoom = tempRoom.AddComponent<Room>();
+            currentRooms.Add(tmpRoomID, _tempRoom);
+
+            if (tmpPersonID > 0)
+            {
+                GameObject tempPlayerManager = Instantiate(personGO[tmpPersonID]);
+                PlayerManager _tempPlayer = tempPlayerManager.GetComponent<PlayerManager>();
+                currentPersons.Add(tmpPersonID, _tempPlayer);
+                _tempPlayer.SetupPlayerIDAndBelongRoom(tmpPersonID, tmpRoomID);
+            }
+        }
 
         //Get Stage Condition - show On UI
         List<string> stageCondition = StageInfo.stageCondition[stage];
         UI_Condition.Instance.TurnStringToUI(stageCondition);
 
+        foreach ( string _con in stageCondition) {
+            string[] _conStr = _con.Split('|');
 
-        currentStage = Instantiate(stagePrefabs[stage]) as GameObject;
-        currentStage.transform.parent = transform;
-        isWon = false;
+            switch (_con[0].ToString())
+            {
+                case "r":
+                case "R":
+                    currentRooms[int.Parse(_conStr[0].Substring(1))].SetUpRoomsCondition(_conStr[1], _conStr[2]);
+                    break;
 
-        currentRooms.AddRange(GetComponentsInChildren<Room>());
-        foreach (Room r in GetComponentsInChildren<Room>())
-        {
-            currentRooms.Add(r);
+                case "p":
+                case "P":
+                    currentPersons[int.Parse(_conStr[0].Substring(1))].SetUpPlayerCondition(_conStr[1], _conStr[2]);
+                    break;
+            }
         }
-
     }
 
     public bool CheckWin()
@@ -69,7 +98,7 @@ public class StageManager : MonoBehaviour
         if (currentStage == null) return false;
 
         // Check room connect conditions
-        foreach (Room r in currentRooms)
+        foreach (Room r in currentRooms.Values)
         {
             if (!r.CheckRoomValid()) return false;
         }
@@ -86,8 +115,8 @@ public class StageManager : MonoBehaviour
         Destroy(currentStage);
     }
 
-    public List<Room> GetCurrentRoom()
-    {
-        return currentRooms;
-    }
+    //public List<Room> GetCurrentRoom()
+    //{
+    //    return currentRooms;
+    //}
 }

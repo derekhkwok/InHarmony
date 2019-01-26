@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public Transform goal;
     public List<int> excludedRoommID;
     public List<int> excludedPersonID;
+    public int belongsRoomID = -1;
     public int goalRoomID = -1;
     public int playerID = 0;
     public bool isPathValid = false;
@@ -30,6 +31,32 @@ public class PlayerManager : MonoBehaviour
             start = goal;
             goal = temp;
             agent.destination = goal.position;
+        }
+    }
+
+    public void SetupPlayerIDAndBelongRoom( int _playerID, int _belongRoom)
+    {
+        playerID = _playerID;
+        belongsRoomID = _belongRoom;
+    }
+
+    public void SetUpPlayerCondition(string _case, string _target)
+    {
+        if (excludedRoommID == null) excludedRoommID = new List<int>();
+        if (excludedPersonID == null) excludedPersonID = new List<int>();
+
+        switch (_case)
+        {
+            case ">":
+                goalRoomID = int.Parse(_target.Replace("r", ""));
+                break;
+
+            case "x":
+                if (_target[0].ToString() == "r")
+                    excludedRoommID.Add(int.Parse(_target.Replace("r", "")));
+                else if (_target[0].ToString() == "p")
+                    excludedPersonID.Add(int.Parse(_target.Replace("p", "")));
+                break;
         }
     }
 }
