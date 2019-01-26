@@ -15,6 +15,8 @@ public class StageManager : MonoBehaviour
     public GameObject[] personGO;
     public GameObject[] roomGO;
 
+    private bool inited = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,6 +40,9 @@ public class StageManager : MonoBehaviour
 
     public void InitStage(int stage)
     {
+        if (inited) return;
+        inited = true;
+
         currentRooms = new Dictionary<int, Room>();
         currentPersons = new Dictionary<int, Player>();
 
@@ -81,10 +86,17 @@ public class StageManager : MonoBehaviour
 
                 case "p":
                 case "P":
-                    currentPersons[int.Parse(_conStr[0].Substring(1))].SetUpPlayerCondition(_conStr[1], _conStr[2]);
+                    Player _player = currentPersons[int.Parse(_conStr[0].Substring(1))];
+                    _player.SetUpPlayerCondition(_conStr[1], _conStr[2]);
+                    _player.InitPlayer(currentRooms[_player.roomSourceID].startPos, currentRooms[_player.roomTargetID].startPos);
                     break;
             }
         }
+
+        //foreach (Player _player in currentPersons.Values)
+        //{
+        //    _player.InitPlayer(currentRooms[_player.roomSourceID].startPos, currentRooms[_player.roomTargetID].startPos);
+        //}
     }
 
     public bool CheckWin()
@@ -97,6 +109,7 @@ public class StageManager : MonoBehaviour
 
         //TODO: shut down inputs and wait for the animation ends
         isWon = true;
+        inited = false;
         Debug.LogWarning("[GAME] YOU WIN!");
         return true;
     }
