@@ -24,6 +24,11 @@ public class Player: MonoBehaviour {
 
     public SpriteRenderer playerFace;
 
+    public ParticleSystem angrayParticle;
+    public ParticleSystem sadParticle;
+    public ParticleSystem successParticle;
+
+
     private bool alreadyExcludedRoomList = false;
     private NavMeshPath navMeshPath;
     private NavMeshHit hit;
@@ -57,6 +62,11 @@ public class Player: MonoBehaviour {
 
         if (excludedRoomID.Contains(currentRoomIn))
         {
+            //sad
+            angrayParticle.gameObject.SetActive(false);
+            sadParticle.gameObject.SetActive(true);
+            successParticle.gameObject.SetActive(false);
+            sadParticle.Play();
             playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
         } else {
             playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
@@ -65,6 +75,11 @@ public class Player: MonoBehaviour {
             {
                if ( StageManager.instance.currentPersons[excludedPersonID[i]].currentRoomIn == currentRoomIn)
                 {
+                    //angray
+                    angrayParticle.gameObject.SetActive(true);
+                    sadParticle.gameObject.SetActive(false);
+                    successParticle.gameObject.SetActive(false);
+                    angrayParticle.Play();
                     playerFace.GetComponent<SpriteRenderer>().sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 6);
                     break;
                 }
@@ -89,6 +104,15 @@ public class Player: MonoBehaviour {
 
         //if middle rooms to destinations are removed; walk back to starting room
         //if starting room is disconnected; stand idlely
+    }
+
+    public void Win()
+    {
+        //win
+        angrayParticle.gameObject.SetActive(false);
+        sadParticle.gameObject.SetActive(false);
+        successParticle.gameObject.SetActive(true);
+        successParticle.Play();
     }
 
     public void RestPosition(Vector3 newPos) {

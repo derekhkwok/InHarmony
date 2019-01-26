@@ -41,7 +41,7 @@ public class UI_Condition : MonoBehaviour
                 tempImage.gameObject.SetActive(true);
                 tempImage.sprite = UI_TextureHelper.Instance.GetSprite(_conStr[i]);
                 tempImage.transform.SetParent(_tempEmpty.transform);
-                tempImage.transform.localPosition = new Vector3(i * 55f, 0f, 0f);
+                tempImage.transform.localPosition = new Vector3(i * 55f + 20f, 0f, 0f);
                 tempImage.transform.localScale = Vector3.one;
                 tempImage.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
             }

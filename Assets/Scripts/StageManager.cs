@@ -53,11 +53,14 @@ public partial class StageManager : MonoBehaviour
     public void InitStage(int stage)
     {
         if (inited) return;
+        inited = true;
+
+
+
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
         InputManager.Instance.SetCanDrag(false);
-        inited = true;
         isEnding = false;
 
         currentRooms = new Dictionary<int, Room>();
@@ -171,6 +174,9 @@ public partial class StageManager : MonoBehaviour
         isWon = true;
 
         UI_Condition.Instance.WinDestoryObject();
+        foreach ( Player player in currentPersons.Values) {
+            player.Win();
+        }
         Debug.LogWarning("[GAME] YOU WIN!");
         Congret_Prefab congret = Congret_Prefab.Create(() => { OnClickEndStage(); });
         return true;
