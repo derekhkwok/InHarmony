@@ -21,6 +21,8 @@ public class Room : MonoBehaviour
     public Transform startPos;
     public Transform endPos;
 
+    NavMeshSourceTag navTag;
+
     public List<Room> GetConnectedRooms() {
         List<Room> returnList = new List<Room>();
         foreach (Door d in doors)
@@ -86,6 +88,10 @@ public class Room : MonoBehaviour
         //do reset person
     }
 
+    public void SetNavTag(bool input) {
+        navTag.enabled = input;
+    }
+
 
 
 
@@ -93,6 +99,8 @@ public class Room : MonoBehaviour
         doors = new List<Door>(GetComponentsInChildren<Door>());
         foreach (Door d in doors)
             d.SetRoom(this);
+
+        navTag = GetComponentInChildren<NavMeshSourceTag>();
     }
 
     public void SetUpRoomsCondition( string _case, string _target )

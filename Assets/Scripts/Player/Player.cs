@@ -193,5 +193,9 @@ public class Player: MonoBehaviour {
         return roomList;
     }
 
-
+    public void SetAgent(int id, bool input) {
+        if(currentRoomIn == id) {
+            agent.enabled = input;
+        }
+    }
 }

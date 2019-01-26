@@ -211,7 +211,10 @@ public partial class StageManager : MonoBehaviour
             p.Value.RoomUpdated();
     }
 
-
+    public void SetPlayerAgent(int id, bool input) {
+        foreach (KeyValuePair<int, Player> p in currentPersons)
+            p.Value.SetAgent(id, input);
+    }
 
 
     Transform tempParent = null;
