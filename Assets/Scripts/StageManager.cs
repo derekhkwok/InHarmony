@@ -54,6 +54,8 @@ public partial class StageManager : MonoBehaviour
     {
         if (inited) return;
         currentLv = stage;
+        InputManager.Instance.ZoomCameraByStage(stage);
+
         InputManager.Instance.SetCanDrag(false);
         inited = true;
         isEnding = false;
