@@ -137,7 +137,7 @@ public class InputManager : MonoBehaviour
         }
 
         if (camMoving) {
-            targetCam.transform.Translate(camMoveSpeed.x, 0f, camMoveSpeed.y);
+            targetCam.transform.Translate(camMoveSpeed.x * camSpeed, 0f, camMoveSpeed.y * camSpeed);
             if (!camMove) {
                 float v = camMoveSpeed.magnitude;
                 v = Mathf.Clamp(v - 0.1f, 0f, 5f);

@@ -45,5 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDrag: 0
   targetCam: {fileID: 0}
-  zoomMin: 2
-  zoomMax: 5
+  zoomMin: 4
+  zoomMax: 10
+  camSpeed: 1
