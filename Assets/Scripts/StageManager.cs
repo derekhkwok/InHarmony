@@ -133,7 +133,7 @@ public class StageManager : MonoBehaviour
         foreach (Player p in currentPersons.Values)
         {
             bool isValid = true;
-            List<int> myPath = new List<int>(); //p.GetPath();
+            List<int> myPath = p.GetPath();
 
             if (myPath.Last() != p.roomTargetID) // not reaching target
             {
@@ -143,8 +143,8 @@ public class StageManager : MonoBehaviour
             {
                 foreach (int otherP in p.excludedPersonID)
                 {
-                    Player otherPerson = currentPersons[otherP];
-                    if (myPath.Take(myPath.Count-1).Intersect(/*otherPerson.GetPath().Take()*/ new List<int>()).Any())
+                    List<int> otherPath = otherP.GetPath();
+                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.GetPath().Take(otherPath.Count - 1)).Any())
                     {
                         isValid = false;
                         break;
@@ -159,8 +159,6 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        //TODO: shut down inputs and wait for the animation ends
-        //done
         isWon = true;
         Debug.LogWarning("[GAME] YOU WIN!");
         return true;
@@ -170,6 +168,16 @@ public class StageManager : MonoBehaviour
     {
         Debug.LogWarning("[GAME] STAGE CLEAR! CONGRATULATIONS!");
         yield return new WaitForSeconds(1f);
+        //TODO: Animation
+    }
+
+    //public List<Room> GetCurrentRoom()
+    //{
+    //    return currentRooms;
+    //}
+
+    void OnClickEndStage() 
+    {
         if (currentRooms != null)
         {
             foreach (Room r in currentRooms.Values)
@@ -193,8 +201,4 @@ public class StageManager : MonoBehaviour
         MainMenuView.SummonMenu();
     }
 
-    //public List<Room> GetCurrentRoom()
-    //{
-    //    return currentRooms;
-    //}
 }
