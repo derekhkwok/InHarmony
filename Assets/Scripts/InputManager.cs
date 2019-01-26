@@ -96,6 +96,7 @@ public class InputManager : MonoBehaviour
                         currentRoom = null;
 
                         StageManager.instance.UpdateRoomConnection();
+                        StageManager.instance.CheckWin();
                     }
                     camMove = false;
                     break;
