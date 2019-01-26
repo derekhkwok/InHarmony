@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     
     List<Door> doors;
     [SerializeField]
-    List<int> excludedRooms, mustConnectedRooms;
+    public List<int> excludedRooms, mustConnectedRooms;
     [SerializeField]
     int minNumConnectedRoom;
 
