@@ -25,6 +25,8 @@ public class StageManager : MonoBehaviour
         }
         isWon = false;
         instance = this;
+
+        InitStage(1);
     }
 
     // Update is called once per frame
@@ -55,8 +57,8 @@ public class StageManager : MonoBehaviour
 
             if (tmpPersonID > 0)
             {
-                GameObject tempPlayerManager = Instantiate(personGO[tmpPersonID]);
-                Player _tempPlayer = tempPlayerManager.GetComponent<Player>();
+                GameObject tempPlayerManager = Instantiate(personGO[0]);
+                Player _tempPlayer = tempPlayerManager.GetComponentInChildren<Player>();
                 currentPersons.Add(tmpPersonID, _tempPlayer);
                 _tempPlayer.SetupPlayerIDAndRoomID(tmpPersonID, tmpRoomID);
             }
