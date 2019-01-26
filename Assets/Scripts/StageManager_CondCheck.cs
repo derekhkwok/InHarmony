@@ -43,9 +43,19 @@ public partial class StageManager : MonoBehaviour
                 switch (cond[1])
                 {
                     case "x":
-                        List<int> myPath = currentPersons[ID].GetPath();
-                        List<int> otherPath = currentPersons[second.Item2].GetPath();
-                        return !myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any();
+                        switch (second.Item1)
+                        {
+                            case "p":
+                                List<int> myPath = currentPersons[ID].GetPath();
+                                List<int> otherPath = currentPersons[second.Item2].GetPath();
+                                return !myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any();
+                            case "r":
+                                List<int> myPath_1 = currentPersons[ID].GetPath();
+                                return !myPath_1.Contains(currentRooms[second.Item2].id);
+                            default:
+                                return false;
+                        }
+
                     case ">":
                         return currentPersons[ID].GetPath().Count > 0 && currentPersons[ID].GetPath().Last() == second.Item2;
                     default:

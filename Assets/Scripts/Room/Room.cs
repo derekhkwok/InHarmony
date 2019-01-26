@@ -33,7 +33,7 @@ public class Room : MonoBehaviour
     public bool CheckRoomValid() {
         bool returnBool = true;
         List<Room> rm = GetConnectedRooms();
-        if (rm.Count < minNumConnectedRoom)
+        if (rm.Count < minNumConnectedRoom || rm.Count <= 0)
             returnBool = false;
 
         List<int> mustConnect = new List<int>(mustConnectedRooms);
