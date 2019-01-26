@@ -17,6 +17,9 @@ public class Room : MonoBehaviour
     [SerializeField]
     int minNumConnectedRoom;
 
+    public Transform startPos;
+    public Transform endPos;
+
     public List<Room> GetConnectedRooms() {
         List<Room> returnList = new List<Room>();
         foreach (Door d in doors)

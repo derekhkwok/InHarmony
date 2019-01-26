@@ -165,7 +165,7 @@ MonoBehaviour:
   excludedPersonID: 
   isRoomPathValid: 1
   isPersonPathValid: 1
-  agent: {fileID: 0}
+  agent: {fileID: 6516716154311724701}
   IsRoomUpdated: 0
   roomSourceID: 1
   playerID: 1

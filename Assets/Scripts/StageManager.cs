@@ -52,7 +52,7 @@ public class StageManager : MonoBehaviour
             int tmpPersonID = int.Parse(info.Split('|')[1]);
 
             GameObject tempRoom = Instantiate(roomGO[tmpRoomID]);
-            Room _tempRoom = tempRoom.AddComponent<Room>();
+            Room _tempRoom = tempRoom.GetComponent<Room>();
             currentRooms.Add(tmpRoomID, _tempRoom);
 
             if (tmpPersonID > 0)
@@ -60,6 +60,7 @@ public class StageManager : MonoBehaviour
                 GameObject tempPlayerManager = Instantiate(personGO[0]);
                 Player _tempPlayer = tempPlayerManager.GetComponentInChildren<Player>();
                 currentPersons.Add(tmpPersonID, _tempPlayer);
+                _tempPlayer.InitPlayer( _tempRoom.startPos );
                 _tempPlayer.SetupPlayerIDAndRoomID(tmpPersonID, tmpRoomID);
             }
         }

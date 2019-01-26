@@ -29,9 +29,9 @@ public class Player: MonoBehaviour {
     private NavMeshHit hit;
 
     void Start(){
-        navMeshPath = new NavMeshPath();
-        gameObject.transform.position = start.position;
-        RoomUpdated();
+        //navMeshPath = new NavMeshPath();
+        //gameObject.transform.position = start.position;
+        //RoomUpdated();
         //navMeshPath = agent.path;
         //agent.destination = goal.position;
 
@@ -82,7 +82,7 @@ public class Player: MonoBehaviour {
             }
         }
         navMeshPath = new NavMeshPath();
-        agent.destination = goal.position;
+        agent.destination = goal == null ? start.position : goal.position;
         navMeshPath = agent.path;
         //Debug.Log((NavMesh.SamplePosition(gameObject.transform.position, out hit, 10f, 1)));
         //Debug.Log(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath));
@@ -107,6 +107,14 @@ public class Player: MonoBehaviour {
             isRoomPathValid = false;
             alreadyExcludedRoomList = false;
         }
+    }
+
+    public void InitPlayer( Transform _start )
+    {
+        start = _start;
+        navMeshPath = new NavMeshPath();
+        gameObject.transform.position = start.position;
+        RoomUpdated();
     }
 
     public void SetupPlayerIDAndRoomID( int _playerID, int _belongRoomID)
