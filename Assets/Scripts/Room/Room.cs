@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Room : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class Room : MonoBehaviour
         return returnBool;
 
     }
+    
 
     /* rubbish, no use
     public List<Room> SearchConnectedRooms(Room from, List<Room> excludedRooms = null) {
