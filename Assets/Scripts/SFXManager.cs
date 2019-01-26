@@ -18,7 +18,8 @@ public class SFXManager : MonoBehaviour
         powerUp,
         powerUp2,
         jump,
-        victory
+        victory,
+        Footstep01
     }
 
     void Awake()
