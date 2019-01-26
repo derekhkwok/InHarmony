@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1041,8 +1041,6 @@ GameObject:
   - component: {fileID: 1749862272}
   - component: {fileID: 1749862271}
   - component: {fileID: 1749862270}
-  - component: {fileID: 1749862269}
-  - component: {fileID: 1749862273}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1050,18 +1048,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1749862269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749862268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &1749862270
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1126,22 +1112,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1749862273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749862268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9f2c8ab212d7c24381d220723fe1aac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDrag: 0
-  targetCam: {fileID: 0}
-  zoomMin: 0
-  zoomMax: 0
 --- !u!1001 &260315079345781409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1547,6 +1517,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
         type: 3}
+    - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: targetCam
+      value: 
+      objectReference: {fileID: 1749862271}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dbd74291d0434ef7a5a9c64c2668efe, type: 3}
 --- !u!1001 &1567027672676559549
