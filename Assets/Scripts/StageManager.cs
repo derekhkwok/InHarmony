@@ -168,7 +168,7 @@ public partial class StageManager : MonoBehaviour
 
         UI_Condition.Instance.WinDestoryObject();
         Debug.LogWarning("[GAME] YOU WIN!");
-        Congret_Prefab congret = Congret_Prefab.Create(() => { MainMenuView.SummonMenu(); });
+        Congret_Prefab congret = Congret_Prefab.Create(() => { OnClickEndStage(); });
         return true;
     }
 
@@ -178,7 +178,7 @@ public partial class StageManager : MonoBehaviour
         {
             foreach (Room r in currentRooms.Values)
             {
-                Destroy(r);
+                Destroy(r.gameObject);
             }
         }
 
@@ -186,7 +186,7 @@ public partial class StageManager : MonoBehaviour
         {
             foreach (Player p in currentPersons.Values)
             {
-                Destroy(p);
+                Destroy(p.gameObject);
             }
         }
         inited = false;
@@ -194,6 +194,8 @@ public partial class StageManager : MonoBehaviour
         currentPersons = null;
 
         GameManager.RefreshMaxClearedStage(currentLv);
+
+        MainMenuView.SummonMenu();
     }
 
     public void UpdateRoomConnection() {
