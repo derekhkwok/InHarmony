@@ -75,7 +75,8 @@ public class Player: MonoBehaviour {
     }
 
     public void RoomUpdated() {
-        Room currMovingRoom = InputManager.GetInstance().currentRoom;
+        if(!agent.enabled) agent.enabled = true;
+        Room currMovingRoom = InputManager.Instance.currentRoom;
         if(currMovingRoom != null) {
             if(currMovingRoom.id == roomSourceID || currMovingRoom.id == currentRoomIn) {
                 gameObject.transform.position = start.position;
@@ -115,7 +116,7 @@ public class Player: MonoBehaviour {
         goal = _goal;
         navMeshPath = new NavMeshPath();
         gameObject.transform.position = start.position;
-        //RoomUpdated();
+        Invoke("RoomUpdated", 3f);
     }
 
     public void SetupPlayerIDAndRoomID( int _playerID, int _belongRoomID)

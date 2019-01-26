@@ -6,13 +6,8 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField]
     Camera raycastCam;
-    public static InputManager GetInstance() {
-        if(_instance != null) {
-            return _instance;
-        } else {
-            _instance = new InputManager();
-            return _instance;
-        }
+    public static InputManager Instance{
+        get { return _instance;}
     }
     private static InputManager _instance;
     private bool holdRoom = false;
@@ -23,11 +18,15 @@ public class InputManager : MonoBehaviour
     private float speed = 10f;
     private float x;
     private float z;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+   
+    void Awake(){
+        if(_instance != null && _instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            _instance = this;
+        }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -91,7 +90,7 @@ public class InputManager : MonoBehaviour
             }
         }
         if(currentRoom != null) {
-            currentRoom.transform.localPosition = new Vector3(currentRoom.transform.localPosition.x + x*2, currentRoom.transform.localPosition.y, currentRoom.transform.localPosition.z + z*2);
+            currentRoom.transform.localPosition = new Vector3(currentRoom.transform.localPosition.x + x/2, currentRoom.transform.localPosition.y, currentRoom.transform.localPosition.z + z/2);
 
         }
 
