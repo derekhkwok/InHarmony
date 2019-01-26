@@ -164,7 +164,7 @@ public class Player: MonoBehaviour {
         }
     }
     //Called 
-    public List<Room> GetPath() {
+    public List<int> GetPath() {
         return roomList;
     }
 }
