@@ -59,7 +59,7 @@ public class InputManager : MonoBehaviour
 
     public void ZoomCameraByStage(int stage)
     {
-        targetCam.orthographicSize = Mathf.Clamp(zoomStart -1 + stage, zoomMin, zoomMax);
+        targetCam.orthographicSize = Mathf.Clamp(stage, zoomMin, zoomMax);
     }
 
     // Update is called once per frame
@@ -118,7 +118,7 @@ public class InputManager : MonoBehaviour
                         currentRoom = null;
 
                         StageManager.instance.UpdateRoomConnection();
-                        StageManager.instance.CheckWin();
+                        Invoke("DelayChecking", 0.5f);
                     }
                     camMove = false;
                     break;
@@ -240,7 +240,7 @@ public class InputManager : MonoBehaviour
                 currentRoom = null;
                 StageManager.instance.UpdateRoomConnection();
                 StageManager.instance.RoomSniping(temp);
-                StageManager.instance.CheckWin();
+                Invoke("DelayChecking", 0.5f);
             }
             camMove = false;
         }
@@ -263,5 +263,11 @@ public class InputManager : MonoBehaviour
         //    // Code for mouse standing still
         //}
         //}
+    }
+
+    void DelayChecking() {
+        UI_Condition.Instance.CheckingPassConditionUI();
+
+        StageManager.instance.CheckWin();
     }
 }
