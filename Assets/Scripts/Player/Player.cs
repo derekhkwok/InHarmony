@@ -133,7 +133,7 @@ public class Player: MonoBehaviour {
                 }
             }
 
-            SFXManager.instance.PlaySFX();
+            SFXManager.instance.PlaySFX( SFXManager.SFX.Footstep01 );
             //Debug.Log("POSSIBLE");
         } else {
             //Debug.Log("NOPE POSSIBLE");
