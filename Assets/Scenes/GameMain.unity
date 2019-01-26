@@ -319,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &849937378
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -745,7 +745,8 @@ PrefabInstance:
         type: 3}
       propertyPath: peopleTexture.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 8277acb9bf4b74ae0b3b4b0299e8e6f0,
+        type: 3}
     - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
         type: 3}
       propertyPath: peopleTexture.Array.data[1]
@@ -865,6 +866,12 @@ PrefabInstance:
       propertyPath: roomTexture.Array.data[10]
       value: 
       objectReference: {fileID: 21300000, guid: 23985338c68024f6391070097198e890,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: roomTexture.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8277acb9bf4b74ae0b3b4b0299e8e6f0,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409, type: 3}

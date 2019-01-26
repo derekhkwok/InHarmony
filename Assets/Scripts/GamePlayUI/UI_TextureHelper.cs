@@ -12,7 +12,7 @@ public class UI_TextureHelper : MonoBehaviour
     private string[] compareStr = new string[] { ">", "x", "c", "d2" };
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Instance = this;
     }

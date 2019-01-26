@@ -109,9 +109,10 @@ public class Player: MonoBehaviour {
         }
     }
 
-    public void InitPlayer( Transform _start )
+    public void InitPlayer( Transform _start, Transform _goal )
     {
         start = _start;
+        goal = _goal;
         navMeshPath = new NavMeshPath();
         gameObject.transform.position = start.position;
         RoomUpdated();

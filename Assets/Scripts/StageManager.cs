@@ -60,7 +60,7 @@ public class StageManager : MonoBehaviour
                 GameObject tempPlayerManager = Instantiate(personGO[0]);
                 Player _tempPlayer = tempPlayerManager.GetComponentInChildren<Player>();
                 currentPersons.Add(tmpPersonID, _tempPlayer);
-                _tempPlayer.InitPlayer( _tempRoom.startPos );
+                _tempPlayer.InitPlayer( _tempRoom.startPos, _tempRoom.endPos );
                 _tempPlayer.SetupPlayerIDAndRoomID(tmpPersonID, tmpRoomID);
             }
         }
