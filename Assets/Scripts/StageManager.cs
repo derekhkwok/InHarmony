@@ -35,20 +35,20 @@ public partial class StageManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (isWon && !isEnding)
-        {
-            // TODO: check for animation ends
-            //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
-            //if (playerReached.Length == currentPersons.Count)
-            //{
-            //    isEnding = true;
-            //    StartCoroutine(CompleteStage());
-            //}
+    //void Update()
+    //{
+    //    if (isWon && !isEnding)
+    //    {
+    //        // TODO: check for animation ends
+    //        //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
+    //        //if (playerReached.Length == currentPersons.Count)
+    //        //{
+    //        //    isEnding = true;
+    //        //    StartCoroutine(CompleteStage());
+    //        //}
 
-        }
-    }
+    //    }
+    //}
 
     public void InitStage(int stage)
     {
@@ -164,6 +164,7 @@ public partial class StageManager : MonoBehaviour
 
         UI_Condition.Instance.WinDestoryObject();
         Debug.LogWarning("[GAME] YOU WIN!");
+        StartCoroutine(CompleteStage());
         return true;
     }
 
@@ -173,11 +174,6 @@ public partial class StageManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //TODO: Animation
     }
-
-    //public List<Room> GetCurrentRoom()
-    //{
-    //    return currentRooms;
-    //}
 
     void OnClickEndStage() 
     {
@@ -201,19 +197,19 @@ public partial class StageManager : MonoBehaviour
         currentPersons = null;
 
         GameManager.RefreshMaxClearedStage(currentLv);
-        MainMenuView.SummonMenu();
+        Congret_Prefab congret = Congret_Prefab.Create(() => { MainMenuView.SummonMenu(); });
     }
 
     public void UpdateRoomConnection() {
         foreach(KeyValuePair<int, Room> r in currentRooms) {
             r.Value.UpdateConnectedRoom();
         }
+<<<<<<< HEAD
 
         UI_Condition.Instance.CheckingPassConditionUI();
+=======
+        foreach (KeyValuePair<int, Player> p in currentPersons)
+            p.Value.RoomUpdated();
+>>>>>>> 256dc61ee95aa7fcd94c35a95b1ca459b6ffc4d0
     }
-
-    //public List<Room> GetCurrentRoom()
-    //{
-    //    return currentRooms;
-    //}
 }

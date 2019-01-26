@@ -26,6 +26,7 @@ public class Player: MonoBehaviour {
     private bool alreadyExcludedRoomList = false;
     private NavMeshPath navMeshPath;
     private NavMeshHit hit;
+    private float time;
 
     void Start(){
         //navMeshPath = new NavMeshPath();
@@ -58,10 +59,13 @@ public class Player: MonoBehaviour {
             //Debug.Log(Vector3.Distance(goal.position, gameObject.transform.position));
             if (Vector3.Distance(goal.position, gameObject.transform.position) < 2f)
             {
+                time += Time.deltaTime;
                 Transform temp = start;
                 start = goal;
                 goal = temp;
-                RoomUpdated();
+                if(time > 10f) {
+                    RoomUpdated();
+                }
             }
         }
 
@@ -167,4 +171,6 @@ public class Player: MonoBehaviour {
     public List<int> GetPath() {
         return roomList;
     }
+
+
 }
