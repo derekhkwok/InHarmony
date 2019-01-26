@@ -56,13 +56,15 @@ public class InputManager : MonoBehaviour
                         if (temp) {
                             currentRoom = temp;
                             currentRoom.SetMoveRoom(true);
+                            holdRoomTime = 0f;
+                            holdRoom = false;
                         }
                     }
                     break;
                 case TouchPhase.Moved:
                     holdRoom = false;
                     holdRoomTime = 0f;
-                    currentRoom.MoveRoom(Input.GetTouch(0).deltaPosition);
+                    currentRoom.MoveRoom(targetCam.ScreenToWorldPoint(Input.GetTouch(0).position));
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
@@ -123,6 +125,8 @@ public class InputManager : MonoBehaviour
                 if(temp) {
                     currentRoom = temp;
                     currentRoom.SetMoveRoom(true);
+                    holdRoomTime = 0f;
+                    holdRoom = false;
                     lastMousePos = Input.mousePosition;
                 }
             }
@@ -143,6 +147,7 @@ public class InputManager : MonoBehaviour
                 }
             } else {
                 holdRoomTime = 0f;
+                holdRoom = false;
             }
             lastMousePos = Input.mousePosition;
 
