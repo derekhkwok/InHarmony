@@ -52,7 +52,7 @@ public partial class StageManager : MonoBehaviour
 
     public void InitStage(int stage)
     {
-        stage = 5;
+        //stage = 5;
 
         if (inited) return;
         currentLv = stage;
@@ -68,17 +68,19 @@ public partial class StageManager : MonoBehaviour
         //Get Stage Info
         List<string> roomsAndPerson = StageInfo.stageRooms[stage];
 
+        int count = 0;
         foreach (string info in roomsAndPerson)
         {
             int tmpRoomID = int.Parse(info.Split('|')[0]);
             int tmpPersonID = int.Parse(info.Split('|')[1]);
 
             GameObject tempRoom = Instantiate(roomGO[tmpRoomID]);
-            tempRoom.transform.position = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-3f, 3f));
+            tempRoom.transform.position = new Vector3(7.5f * (count%3), 0f, 3f * count/3);
             tempRoom.transform.eulerAngles = new Vector3(0f, Random.Range(0, 4) * 90f, 0f);
             Room _tempRoom = tempRoom.GetComponent<Room>();
             _tempRoom.SetID( tmpRoomID );
             currentRooms.Add(tmpRoomID, _tempRoom);
+            count++;
 
             if (tmpPersonID > 0)
             {
@@ -108,7 +110,8 @@ public partial class StageManager : MonoBehaviour
                 case "P":
                     Player _player = currentPersons[int.Parse(_conStr[0].Substring(1))];
                     _player.SetUpPlayerCondition(_conStr[1], _conStr[2]);
-                    _player.InitPlayer(currentRooms[_player.roomSourceID].startPos, currentRooms[_player.roomTargetID].startPos);
+                    //Debug.LogError("Player :" + _player.playerID + ":" + _player.roomTargetID);
+                    //_player.InitPlayer(currentRooms[_player.roomSourceID].startPos, currentRooms[_player.roomTargetID].startPos);
                     break;
             }
         }
@@ -129,6 +132,7 @@ public partial class StageManager : MonoBehaviour
             if (!r.CheckRoomValid())
             {
                 InputManager.Instance.SetCanDrag(true);
+
                 return false;
             }
         }
@@ -140,7 +144,7 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if (myPath.Count <= 0 || myPath.Last() != p.roomTargetID) // not reaching target
+            if ((myPath.Count > 0 && myPath.Last() != p.roomTargetID) || (myPath.Count == 0 && p.roomTargetID != -1)) // not reaching target
             {
                 isValid = false;
             }
