@@ -33,6 +33,10 @@ public class MainMenuView : MonoBehaviour
 
     public GameObject title;
 
+    public GameObject clouds;
+    public SpriteRenderer fogSpr;
+    public TextMesh floorText;
+
     //private BoxCollider navArea;
 
     public static MainMenuView instance { get; private set; }
@@ -286,11 +290,39 @@ public class MainMenuView : MonoBehaviour
             "islocal", true,
             "easetype", iTween.EaseType.easeInCubic
             ));
-        //navArea.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        // Enterstage
+
+        iTween.MoveTo(clouds.gameObject, iTween.Hash(
+            "z", -25f,
+            "time", 1.2f,
+            "islocal", true,
+            "easetype", iTween.EaseType.linear
+            ));
+        // 18.5,    13.5    = 32
+        // 7 -> -11.5 -> 25  
+        yield return new WaitForSeconds(1f * 18.5f / 32f);
+
+        fogSpr.gameObject.SetActive(true);
+
         StageManager.instance.InitStage(id);
+
+        yield return new WaitForSeconds(0.5f);
+
+        iTween.ValueTo(this.gameObject, iTween.Hash(
+            "from", 1f,
+            "to", 0f,
+            "time", 1f,
+            "easetype", iTween.EaseType.linear,
+            "onupdate", "UpdateColor"
+            ));
+
+        yield return new WaitForSeconds(1.1f);
         Destroy(this.gameObject);
+    }
+
+    private void UpdateColor( float val )
+    {
+        fogSpr.color = new Color(1f, 1f, 1f, val / 2f);
+        //floorText.color = new Color(1f, 1f, 1f, val);
     }
 
 }

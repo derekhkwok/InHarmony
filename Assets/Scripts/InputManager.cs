@@ -51,6 +51,16 @@ public class InputManager : MonoBehaviour
         camOriPos = targetCam.transform.position;
     }
 
+    public float GetCamSize()
+    {
+        return targetCam.orthographicSize;
+    }
+
+    public Vector3 GetCamPos()
+    {
+        return targetCam.transform.position;
+    }
+
     public void ResetCamSetting()
     {
         targetCam.orthographicSize = camOriSize;
