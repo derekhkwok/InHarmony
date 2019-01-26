@@ -7,7 +7,7 @@ public class UI_Condition : MonoBehaviour
 {
     public static UI_Condition Instance;
 
-    public PlayerManager[] players;
+    public Player[] players;
     public Room[] rooms;
     List<string> conditions;
     public GameObject conditonPointGO;
@@ -44,16 +44,16 @@ public class UI_Condition : MonoBehaviour
         _conditonGameObject = new List<GameObject>();
 
         //find out all condition and store as string from
-        foreach ( PlayerManager p in players)
+        foreach ( Player p in players)
         {
-            if ( p.goalRoomID != -1)
+            if ( p.roomTargetID != -1)
             {
-                conditions.Add("p" + p.playerID + "|>|r" + p.goalRoomID);
+                conditions.Add("p" + p.playerID + "|>|r" + p.roomTargetID);
             }
 
-            if ( p.excludedRoommID != null && p.excludedRoommID.Count > 0)
+            if ( p.excludedRoomID != null && p.excludedRoomID.Count > 0)
             {
-                foreach( int excludeRoomID in p.excludedRoommID)
+                foreach( int excludeRoomID in p.excludedRoomID)
                 {
                     conditions.Add("p" + p.playerID + "|x|r" + excludeRoomID);
                 }
