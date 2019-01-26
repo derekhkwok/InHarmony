@@ -70,6 +70,7 @@ public class InputManager : MonoBehaviour
                             currentRoom.SetMoveRoom(true);
 
                             StageManager.instance.UpdateRoomConnection();
+                            StageManager.instance.PullRoomSortingToFront(currentRoom.id);
 
                             holdRoomTime = 0f;
                             holdRoom = false;
@@ -176,6 +177,8 @@ public class InputManager : MonoBehaviour
                     holdRoom = false;
                     lastMousePos = Input.mousePosition;
                     offset = currentRoom.transform.position - targetCam.ScreenToWorldPoint(Input.mousePosition);
+
+                    StageManager.instance.PullRoomSortingToFront(currentRoom.id);
                 }
             }
         }
