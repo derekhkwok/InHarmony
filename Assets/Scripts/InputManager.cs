@@ -12,6 +12,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     Camera targetCam;
+    private float camOriSize;
+    private Vector3 camOriPos;
     public static InputManager Instance{
         get { return _instance;}
     }
@@ -45,6 +47,14 @@ public class InputManager : MonoBehaviour
         } else {
             _instance = this;
         }
+        camOriSize = targetCam.orthographicSize;
+        camOriPos = targetCam.transform.position;
+    }
+
+    public void ResetCamSetting()
+    {
+        targetCam.orthographicSize = camOriSize;
+        targetCam.transform.position = camOriPos;
     }
 
     public void ZoomCameraByStage(int stage)
