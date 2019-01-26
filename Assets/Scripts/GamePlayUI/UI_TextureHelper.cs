@@ -17,6 +17,11 @@ public class UI_TextureHelper : MonoBehaviour
         Instance = this;
     }
 
+    public Sprite GetPeopleFace(int number)
+    {
+        return peopleTexture[number];
+    }
+
     public Sprite GetSprite( string _textureIndex)
     {
         if (System.Array.IndexOf(compareStr, _textureIndex) != -1)

@@ -1197,7 +1197,7 @@ PrefabInstance:
     - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
         type: 3}
       propertyPath: peopleTexture.Array.size
-      value: 11
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
         type: 3}
@@ -1359,6 +1359,54 @@ PrefabInstance:
       propertyPath: roomTexture.Array.data[0]
       value: 
       objectReference: {fileID: 21300000, guid: 8277acb9bf4b74ae0b3b4b0299e8e6f0,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[11]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1455bcfbac2374e6fa18f418daeb8436,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[12]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9aff61b9b1c534c1caccb1a5cb5ec869,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[13]
+      value: 
+      objectReference: {fileID: 21300000, guid: fb6d9189a9e774ab88b44a085001562c,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[14]
+      value: 
+      objectReference: {fileID: 21300000, guid: 770847cdd8da94d87b9ee5a38eddd861,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[15]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9bca48b5e7dd74b358556f7e106fffa3,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[16]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e41baae6fb5d4ddea1667c1c1c98fcd,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[17]
+      value: 
+      objectReference: {fileID: 21300000, guid: 62f2b1dfdaea549128f4f433d16f6cdc,
+        type: 3}
+    - target: {fileID: 8135912106700893068, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409,
+        type: 3}
+      propertyPath: peopleTexture.Array.data[18]
+      value: 
+      objectReference: {fileID: 21300000, guid: bbff9eecc40744e31b4ad3695efc0291,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a9d9fcdc63b4d4c8ff82f6c1b29409, type: 3}

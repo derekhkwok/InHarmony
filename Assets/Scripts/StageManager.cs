@@ -7,8 +7,8 @@ public partial class StageManager : MonoBehaviour
 {
     [Header("Stage Library")]
     public GameObject[] stagePrefabs;
-    Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
-    Dictionary<int, Player> currentPersons = new Dictionary<int, Player>();
+    public Dictionary<int, Room> currentRooms = new Dictionary<int, Room>();
+    public Dictionary<int, Player> currentPersons = new Dictionary<int, Player>();
 
     public static StageManager instance { get; private set; }
     public bool isWon = false;
