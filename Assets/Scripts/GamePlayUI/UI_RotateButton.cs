@@ -13,6 +13,12 @@ public class UI_RotateButton : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    private void Update() {
+        if (targetRoom) {
+            transform.position = targetRoom.transform.position;
+        }
+    }
+
     public void SetRotateAction( System.Action _action, Vector3 mousePoition, Room inputRoom)
     {
         transform.position = mousePoition;

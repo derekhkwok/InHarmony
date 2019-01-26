@@ -59,7 +59,7 @@ public class Room : MonoBehaviour
         excludedRooms.Add(this);
 
         foreach (Door d in doors) {
-            if (d.connectedDoor != null) {
+            if (d.connectedRoom != null) {
                 Debug.Log("hihi search");
                 if ((from != null && from != d.connectedRoom)) {
                     if (excludedRooms != null) {
@@ -84,10 +84,6 @@ public class Room : MonoBehaviour
 
 
         //do reset person
-    }
-
-    public void MoveRoom(Vector2 input) {
-        transform.position = new Vector3(input.x, 0f, input.y);
     }
 
 

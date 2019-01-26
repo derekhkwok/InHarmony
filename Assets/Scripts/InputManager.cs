@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     private float holdRoomTime = 0f;
 
     public Room currentRoom { get; private set; }
+    Vector3 offset;
 
     private float speed = 10f;
     private float x;
@@ -68,6 +69,8 @@ public class InputManager : MonoBehaviour
 
                             holdRoomTime = 0f;
                             holdRoom = false;
+
+                            offset = currentRoom.transform.position - targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         }
                     } else {
                         camMove = true;
@@ -79,7 +82,9 @@ public class InputManager : MonoBehaviour
                     if (!camMove) {
                         holdRoom = false;
                         holdRoomTime = 0f;
-                        currentRoom.MoveRoom(targetCam.ScreenToWorldPoint(Input.GetTouch(0).position));
+                        
+                        Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
                     } else {
                         if(Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
                             camMoving = true;
@@ -166,6 +171,7 @@ public class InputManager : MonoBehaviour
                     holdRoomTime = 0f;
                     holdRoom = false;
                     lastMousePos = Input.mousePosition;
+                    offset = currentRoom.transform.position - targetCam.ScreenToWorldPoint(Input.mousePosition);
                 }
             }
         }
@@ -190,7 +196,7 @@ public class InputManager : MonoBehaviour
             lastMousePos = Input.mousePosition;
 
             Vector3 camPos = targetCam.ScreenToWorldPoint(Input.mousePosition);
-            currentRoom.transform.position = new Vector3(camPos.x, currentRoom.transform.position.y, camPos.z);
+            currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
         }
 
         if(Input.GetMouseButtonUp(0)) {
