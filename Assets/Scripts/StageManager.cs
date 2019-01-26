@@ -53,11 +53,14 @@ public partial class StageManager : MonoBehaviour
     public void InitStage(int stage)
     {
         if (inited) return;
+        inited = true;
+
+
+
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
         InputManager.Instance.SetCanDrag(false);
-        inited = true;
         isEnding = false;
 
         currentRooms = new Dictionary<int, Room>();
