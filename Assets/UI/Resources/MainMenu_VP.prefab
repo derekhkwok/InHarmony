@@ -10670,7 +10670,6 @@ MonoBehaviour:
   lowestTilePosY: -1.5
   tilePadding: 1
   startAnim: {fileID: 7276225369489987056}
-  title: {fileID: 411721756648849214}
   tileSprs:
   - {fileID: 626022064107255477}
   - {fileID: 8593250968597342059}
@@ -10694,6 +10693,7 @@ MonoBehaviour:
   parent: {fileID: 2300801745443200157}
   car1: {fileID: 314375808}
   car2: {fileID: 459431973}
+  title: {fileID: 411721756648849214}
 --- !u!111 &7276225369489987056
 Animation:
   m_ObjectHideFlags: 0
