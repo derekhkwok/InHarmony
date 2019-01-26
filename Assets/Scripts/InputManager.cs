@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     Camera raycastCam;
 
-    Room currentRoom;
+    public Room currentRoom;
 
     // Start is called before the first frame update
     void Start()
