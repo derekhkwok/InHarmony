@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+
+    public bool canDrag;
+    public void SetCanDrag(bool input) {
+        canDrag = input;
+    }
+
     [SerializeField]
     Camera raycastCam;
     public static InputManager Instance{
@@ -13,11 +19,13 @@ public class InputManager : MonoBehaviour
     private bool holdRoom = false;
     private float holdRoomTime = 0f;
 
-    public Room currentRoom;
+    public Room currentRoom { get; private set; }
 
     private float speed = 10f;
     private float x;
     private float z;
+
+    Vector3 lastMousePos;
    
     void Awake(){
         if(_instance != null && _instance != this) {
@@ -34,6 +42,9 @@ public class InputManager : MonoBehaviour
         if(Input.touchCount > 0) {
             switch (Input.GetTouch(0).phase) {
                 case TouchPhase.Began:
+                    if (!canDrag)
+                        return;
+
                     Ray ray = raycastCam.ScreenPointToRay(Input.GetTouch(0).position);
                     RaycastHit hit;
                     if(Physics.Raycast(ray, out hit)) {
@@ -58,6 +69,9 @@ public class InputManager : MonoBehaviour
                     break;
 
                 case TouchPhase.Stationary:
+                    if (!canDrag)
+                        return;
+
                     holdRoomTime += Time.deltaTime;
                     if (holdRoomTime > 0.65f) {
                         if ( !holdRoom)
@@ -75,9 +89,6 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        x = Input.GetAxis("Mouse X");
-        z = Input.GetAxis("Mouse Y");
-
         if(Input.GetMouseButtonDown(0)) {
             Ray ray = raycastCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -86,16 +97,38 @@ public class InputManager : MonoBehaviour
                 if(temp) {
                     currentRoom = temp;
                     currentRoom.SetMoveRoom(true);
+                    lastMousePos = Input.mousePosition;
                 }
             }
         }
         if(currentRoom != null) {
-            currentRoom.transform.localPosition = new Vector3(currentRoom.transform.localPosition.x + x/2, currentRoom.transform.localPosition.y, currentRoom.transform.localPosition.z + z/2);
+            if(Vector3.Distance(Input.mousePosition, lastMousePos) < 1f) {
+                holdRoomTime += Time.deltaTime;
+                if (holdRoomTime > 0.65f) {
+                    if (!holdRoom) {
+                        UI_RotateButton.Instance.gameObject.SetActive(true);
+                        UI_RotateButton.Instance.SetRotateAction(() => {
+                            if (currentRoom != null)
+                                currentRoom.transform.eulerAngles =
+                                    new Vector3(0f, 90f, 0f) + currentRoom.transform.eulerAngles;
+                        }, currentRoom.transform.position);
+                    }
+                    holdRoom = true;
+                }
+            } else {
+                holdRoomTime = 0f;
+            }
+            lastMousePos = Input.mousePosition;
 
+            Vector3 camPos = raycastCam.ScreenToWorldPoint(Input.mousePosition);
+            currentRoom.transform.position = new Vector3(camPos.x, currentRoom.transform.position.y, camPos.z);
         }
 
         if(Input.GetMouseButtonUp(0)) {
-            currentRoom = null;
+            if (currentRoom != null) {
+                currentRoom.SetMoveRoom(false);
+                currentRoom = null;
+            }
         }
         //var mousex : float = Input.GetAxis("Mouse X");
         //var mousey : float = Input.GetAxis("Mouse Y");
