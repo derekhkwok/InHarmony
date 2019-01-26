@@ -97,9 +97,9 @@ public class Player: MonoBehaviour {
                 Ray ray = new Ray(navMeshPath.corners[i], (navMeshPath.corners[i + 1] - navMeshPath.corners[i]).normalized);
                 RaycastHit hit;
                 //Debug.Log(Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]));
-                Debug.DrawRay(ray.origin, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * ray.direction * 50f, Color.red, 5f);
+                //Debug.DrawRay(ray.origin, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * ray.direction * 50f, Color.red, 5f);
                 if(Physics.Raycast(ray, out hit, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * 50f)){
-                    Debug.Log(hit.collider.name);
+                    //Debug.Log(hit.collider.name);
                     Room hitRoom = hit.collider.transform.parent.parent.parent.GetComponent<Room>();
                     if(hitRoom != null) {
                         if(!roomList.Contains(hitRoom)){
