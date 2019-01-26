@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -995,8 +995,8 @@ Canvas:
   m_GameObject: {fileID: 1621621442}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1749862271}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1467,55 +1467,55 @@ PrefabInstance:
         type: 3}
       propertyPath: roomGO.Array.data[2]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: d5b05fe760e844281b21161351acfcd1,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[3]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: cd7475539b2cf4b67b91e3e3b5859657,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[4]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: b9883b76bfe26489cbb494cd392184dc,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[5]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: 4705850174b2647a496f7695008b2086,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[6]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: b30d85c9058d3489aae36fbd13efa874,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[7]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: 2ee730907969640d5908928a1c0d401f,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[8]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: d2a4a2972782e4d6c899fe6586eb7403,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[9]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: 6332d4c7c9c844a4da8be8022e554cd7,
         type: 3}
     - target: {fileID: 434776524898821178, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: roomGO.Array.data[10]
       value: 
-      objectReference: {fileID: 5839438898034802024, guid: ef28c144b6ea8a945ae4472ab07a3276,
+      objectReference: {fileID: 5839438898034802024, guid: dfc7ca67d3e9d470893ca14577a243ee,
         type: 3}
     - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
@@ -1780,6 +1780,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385247341974798391, guid: 1b91699f4c8164467bc79c970e7061ec,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385247341974798391, guid: 1b91699f4c8164467bc79c970e7061ec,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b91699f4c8164467bc79c970e7061ec, type: 3}
