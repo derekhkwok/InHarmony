@@ -6,9 +6,21 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField]
     Camera raycastCam;
+    public static InputManager GetInstance() {
+        if(_instance != null) {
+            return _instance;
+        } else {
+            _instance = new InputManager();
+            return _instance;
+        }
+    }
+    private static InputManager _instance;
 
     public Room currentRoom;
 
+    private float speed = 10f;
+    private float x;
+    private float z;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,5 +55,47 @@ public class InputManager : MonoBehaviour
                     break;
             }
         }
+
+        x = Input.GetAxis("Mouse X");
+        z = Input.GetAxis("Mouse Y");
+
+        if(Input.GetMouseButtonDown(0)) {
+            Ray ray = raycastCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit)) {
+                Room temp = hit.collider.GetComponent<Room>();
+                if(temp) {
+                    currentRoom = temp;
+                    currentRoom.SetMoveRoom(true);
+                }
+            }
+        }
+        if(currentRoom != null) {
+            currentRoom.transform.localPosition = new Vector3(currentRoom.transform.localPosition.x + x*2, currentRoom.transform.localPosition.y, currentRoom.transform.localPosition.z + z*2);
+
+        }
+
+        if(Input.GetMouseButtonUp(0)) {
+            currentRoom = null;
+        }
+        //var mousex : float = Input.GetAxis("Mouse X");
+        //var mousey : float = Input.GetAxis("Mouse Y");
+
+        //if(mousex > mousexThreshold) {
+        //    // Code for mouse moving right
+        //} else if(mousex < -mousexThreshold) {
+        //    // Code for mouse moving left
+        //} else {
+        //    // Code for mouse standing still
+        //}
+
+        //if(mousey > mouseyThreshold) {
+        //    // Code for mouse moving forward
+        //} else if(mousey < -mouseyThreshold) {
+        //    // Code for mouse moving backward
+        //} else {
+        //    // Code for mouse standing still
+        //}
+        //}
     }
 }

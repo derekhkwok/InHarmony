@@ -75,10 +75,11 @@ public class Player: MonoBehaviour {
     }
 
     public void RoomUpdated() {
-        int currMovingRoom = 0;
-        //currRoom = InputManager.currentRoom;
-        if(currMovingRoom == roomSourceID || currMovingRoom == currentRoomIn) {
-            gameObject.transform.position = start.position;
+        Room currMovingRoom = InputManager.GetInstance().currentRoom;
+        if(currMovingRoom != null) {
+            if(currMovingRoom.id == roomSourceID || currMovingRoom.id == currentRoomIn) {
+                gameObject.transform.position = start.position;
+            }
         }
         navMeshPath = new NavMeshPath();
         agent.destination = goal.position;
