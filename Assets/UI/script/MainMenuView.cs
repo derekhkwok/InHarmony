@@ -31,25 +31,31 @@ public class MainMenuView : MonoBehaviour
     public GameObject car1;
     public GameObject car2;
 
-    public GameObject creditGO;
+    public GameObject title;
 
     //private BoxCollider navArea;
 
-    public static MainMenuView instance;
+    public static MainMenuView instance { get; private set; }
     public static MainMenuView SummonMenu()
     {
         if( instance == null )
         {
             instance = Instantiate(Resources.Load("MainMenu_VP"), new Vector3( 0f, 7f, 0f ), Quaternion.identity, null ) as MainMenuView;
         }
-
-        instance.creditGO.SetActive(true);
         return instance;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
         currentLv = GameManager.maxClearedLv + 1;
 
         //navArea = GameObject.Find("NavArea").GetComponent<BoxCollider>() ;
@@ -106,6 +112,7 @@ public class MainMenuView : MonoBehaviour
         }
         else
         {
+            title.SetActive(false);
             iTween.MoveTo(parent, iTween.Hash(
                 "z", 0f,
                 "time", 1f,
@@ -280,7 +287,6 @@ public class MainMenuView : MonoBehaviour
         //navArea.enabled = true;
         yield return new WaitForSeconds(0.5f);
         // Enterstage
-        creditGO.SetActive(false);
         StageManager.instance.InitStage(id);
         Destroy(this.gameObject);
     }

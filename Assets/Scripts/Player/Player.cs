@@ -22,6 +22,7 @@ public class Player: MonoBehaviour {
     public int roomTargetID = -1;
     public int currentRoomIn = 1;
 
+    public SpriteRenderer playerFace;
 
     private bool alreadyExcludedRoomList = false;
     private NavMeshPath navMeshPath;
@@ -52,6 +53,22 @@ public class Player: MonoBehaviour {
         if(IsRoomUpdated) {
             RoomUpdated();
             IsRoomUpdated = false;
+        }
+
+        if (excludedRoomID.Contains(currentRoomIn))
+        {
+            playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
+        } else {
+            playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
+
+            for ( int i = 0; i < excludedPersonID.Count; i++)
+            {
+               if ( StageManager.instance.currentPersons[excludedPersonID[i]].currentRoomIn == currentRoomIn)
+                {
+                    playerFace.GetComponent<SpriteRenderer>().sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 6);
+                    break;
+                }
+            }
         }
 
         if (goal != null)
