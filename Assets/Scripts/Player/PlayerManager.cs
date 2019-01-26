@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public Transform goal;
     public List<int> excludedRoommID;
     public List<int> excludedPersonID;
+    public int goalRoomID = -1;
+    public int playerID = 0;
     public bool isPathValid = false;
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
 

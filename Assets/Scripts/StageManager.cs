@@ -76,4 +76,9 @@ public class StageManager : MonoBehaviour
         Debug.LogWarning("[GAME] CONGRATULATIONS!");
         Destroy(currentStage);
     }
+
+    public List<Room> GetCurrentRoom()
+    {
+        return currentRooms;
+    }
 }
