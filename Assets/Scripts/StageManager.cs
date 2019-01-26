@@ -205,9 +205,10 @@ public partial class StageManager : MonoBehaviour
 
         foreach (KeyValuePair<int, Player> p in currentPersons)
             p.Value.RoomUpdated();
-
-        UI_Condition.Instance.CheckingPassConditionUI();
     }
+
+
+
 
     Transform tempParent = null;
 
