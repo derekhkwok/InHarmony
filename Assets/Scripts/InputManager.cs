@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
     float touchDisStart, zoomStart;
 
     [SerializeField]
-    float camSpeed;
+    float camSpeed, fadeSpeed;
     bool camMove, camMoving;
     Vector2 camMoveSpeed;
     Vector2 touchStartPos, touchLastPos;
@@ -97,6 +97,8 @@ public class InputManager : MonoBehaviour
                         if (camMoving) {
                             camMoveSpeed = Input.GetTouch(0).position - touchLastPos;
                         }
+
+                        touchLastPos = Input.GetTouch(0).position;
                     }
                     break;
                 case TouchPhase.Canceled:
@@ -148,10 +150,10 @@ public class InputManager : MonoBehaviour
         }
 
         if (camMoving) {
-            targetCam.transform.Translate(camMoveSpeed.x * camSpeed, 0f, camMoveSpeed.y * camSpeed);
+            targetCam.transform.Translate(camMoveSpeed.x * camSpeed, camMoveSpeed.y * camSpeed, 0f, Space.Self);
             if (!camMove) {
                 float v = camMoveSpeed.magnitude;
-                v = Mathf.Clamp(v - 0.1f, 0f, 5f);
+                v = Mathf.Clamp(v - fadeSpeed, 0f, 20f);
                 camMoveSpeed = camMoveSpeed.normalized * v;
                 if (v <= 0f)
                     camMoving = false;
@@ -180,8 +182,23 @@ public class InputManager : MonoBehaviour
 
                     StageManager.instance.PullRoomSortingToFront(currentRoom.id);
                 }
+            } else {
+                camMove = true;
+                touchStartPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                touchLastPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
         }
+
+        if (camMove) {
+            if (Vector2.Distance(Input.mousePosition, touchStartPos) > 0.5f) {
+                camMoving = true;
+            }
+            if (camMoving) {
+                camMoveSpeed = new Vector2(Input.mousePosition.x, Input.mousePosition.y) - touchLastPos;
+            }
+            touchLastPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        }
+
         if(currentRoom != null) {
             if(Vector3.Distance(Input.mousePosition, lastMousePos) < 1f) {
                 holdRoomTime += Time.deltaTime;
@@ -215,6 +232,7 @@ public class InputManager : MonoBehaviour
                 StageManager.instance.RoomSniping(temp);
                 StageManager.instance.CheckWin();
             }
+            camMove = false;
         }
         //var mousex : float = Input.GetAxis("Mouse X");
         //var mousey : float = Input.GetAxis("Mouse Y");
