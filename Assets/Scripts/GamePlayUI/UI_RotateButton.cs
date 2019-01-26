@@ -6,16 +6,18 @@ public class UI_RotateButton : MonoBehaviour
 {
     public static UI_RotateButton Instance;
     System.Action rotateAction;
+    public Room targetRoom;
 
     void Awake() {
         Instance = this;
         this.gameObject.SetActive(false);
     }
 
-    public void SetRotateAction( System.Action _action, Vector3 mousePoition)
+    public void SetRotateAction( System.Action _action, Vector3 mousePoition, Room inputRoom)
     {
         transform.position = mousePoition;
         rotateAction = _action;
+        targetRoom = inputRoom;
     }
 
     public void onClick()

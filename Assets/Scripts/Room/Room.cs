@@ -70,15 +70,20 @@ public class Room : MonoBehaviour
     }
     */
 
-    public void SetMoveRoom(bool input) {
-        isMoving = input;
-
+    public void UpdateConnectedRoom() {
         foreach (Door d in doors)
             d.Search();
     }
 
+    public void SetMoveRoom(bool input) {
+        isMoving = input;
+
+
+        //do reset person
+    }
+
     public void MoveRoom(Vector2 input) {
-        transform.Translate(new Vector3(input.x, 0f, input.y));
+        transform.position = new Vector3(input.x, 0f, input.y);
     }
 
 

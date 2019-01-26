@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class StageManager : MonoBehaviour
+public partial class StageManager : MonoBehaviour
 {
     [Header("Stage Library")]
     public GameObject[] stagePrefabs;
@@ -16,6 +17,9 @@ public class StageManager : MonoBehaviour
     public GameObject[] roomGO;
 
     private bool inited = false;
+    bool isEnding = false;
+
+    int currentLv = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,21 +31,32 @@ public class StageManager : MonoBehaviour
         }
         isWon = false;
         instance = this;
+        isEnding = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isWon)
+        if (isWon && !isEnding)
         {
             // TODO: check for animation ends
+            //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
+            //if (playerReached.Length == currentPersons.Count)
+            //{
+            //    isEnding = true;
+            //    StartCoroutine(CompleteStage());
+            //}
+
         }
     }
 
     public void InitStage(int stage)
     {
         if (inited) return;
+        currentLv = stage;
+        InputManager.Instance.SetCanDrag(false);
         inited = true;
+        isEnding = false;
 
         currentRooms = new Dictionary<int, Room>();
         currentPersons = new Dictionary<int, Player>();
@@ -94,6 +109,7 @@ public class StageManager : MonoBehaviour
             }
         }
 
+        InputManager.Instance.SetCanDrag(true);
         //foreach (Player _player in currentPersons.Values)
         //{
         //    _player.InitPlayer(currentRooms[_player.roomSourceID].startPos, currentRooms[_player.roomTargetID].startPos);
@@ -102,25 +118,67 @@ public class StageManager : MonoBehaviour
 
     public bool CheckWin()
     {
+        InputManager.Instance.SetCanDrag(false);
         // Check room connect conditions
         foreach (Room r in currentRooms.Values)
         {
-            if (!r.CheckRoomValid()) return false;
+            if (!r.CheckRoomValid())
+            {
+                InputManager.Instance.SetCanDrag(true);
+                return false;
+            }
         }
 
         // TODO: Player connection
+        // Waiting for p.GetPath()
+        foreach (Player p in currentPersons.Values)
+        {
+            bool isValid = true;
+            List<int> myPath = p.GetPath();
 
-        //TODO: shut down inputs and wait for the animation ends
+            if (myPath.Last() != p.roomTargetID) // not reaching target
+            {
+                isValid = false;
+            }
+            else // check if whether it overlap with its enemies
+            {
+                foreach (int otherP in p.excludedPersonID)
+                {
+                    List<int> otherPath = currentPersons[otherP].GetPath();
+                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any())
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!isValid)
+            {
+                InputManager.Instance.SetCanDrag(true);
+                return false;
+            }
+        }
+
         isWon = true;
-        inited = false;
         Debug.LogWarning("[GAME] YOU WIN!");
         return true;
     }
 
-    public void CompleteStage()
+    IEnumerator CompleteStage()
     {
-        Debug.LogWarning("[GAME] CONGRATULATIONS!");
+        Debug.LogWarning("[GAME] STAGE CLEAR! CONGRATULATIONS!");
+        yield return new WaitForSeconds(1f);
+        //TODO: Animation
+    }
 
+    //public List<Room> GetCurrentRoom()
+    //{
+    //    return currentRooms;
+    //}
+
+    void OnClickEndStage() 
+    {
         if (currentRooms != null)
         {
             foreach (Room r in currentRooms.Values)
@@ -135,6 +193,18 @@ public class StageManager : MonoBehaviour
             {
                 Destroy(p);
             }
+        }
+        inited = false;
+        currentRooms = null;
+        currentPersons = null;
+
+        GameManager.RefreshMaxClearedStage(currentLv);
+        MainMenuView.SummonMenu();
+    }
+
+    public void UpdateRoomConnection() {
+        foreach(KeyValuePair<int, Room> r in currentRooms) {
+            r.Value.UpdateConnectedRoom();
         }
     }
 
