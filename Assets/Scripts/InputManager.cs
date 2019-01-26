@@ -12,13 +12,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     Camera raycastCam;
-    public static InputManager GetInstance() {
-        if(_instance != null) {
-            return _instance;
-        } else {
-            _instance = new InputManager();
-            return _instance;
-        }
+    public static InputManager Instance{
+        get { return _instance;}
     }
     private static InputManager _instance;
     private bool holdRoom = false;
@@ -29,6 +24,7 @@ public class InputManager : MonoBehaviour
     private float speed = 10f;
     private float x;
     private float z;
+<<<<<<< HEAD
 
     Vector3 lastMousePos;
 
@@ -38,7 +34,17 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         
+=======
+   
+    void Awake(){
+        if(_instance != null && _instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            _instance = this;
+        }
+>>>>>>> 75757f32a71d53d327d46a2d5c62aee4b477b6db
     }
+
 
     // Update is called once per frame
     void Update()
@@ -106,6 +112,7 @@ public class InputManager : MonoBehaviour
             }
         }
         if(currentRoom != null) {
+<<<<<<< HEAD
             if(Vector3.Distance(Input.mousePosition, lastMousePos) < 1f) {
                 holdRoomTime += Time.deltaTime;
                 if (holdRoomTime > 0.65f) {
@@ -123,6 +130,9 @@ public class InputManager : MonoBehaviour
                 holdRoomTime = 0f;
             }
             lastMousePos = Input.mousePosition;
+=======
+            currentRoom.transform.localPosition = new Vector3(currentRoom.transform.localPosition.x + x/2, currentRoom.transform.localPosition.y, currentRoom.transform.localPosition.z + z/2);
+>>>>>>> 75757f32a71d53d327d46a2d5c62aee4b477b6db
 
             Vector3 camPos = raycastCam.ScreenToWorldPoint(Input.mousePosition);
             currentRoom.transform.position = new Vector3(camPos.x, currentRoom.transform.position.y, camPos.z);
