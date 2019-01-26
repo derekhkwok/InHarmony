@@ -22,6 +22,7 @@ public class Room : MonoBehaviour
     public Transform endPos;
 
     NavMeshSourceTag navTag;
+    NavMeshObstacle[] walls;
 
     public List<Room> GetConnectedRooms() {
         List<Room> returnList = new List<Room>();
@@ -89,7 +90,9 @@ public class Room : MonoBehaviour
     }
 
     public void SetNavTag(bool input) {
-        navTag.enabled = input;
+//        navTag.enabled = input;
+        foreach (NavMeshObstacle n in walls)
+            n.enabled = input;
     }
 
 
@@ -101,6 +104,7 @@ public class Room : MonoBehaviour
             d.SetRoom(this);
 
         navTag = GetComponentInChildren<NavMeshSourceTag>();
+        walls = GetComponentsInChildren<NavMeshObstacle>();
     }
 
     public void SetUpRoomsCondition( string _case, string _target )
@@ -119,6 +123,13 @@ public class Room : MonoBehaviour
                 else
                     minNumConnectedRoom = 2;
                 break;
+        }
+    }
+
+    private void OnTriggerStay(Collider col) {
+        Player p = col.GetComponent<Player>();
+        if (p != null && this != InputManager.Instance.currentRoom && p.agent.enabled) {
+            p.SetCurrentRoomIn(id);
         }
     }
 

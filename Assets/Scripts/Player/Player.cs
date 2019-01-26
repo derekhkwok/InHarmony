@@ -34,6 +34,8 @@ public class Player: MonoBehaviour {
     private NavMeshHit hit;
     private float time;
 
+    Coroutine peparePath;
+
     void Start(){
         //navMeshPath = new NavMeshPath();
         //gameObject.transform.position = start.position;
@@ -106,6 +108,10 @@ public class Player: MonoBehaviour {
         //if starting room is disconnected; stand idlely
     }
 
+    public void SetCurrentRoomIn(int input) {
+        currentRoomIn = input;
+    }
+
     public void Win()
     {
         //win
@@ -120,56 +126,66 @@ public class Player: MonoBehaviour {
     }
 
     public void RoomUpdated() {
-        if(!agent.enabled) agent.enabled = true;
+        roomList = new List<int>();
+//        if(!agent.enabled) agent.enabled = true;
         Room currMovingRoom = InputManager.Instance.currentRoom;
         if(currMovingRoom != null) {
             if(currMovingRoom.id == currentRoomIn) {
                 gameObject.transform.position = start.position;
             } else if(currMovingRoom.id == roomSourceID) {
-                gameObject.transform.localPosition = start.localPosition;
+                gameObject.transform.position = start.position;
             }
         }
+        if (!agent.enabled)
+            return;
+
         navMeshPath = new NavMeshPath();
         agent.destination = goal == null ? start.position : goal.position;
         navMeshPath = agent.path;
-        //Debug.Log((NavMesh.SamplePosition(gameObject.transform.position, out hit, 10f, 1)));
-        //Debug.Log(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath));
-        //Debug.Log(navMeshPath.status);
+        
+        Debug.Log((NavMesh.SamplePosition(gameObject.transform.position, out hit, 10f, 1)));
+        Debug.Log(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath));
+        Debug.Log(navMeshPath.status);
 
-        if(((NavMesh.SamplePosition(gameObject.transform.position, out hit, 10f, 1)) ||
+        if (peparePath != null)
+            StopCoroutine(peparePath);
+        peparePath = StartCoroutine(PeparePath());
+
+    }
+
+    IEnumerator PeparePath() {
+        while (agent.pathPending)
+            yield return 0;
+
+        if (((NavMesh.SamplePosition(gameObject.transform.position, out hit, 10f, 1)) ||
             NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath)) &&
             (navMeshPath.status == NavMeshPathStatus.PathComplete)) {
             //Debug.Log(navMeshPath.status);
             agent.isStopped = false;
-            for(int i = 0; i < navMeshPath.corners.Length - 1; i++) {
+            for (int i = 0; i < navMeshPath.corners.Length - 1; i++) {
                 Ray ray = new Ray(navMeshPath.corners[i], (navMeshPath.corners[i + 1] - navMeshPath.corners[i]).normalized);
                 RaycastHit hit;
                 //Debug.Log(Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]));
-                Debug.DrawRay(ray.origin, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * ray.direction * 50f, Color.red, 5f);
-                if(Physics.Raycast(ray, out hit, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * 50f)){
+                Debug.DrawRay(ray.origin, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * ray.direction, Color.red, 5f);
+                if (Physics.Raycast(ray, out hit, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]))) {
                     Debug.Log(hit.collider.name);
                     Room hitRoom = hit.collider.transform.GetComponent<Room>();
-                    if(hitRoom != null) {
-                        if(!roomList.Contains(hitRoom.id)){
+                    if (hitRoom != null) {
+                        if (!roomList.Contains(hitRoom.id)) {
                             roomList.Add(hitRoom.id);
                         }
                     }
                 }
             }
 
-            SFXManager.instance.PlaySFX( SFXManager.SFX.Footstep01 );
+            SFXManager.instance.PlaySFX(SFXManager.SFX.Footstep01);
             //Debug.Log("POSSIBLE");
         } else {
             //Debug.Log("NOPE POSSIBLE");
             agent.isStopped = true;
         }
-        //if(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath)) {
-        //    Debug.Log(navMeshPath.status);
-        //    foreach(Vector3 v in navMeshPath.corners)
-        //        Debug.DrawRay(v, Vector3.forward, Color.red, 5f);
-        //}
-
     }
+
     //Called on OnRoomEnter trigger
     public void IsExcludedRoom(int roomID) {
         if(!alreadyExcludedRoomList && excludedRoomID.Contains(roomID)) {
@@ -191,6 +207,7 @@ public class Player: MonoBehaviour {
     {
         playerID = _playerID;
         roomSourceID = _belongRoomID;
+        currentRoomIn = roomSourceID;
     }
 
     public void SetUpPlayerCondition( string _case, string _target )
@@ -211,15 +228,22 @@ public class Player: MonoBehaviour {
                     excludedPersonID.Add(int.Parse(_target.Replace("p", "")));
                 break;
         }
+        if(StageManager.instance.currentRooms.ContainsKey(roomTargetID))
+            goal = StageManager.instance.currentRooms[roomTargetID].endPos;
     }
     //Called 
     public List<int> GetPath() {
         return roomList;
     }
 
+    Transform playerRoot = null;
     public void SetAgent(int id, bool input) {
-        if(currentRoomIn == id) {
+        if (playerRoot == null)
+            playerRoot = transform.parent;
+        if (currentRoomIn == id) {
             agent.enabled = input;
+
+            playerRoot.parent = input ? null : StageManager.instance.currentRooms[id].transform;
         }
     }
 }

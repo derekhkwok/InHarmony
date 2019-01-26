@@ -228,7 +228,7 @@ public partial class StageManager : MonoBehaviour
     public void RoomSniping(Room draggedRoom) {
         foreach(Door d in draggedRoom.doors) {
             if (d.connectedRoom != null) {
-                List<Room> roomNeedToMove = d.connectedRoom.SearchConnectedRooms(draggedRoom);
+                List<Room> roomNeedToMove = d.connectedRoom.SearchConnectedRooms(draggedRoom, new List<Room>() { draggedRoom });
                 roomNeedToMove.Add(d.connectedRoom);
                 if (tempParent == null)
                     tempParent = new GameObject().GetComponent<Transform>();

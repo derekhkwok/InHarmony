@@ -119,13 +119,12 @@ public class InputManager : MonoBehaviour
                         currentRoom.SetMoveRoom(false);
                         Room temp = currentRoom;
                         currentRoom = null;
+                        StageManager.instance.SetPlayerAgent(temp.id, true);
                         StageManager.instance.UpdateRoomConnection();
                         StageManager.instance.RoomSniping(temp);
                         temp.SetNavTag(true);
-                        StageManager.instance.SetPlayerAgent(temp.id, true);
                         currentRoom = null;
 
-                        StageManager.instance.UpdateRoomConnection();
                         Invoke("DelayChecking", 0.5f);
                     }
                     camMove = false;
@@ -251,10 +250,10 @@ public class InputManager : MonoBehaviour
                 currentRoom.SetMoveRoom(false);
                 Room temp = currentRoom;
                 currentRoom = null;
-                StageManager.instance.UpdateRoomConnection();
                 temp.SetNavTag(true);
-                StageManager.instance.RoomSniping(temp);
                 StageManager.instance.SetPlayerAgent(temp.id, true);
+                StageManager.instance.UpdateRoomConnection();
+                StageManager.instance.RoomSniping(temp);
                 Invoke("DelayChecking", 0.5f);
             }
             camMove = false;
