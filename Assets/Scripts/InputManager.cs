@@ -30,6 +30,13 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     float zoomMin, zoomMax;
     float touchDisStart, zoomStart;
+
+    [SerializeField]
+    float camSpeed;
+    bool camMove, camMoving;
+    Vector2 camMoveSpeed;
+    Vector2 touchStartPos, touchLastPos;
+    Vector3 camLastPos;
    
     void Awake(){
         if(_instance != null && _instance != this) {
@@ -56,22 +63,41 @@ public class InputManager : MonoBehaviour
                         if (temp) {
                             currentRoom = temp;
                             currentRoom.SetMoveRoom(true);
+
+                            StageManager.instance.UpdateRoomConnection();
+
                             holdRoomTime = 0f;
                             holdRoom = false;
                         }
+                    } else {
+                        camMove = true;
+                        touchStartPos = Input.GetTouch(0).position;
+                        touchLastPos = Input.GetTouch(0).position;
                     }
                     break;
                 case TouchPhase.Moved:
-                    holdRoom = false;
-                    holdRoomTime = 0f;
-                    currentRoom.MoveRoom(targetCam.ScreenToWorldPoint(Input.GetTouch(0).position));
+                    if (!camMove) {
+                        holdRoom = false;
+                        holdRoomTime = 0f;
+                        currentRoom.MoveRoom(targetCam.ScreenToWorldPoint(Input.GetTouch(0).position));
+                    } else {
+                        if(Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
+                            camMoving = true;
+                        }
+                        if (camMoving) {
+                            camMoveSpeed = Input.GetTouch(0).position - touchLastPos;
+                        }
+                    }
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
                     if(currentRoom != null && holdRoom == false) {
                         currentRoom.SetMoveRoom(false);
                         currentRoom = null;
+
+                        StageManager.instance.UpdateRoomConnection();
                     }
+                    camMove = false;
                     break;
 
                 case TouchPhase.Stationary:
@@ -84,10 +110,10 @@ public class InputManager : MonoBehaviour
                         {
                             UI_RotateButton.Instance.gameObject.SetActive(true);
                             UI_RotateButton.Instance.SetRotateAction( ()=> {
-                                if (currentRoom != null)
-                                    currentRoom.transform.eulerAngles =
-                                        new Vector3(0f, 90f, 0f) + currentRoom.transform.eulerAngles;
-                            }, Input.GetTouch(0).position);
+                                if (UI_RotateButton.Instance.targetRoom != null)
+                                    UI_RotateButton.Instance.targetRoom.transform.eulerAngles =
+                                        new Vector3(0f, 90f, 0f) + UI_RotateButton.Instance.targetRoom.transform.eulerAngles;
+                            }, Input.GetTouch(0).position, currentRoom);
                         }
                         holdRoom = true;
                     }
@@ -101,12 +127,23 @@ public class InputManager : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     float touchDis = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
-                    targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDis / touchDisStart, zoomMin, zoomMax);
+                    targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDisStart / touchDis, zoomMin, zoomMax);
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
                     
                     break;
+            }
+        }
+
+        if (camMoving) {
+            targetCam.transform.Translate(camMoveSpeed.x * camSpeed, 0f, camMoveSpeed.y * camSpeed);
+            if (!camMove) {
+                float v = camMoveSpeed.magnitude;
+                v = Mathf.Clamp(v - 0.1f, 0f, 5f);
+                camMoveSpeed = camMoveSpeed.normalized * v;
+                if (v <= 0f)
+                    camMoving = false;
             }
         }
 
@@ -116,8 +153,7 @@ public class InputManager : MonoBehaviour
 
 
 
-
-        if(Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0)) {
             Ray ray = targetCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit)) {
@@ -125,6 +161,7 @@ public class InputManager : MonoBehaviour
                 if(temp) {
                     currentRoom = temp;
                     currentRoom.SetMoveRoom(true);
+                    StageManager.instance.UpdateRoomConnection();
                     holdRoomTime = 0f;
                     holdRoom = false;
                     lastMousePos = Input.mousePosition;
@@ -138,10 +175,10 @@ public class InputManager : MonoBehaviour
                     if (!holdRoom) {
                         UI_RotateButton.Instance.gameObject.SetActive(true);
                         UI_RotateButton.Instance.SetRotateAction(() => {
-                            if (currentRoom != null)
-                                currentRoom.transform.eulerAngles =
-                                    new Vector3(0f, 90f, 0f) + currentRoom.transform.eulerAngles;
-                        }, currentRoom.transform.position);
+                            if (UI_RotateButton.Instance.targetRoom != null)
+                                UI_RotateButton.Instance.targetRoom.transform.eulerAngles =
+                                    new Vector3(0f, 90f, 0f) + UI_RotateButton.Instance.targetRoom.transform.eulerAngles;
+                        }, currentRoom.transform.position, currentRoom);
                     }
                     holdRoom = true;
                 }
@@ -159,6 +196,7 @@ public class InputManager : MonoBehaviour
             if (currentRoom != null) {
                 currentRoom.SetMoveRoom(false);
                 currentRoom = null;
+                StageManager.instance.UpdateRoomConnection();
             }
         }
         //var mousex : float = Input.GetAxis("Mouse X");

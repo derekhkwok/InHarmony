@@ -43,5 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f2c8ab212d7c24381d220723fe1aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastCam: {fileID: 0}
-  currentRoom: {fileID: 0}
+  canDrag: 0
+  targetCam: {fileID: 0}
+  zoomMin: 4
+  zoomMax: 10
+  camSpeed: 1

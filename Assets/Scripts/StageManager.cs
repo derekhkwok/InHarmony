@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class StageManager : MonoBehaviour
+public partial class StageManager : MonoBehaviour
 {
     [Header("Stage Library")]
     public GameObject[] stagePrefabs;
@@ -35,20 +35,20 @@ public class StageManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (isWon && !isEnding)
-        {
-            // TODO: check for animation ends
-            //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
-            //if (playerReached.Length == currentPersons.Count)
-            //{
-            //    isEnding = true;
-            //    StartCoroutine(CompleteStage());
-            //}
+    //void Update()
+    //{
+    //    if (isWon && !isEnding)
+    //    {
+    //        // TODO: check for animation ends
+    //        //Player[] playerReached = currentPersons.Select((KeyValuePair<int, Player> arg) => arg.Value.AniHaveReachedDest()).ToArray();
+    //        //if (playerReached.Length == currentPersons.Count)
+    //        //{
+    //        //    isEnding = true;
+    //        //    StartCoroutine(CompleteStage());
+    //        //}
 
-        }
-    }
+    //    }
+    //}
 
     public void InitStage(int stage)
     {
@@ -73,6 +73,7 @@ public class StageManager : MonoBehaviour
             tempRoom.transform.position = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-3f, 3f));
             tempRoom.transform.eulerAngles = new Vector3(0f, Random.Range(0, 4) * 90f, 0f);
             Room _tempRoom = tempRoom.GetComponent<Room>();
+            _tempRoom.SetID( tmpRoomID );
             currentRooms.Add(tmpRoomID, _tempRoom);
 
             if (tmpPersonID > 0)
@@ -133,7 +134,7 @@ public class StageManager : MonoBehaviour
         foreach (Player p in currentPersons.Values)
         {
             bool isValid = true;
-            List<int> myPath = new List<int>(); //p.GetPath();
+            List<int> myPath = p.GetPath();
 
             if (myPath.Last() != p.roomTargetID) // not reaching target
             {
@@ -143,8 +144,8 @@ public class StageManager : MonoBehaviour
             {
                 foreach (int otherP in p.excludedPersonID)
                 {
-                    Player otherPerson = currentPersons[otherP];
-                    if (myPath.Take(myPath.Count-1).Intersect(/*otherPerson.GetPath().Take()*/ new List<int>()).Any())
+                    List<int> otherPath = currentPersons[otherP].GetPath();
+                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any())
                     {
                         isValid = false;
                         break;
@@ -159,10 +160,9 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        //TODO: shut down inputs and wait for the animation ends
-        //done
         isWon = true;
         Debug.LogWarning("[GAME] YOU WIN!");
+        StartCoroutine(CompleteStage());
         return true;
     }
 
@@ -170,6 +170,11 @@ public class StageManager : MonoBehaviour
     {
         Debug.LogWarning("[GAME] STAGE CLEAR! CONGRATULATIONS!");
         yield return new WaitForSeconds(1f);
+        //TODO: Animation
+    }
+
+    void OnClickEndStage() 
+    {
         if (currentRooms != null)
         {
             foreach (Room r in currentRooms.Values)
@@ -193,8 +198,11 @@ public class StageManager : MonoBehaviour
         MainMenuView.SummonMenu();
     }
 
-    //public List<Room> GetCurrentRoom()
-    //{
-    //    return currentRooms;
-    //}
+    public void UpdateRoomConnection() {
+        foreach(KeyValuePair<int, Room> r in currentRooms) {
+            r.Value.UpdateConnectedRoom();
+        }
+        foreach (KeyValuePair<int, Player> p in currentPersons)
+            p.Value.RoomUpdated();
+    }
 }
