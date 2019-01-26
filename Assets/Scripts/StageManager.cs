@@ -136,7 +136,7 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if (myPath.Last() != p.roomTargetID) // not reaching target
+            if (myPath.Count <= 0 || myPath.Last() != p.roomTargetID) // not reaching target
             {
                 isValid = false;
             }
@@ -161,6 +161,8 @@ public partial class StageManager : MonoBehaviour
         }
 
         isWon = true;
+
+        UI_Condition.Instance.WinDestoryObject();
         Debug.LogWarning("[GAME] YOU WIN!");
         StartCoroutine(CompleteStage());
         return true;
@@ -195,18 +197,18 @@ public partial class StageManager : MonoBehaviour
         currentPersons = null;
 
         GameManager.RefreshMaxClearedStage(currentLv);
-        MainMenuView.SummonMenu();
+        Congret_Prefab congret = Congret_Prefab.Create(() => { MainMenuView.SummonMenu(); });
     }
 
     public void UpdateRoomConnection() {
         foreach(KeyValuePair<int, Room> r in currentRooms) {
             r.Value.UpdateConnectedRoom();
         }
+
         foreach (KeyValuePair<int, Player> p in currentPersons)
             p.Value.RoomUpdated();
 
-
-
+        UI_Condition.Instance.CheckingPassConditionUI();
     }
 
     Transform tempParent = null;

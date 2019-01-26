@@ -10,7 +10,7 @@ public partial class StageManager : MonoBehaviour
     // c = connect
     // x = not connect
     // > = go to
-    public bool CheckCondition_Room(string condString)
+    public bool CheckCondition(string condString)
     {
         if (string.IsNullOrEmpty(condString)) return false;
 
@@ -47,7 +47,7 @@ public partial class StageManager : MonoBehaviour
                         List<int> otherPath = currentPersons[second.Item2].GetPath();
                         return !myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any();
                     case ">":
-                        return currentPersons[ID].GetPath().Last() == second.Item2;
+                        return currentPersons[ID].GetPath().Count > 0 && currentPersons[ID].GetPath().Last() == second.Item2;
                     default:
                         return false;
                 }
