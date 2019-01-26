@@ -28,13 +28,17 @@ public class MainMenuView : MonoBehaviour
 
     public GameObject parent;
 
+    public GameObject car1;
+    public GameObject car2;
+
+    //private BoxCollider navArea;
 
     public static MainMenuView instance;
     public static MainMenuView SummonMenu()
     {
         if( instance == null )
         {
-            instance = Instantiate(Resources.Load("MainMenu_VP"), new Vector3( 0f, 2f, 0f ), Quaternion.identity, null ) as MainMenuView;
+            instance = Instantiate(Resources.Load("MainMenu_VP"), new Vector3( 0f, 7f, 0f ), Quaternion.identity, null ) as MainMenuView;
         }
         return instance;
     }
@@ -42,8 +46,31 @@ public class MainMenuView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //navArea = GameObject.Find("NavArea").GetComponent<BoxCollider>() ;
+        //navArea.enabled = false ;
+
+        SFXManager.instance.PlaySFX(SFXManager.SFX.WELCOME);
+
+        Invoke("MoveCar1", UnityEngine.Random.Range(2f, 6f));
+        Invoke("MoveCar2", UnityEngine.Random.Range(2f, 6f));
+
         parent.transform.localPosition = new Vector3(0f, 0f, -10f);
         tileOriScale = tileSprs[0].transform.localScale;
+
+        iTween.MoveTo(car1, iTween.Hash(
+            "x", -11f,
+            "time", UnityEngine.Random.Range( 5f, 8f ),
+            "easetype", iTween.EaseType.linear,
+            "islocal", true
+            ));
+
+        iTween.MoveTo(car2, iTween.Hash(
+            "x", 11f,
+            "time", UnityEngine.Random.Range(6f, 9f),
+            "easetype", iTween.EaseType.linear,
+            "islocal", true
+            ));
+
         for (int i = 0; i < currentLv - 1; i++)
         {
             tileSprs[i].transform.localPosition = new Vector3(tileSprs[i].transform.localPosition.x,
@@ -81,6 +108,32 @@ public class MainMenuView : MonoBehaviour
                 "oncompletetarget", gameObject
                 ));
         }
+    }
+
+    public void MoveCar1()
+    {
+        car1.transform.localPosition = new Vector3(11f, car1.transform.localPosition.y, car1.transform.localPosition.z);
+        float time = UnityEngine.Random.Range(5f, 8f);
+        iTween.MoveTo(car1, iTween.Hash(
+            "x", -11f,
+            "time", time,
+            "easetype", iTween.EaseType.linear,
+            "islocal", true
+        ));
+        Invoke("MoveCar1", time + UnityEngine.Random.Range(3f, 6f));
+    }
+
+    public void MoveCar2()
+    {
+        car2.transform.localPosition = new Vector3(-11f, car2.transform.localPosition.y, car2.transform.localPosition.z);
+        float time = UnityEngine.Random.Range(6f, 9f);
+        iTween.MoveTo(car2, iTween.Hash(
+            "x", 11f,
+            "time", time,
+            "easetype", iTween.EaseType.linear,
+            "islocal", true
+        ));
+        Invoke("MoveCar2", time + UnityEngine.Random.Range(4f, 7f));
     }
 
     public void DropTile()
@@ -210,8 +263,10 @@ public class MainMenuView : MonoBehaviour
             "islocal", true,
             "easetype", iTween.EaseType.easeInCubic
             ));
+        //navArea.enabled = true;
         yield return new WaitForSeconds(0.5f);
         // Enterstage
+        StageManager.instance.InitStage(id);
 
         Destroy(this.gameObject);
     }
