@@ -205,6 +205,8 @@ public class StageManager : MonoBehaviour
         foreach(KeyValuePair<int, Room> r in currentRooms) {
             r.Value.UpdateConnectedRoom();
         }
+        foreach (KeyValuePair<int, Player> p in currentPersons)
+            p.Value.RoomUpdated();
     }
 
     //public List<Room> GetCurrentRoom()

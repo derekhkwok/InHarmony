@@ -30,6 +30,13 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     float zoomMin, zoomMax;
     float touchDisStart, zoomStart;
+
+    [SerializeField]
+    float camSpeed;
+    bool camMove, camMoving;
+    Vector2 camMoveSpeed;
+    Vector2 touchStartPos, touchLastPos;
+    Vector3 camLastPos;
    
     void Awake(){
         if(_instance != null && _instance != this) {
@@ -62,12 +69,25 @@ public class InputManager : MonoBehaviour
                             holdRoomTime = 0f;
                             holdRoom = false;
                         }
+                    } else {
+                        camMove = true;
+                        touchStartPos = Input.GetTouch(0).position;
+                        touchLastPos = Input.GetTouch(0).position;
                     }
                     break;
                 case TouchPhase.Moved:
-                    holdRoom = false;
-                    holdRoomTime = 0f;
-                    currentRoom.MoveRoom(targetCam.ScreenToWorldPoint(Input.GetTouch(0).position));
+                    if (!camMove) {
+                        holdRoom = false;
+                        holdRoomTime = 0f;
+                        currentRoom.MoveRoom(targetCam.ScreenToWorldPoint(Input.GetTouch(0).position));
+                    } else {
+                        if(Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
+                            camMoving = true;
+                        }
+                        if (camMoving) {
+                            camMoveSpeed = Input.GetTouch(0).position - touchLastPos;
+                        }
+                    }
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
@@ -77,6 +97,7 @@ public class InputManager : MonoBehaviour
 
                         StageManager.instance.UpdateRoomConnection();
                     }
+                    camMove = false;
                     break;
 
                 case TouchPhase.Stationary:
@@ -106,12 +127,23 @@ public class InputManager : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     float touchDis = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
-                    targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDis / touchDisStart, zoomMin, zoomMax);
+                    targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDisStart / touchDis, zoomMin, zoomMax);
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
                     
                     break;
+            }
+        }
+
+        if (camMoving) {
+            targetCam.transform.Translate(camMoveSpeed.x, 0f, camMoveSpeed.y);
+            if (!camMove) {
+                float v = camMoveSpeed.magnitude;
+                v = Mathf.Clamp(v - 0.1f, 0f, 5f);
+                camMoveSpeed = camMoveSpeed.normalized * v;
+                if (v <= 0f)
+                    camMoving = false;
             }
         }
 
@@ -121,8 +153,7 @@ public class InputManager : MonoBehaviour
 
 
 
-
-        if(Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0)) {
             Ray ray = targetCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit)) {
