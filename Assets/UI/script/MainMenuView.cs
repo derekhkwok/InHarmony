@@ -46,7 +46,7 @@ public class MainMenuView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //currentLv = GameManager.maxClearedLv;
+        currentLv = GameManager.maxClearedLv;
 
         //navArea = GameObject.Find("NavArea").GetComponent<BoxCollider>() ;
         //navArea.enabled = false ;
