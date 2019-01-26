@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class StageManager : MonoBehaviour
+public partial class StageManager : MonoBehaviour
 {
     [Header("Stage Library")]
     public GameObject[] stagePrefabs;
