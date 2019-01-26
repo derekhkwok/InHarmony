@@ -115,7 +115,7 @@ public class Player: MonoBehaviour {
         goal = _goal;
         navMeshPath = new NavMeshPath();
         gameObject.transform.position = start.position;
-        RoomUpdated();
+        //RoomUpdated();
     }
 
     public void SetupPlayerIDAndRoomID( int _playerID, int _belongRoomID)

@@ -15,6 +15,8 @@ public class InputManager : MonoBehaviour
         }
     }
     private static InputManager _instance;
+    private bool holdRoom = false;
+    private float holdRoomTime = 0f;
 
     public Room currentRoom;
 
@@ -44,13 +46,31 @@ public class InputManager : MonoBehaviour
                     }
                     break;
                 case TouchPhase.Moved:
+                    holdRoom = false;
+                    holdRoomTime = 0f;
                     currentRoom.MoveRoom(Input.GetTouch(0).deltaPosition);
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
-                    if(currentRoom != null) {
+                    if(currentRoom != null && holdRoom == false) {
                         currentRoom.SetMoveRoom(false);
                         currentRoom = null;
+                    }
+                    break;
+
+                case TouchPhase.Stationary:
+                    holdRoomTime += Time.deltaTime;
+                    if (holdRoomTime > 0.65f) {
+                        if ( !holdRoom)
+                        {
+                            UI_RotateButton.Instance.gameObject.SetActive(true);
+                            UI_RotateButton.Instance.SetRotateAction( ()=> {
+                                if (currentRoom != null)
+                                    currentRoom.transform.eulerAngles =
+                                        new Vector3(0f, 90f, 0f) + currentRoom.transform.eulerAngles;
+                            }, Input.GetTouch(0).position);
+                        }
+                        holdRoom = true;
                     }
                     break;
             }
