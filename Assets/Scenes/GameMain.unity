@@ -644,7 +644,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 849937381}
-  - component: {fileID: 849937379}
   - component: {fileID: 849937378}
   m_Layer: 0
   m_Name: NavArea
@@ -667,19 +666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 849937381}
   m_Size: {x: 100, y: 100, z: 100}
---- !u!65 &849937379
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 849937377}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &849937381
 Transform:
   m_ObjectHideFlags: 0
@@ -1522,6 +1508,16 @@ PrefabInstance:
       propertyPath: targetCam
       value: 
       objectReference: {fileID: 1749862271}
+    - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: zoomMin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: zoomMax
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dbd74291d0434ef7a5a9c64c2668efe, type: 3}
 --- !u!1001 &1567027672676559549
