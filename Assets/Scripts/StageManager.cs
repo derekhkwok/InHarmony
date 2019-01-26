@@ -189,7 +189,7 @@ public class StageManager : MonoBehaviour
         currentRooms = null;
         currentPersons = null;
 
-        GameManager.EndStage(currentLv);
+        GameManager.RefreshMaxClearedStage(currentLv);
         MainMenuView.SummonMenu();
     }
 
