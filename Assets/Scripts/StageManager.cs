@@ -58,6 +58,7 @@ public class StageManager : MonoBehaviour
             tempRoom.transform.position = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-3f, 3f));
             tempRoom.transform.eulerAngles = new Vector3(0f, Random.Range(0, 4) * 90f, 0f);
             Room _tempRoom = tempRoom.GetComponent<Room>();
+            _tempRoom.SetID( tmpRoomID );
             currentRooms.Add(tmpRoomID, _tempRoom);
 
             if (tmpPersonID > 0)
