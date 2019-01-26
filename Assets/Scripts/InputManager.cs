@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     }
 
     [SerializeField]
-    Camera raycastCam;
+    Camera targetCam;
     public static InputManager Instance{
         get { return _instance;}
     }
@@ -26,6 +26,10 @@ public class InputManager : MonoBehaviour
     private float z;
 
     Vector3 lastMousePos;
+
+    [SerializeField]
+    float zoomMin, zoomMax;
+    float touchDisStart, zoomStart;
    
     void Awake(){
         if(_instance != null && _instance != this) {
@@ -39,13 +43,13 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount > 0) {
+        if(Input.touchCount == 1) {
             switch (Input.GetTouch(0).phase) {
                 case TouchPhase.Began:
                     if (!canDrag)
                         return;
 
-                    Ray ray = raycastCam.ScreenPointToRay(Input.GetTouch(0).position);
+                    Ray ray = targetCam.ScreenPointToRay(Input.GetTouch(0).position);
                     RaycastHit hit;
                     if(Physics.Raycast(ray, out hit)) {
                         Room temp = hit.collider.GetComponent<Room>();
@@ -87,10 +91,32 @@ public class InputManager : MonoBehaviour
                     }
                     break;
             }
+        }else if(Input.touchCount > 1 && currentRoom == null) {
+            switch (Input.GetTouch(1).phase) {
+                case TouchPhase.Began:
+                    touchDisStart = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                    zoomStart = targetCam.orthographicSize;
+                    break;
+                case TouchPhase.Moved:
+                    float touchDis = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                    targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDis / touchDisStart, zoomMin, zoomMax);
+                    break;
+                case TouchPhase.Canceled:
+                case TouchPhase.Ended:
+                    
+                    break;
+            }
         }
 
+
+
+
+
+
+
+
         if(Input.GetMouseButtonDown(0)) {
-            Ray ray = raycastCam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = targetCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit)) {
                 Room temp = hit.collider.GetComponent<Room>();
@@ -120,7 +146,7 @@ public class InputManager : MonoBehaviour
             }
             lastMousePos = Input.mousePosition;
 
-            Vector3 camPos = raycastCam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 camPos = targetCam.ScreenToWorldPoint(Input.mousePosition);
             currentRoom.transform.position = new Vector3(camPos.x, currentRoom.transform.position.y, camPos.z);
         }
 
