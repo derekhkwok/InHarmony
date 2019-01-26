@@ -9,9 +9,9 @@ public class Player: MonoBehaviour {
     public Transform start;
     public Transform goal;
     public List<int> excludedRoomID;
-    public List<int> excludedPersonID; //??
+    public List<int> excludedPersonID;
     public bool isRoomPathValid = true;
-    public bool isPersonPathValid = true;
+    public List<Room> roomList = new List<Room>();
     public NavMeshAgent agent;
     public bool IsRoomUpdated = false;
 
@@ -24,7 +24,6 @@ public class Player: MonoBehaviour {
 
 
     private bool alreadyExcludedRoomList = false;
-    private bool alreadyExcludedPersonList = false;
     private NavMeshPath navMeshPath;
     private NavMeshHit hit;
 
@@ -94,12 +93,32 @@ public class Player: MonoBehaviour {
             (navMeshPath.status == NavMeshPathStatus.PathComplete)) {
             //Debug.Log(navMeshPath.status);
             agent.isStopped = false;
+            for(int i = 0; i < navMeshPath.corners.Length - 1; i++) {
+                Ray ray = new Ray(navMeshPath.corners[i], (navMeshPath.corners[i + 1] - navMeshPath.corners[i]).normalized);
+                RaycastHit hit;
+                //Debug.Log(Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]));
+                //Debug.DrawRay(ray.origin, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * ray.direction * 50f, Color.red, 5f);
+                if(Physics.Raycast(ray, out hit, Vector3.Distance(navMeshPath.corners[i + 1], navMeshPath.corners[i]) * 50f)){
+                    //Debug.Log(hit.collider.name);
+                    Room hitRoom = hit.collider.transform.parent.parent.parent.GetComponent<Room>();
+                    if(hitRoom != null) {
+                        if(!roomList.Contains(hitRoom)){
+                            roomList.Add(hitRoom);
+                        }
+                    }
+                }
+            }
 
             //Debug.Log("POSSIBLE");
         } else {
             //Debug.Log("NOPE POSSIBLE");
             agent.isStopped = true;
         }
+        //if(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath)) {
+        //    Debug.Log(navMeshPath.status);
+        //    foreach(Vector3 v in navMeshPath.corners)
+        //        Debug.DrawRay(v, Vector3.forward, Color.red, 5f);
+        //}
 
     }
     //Called on OnRoomEnter trigger
@@ -145,4 +164,7 @@ public class Player: MonoBehaviour {
         }
     }
     //Called 
+    public List<Room> GetPath() {
+        return roomList;
+    }
 }
