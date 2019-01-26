@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        MainMenuView.SummonMenu();
     }
 
     public void StartStage(int stage)

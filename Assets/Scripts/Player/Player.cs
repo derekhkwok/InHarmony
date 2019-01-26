@@ -57,8 +57,10 @@ public class Player: MonoBehaviour {
 
         if (excludedRoomID.Contains(currentRoomIn))
         {
-            playerFace.GetComponent<SpriteRenderer>().sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
+            playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
         } else {
+            playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
+
             for ( int i = 0; i < excludedPersonID.Count; i++)
             {
                if ( StageManager.instance.currentPersons[excludedPersonID[i]].currentRoomIn == currentRoomIn)
@@ -67,8 +69,6 @@ public class Player: MonoBehaviour {
                     break;
                 }
             }
-
-            playerFace.GetComponent<SpriteRenderer>().sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
         }
 
         if (goal != null)

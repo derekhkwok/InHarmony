@@ -31,6 +31,7 @@ public class MainMenuView : MonoBehaviour
     public GameObject car1;
     public GameObject car2;
 
+    public GameObject title;
 
     //private BoxCollider navArea;
 
@@ -54,6 +55,8 @@ public class MainMenuView : MonoBehaviour
         }
 
         instance = this;
+
+        InputManager.Instance.ResetCamSetting();
 
         currentLv = GameManager.maxClearedLv + 1;
 
@@ -111,6 +114,7 @@ public class MainMenuView : MonoBehaviour
         }
         else
         {
+            title.SetActive(false);
             iTween.MoveTo(parent, iTween.Hash(
                 "z", 0f,
                 "time", 1f,

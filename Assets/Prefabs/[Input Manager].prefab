@@ -47,4 +47,5 @@ MonoBehaviour:
   targetCam: {fileID: 0}
   zoomMin: 4
   zoomMax: 10
-  camSpeed: 1
+  camSpeed: -0.02
+  fadeSpeed: 0.8

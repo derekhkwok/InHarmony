@@ -10,7 +10,8 @@ public class Congret_Prefab : MonoBehaviour
 
     public static Congret_Prefab Create( Action onEnter)
     {
-        Congret_Prefab congret = ((GameObject)Instantiate(Resources.Load("Congret_Prefab"), Vector3.zero, Quaternion.identity)).GetComponent<Congret_Prefab>() ;
+        Congret_Prefab congret = (Instantiate(Resources.Load("Congrat_Prefab"), new Vector3( 0f, 8f, 0f ), Quaternion.Euler( new Vector3( 90f, 0f, 0f ) )) as GameObject).GetComponent<Congret_Prefab>() ;
+        congret.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
         congret.onEnter = onEnter;
         return congret;
     }
@@ -49,6 +50,13 @@ public class Congret_Prefab : MonoBehaviour
     private void EnableEnterBtn()
     {
         enterBtn.gameObject.SetActive(true);
+        enterBtn.transform.localScale = new Vector3(0f, 0f, 0f);
+        iTween.ScaleTo(enterBtn.gameObject, iTween.Hash(
+            "scale", Vector3.one,
+            "time", 0.5f,
+            "islocal", true,
+            "easetype", iTween.EaseType.easeOutBack
+            ));
     }
 
     // Update is called once per frame
