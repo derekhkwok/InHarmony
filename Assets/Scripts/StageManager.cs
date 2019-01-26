@@ -143,8 +143,8 @@ public class StageManager : MonoBehaviour
             {
                 foreach (int otherP in p.excludedPersonID)
                 {
-                    List<int> otherPath = otherP.GetPath();
-                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.GetPath().Take(otherPath.Count - 1)).Any())
+                    List<int> otherPath = currentPersons[otherP].GetPath();
+                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any())
                     {
                         isValid = false;
                         break;
