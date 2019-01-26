@@ -210,4 +210,25 @@ public partial class StageManager : MonoBehaviour
 
         UI_Condition.Instance.CheckingPassConditionUI();
     }
+
+    Transform tempParent = null;
+
+    public void RoomSniping(Room draggedRoom) {
+        foreach(Door d in draggedRoom.doors) {
+            if (d.connectedRoom != null) {
+                List<Room> roomNeedToMove = d.connectedRoom.SearchConnectedRooms(draggedRoom);
+                roomNeedToMove.Add(d.connectedRoom);
+                if (tempParent == null)
+                    tempParent = new GameObject().GetComponent<Transform>();
+                tempParent.position = d.connectedDoor.transform.position;
+                foreach (Room r in roomNeedToMove) {
+                    r.transform.parent = tempParent;
+                }
+                tempParent.position = d.transform.position;
+                foreach (Room r in roomNeedToMove) {
+                    r.transform.parent = null;
+                }
+            }
+        }
+    }
 }
