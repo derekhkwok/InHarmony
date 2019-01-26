@@ -10,7 +10,7 @@ public partial class StageManager : MonoBehaviour
     // c = connect
     // x = not connect
     // > = go to
-    public bool CheckCondition_Room(string condString)
+    public bool CheckCondition(string condString)
     {
         if (string.IsNullOrEmpty(condString)) return false;
 
