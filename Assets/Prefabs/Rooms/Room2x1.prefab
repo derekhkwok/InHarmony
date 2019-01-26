@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 3462904949471083268}
   - component: {fileID: 8537979135606232812}
   - component: {fileID: 7496210069645461689}
+  - component: {fileID: 7038235812973356258}
   m_Layer: 0
   m_Name: Room2x1
   m_TagString: Untagged
@@ -534,6 +535,19 @@ MonoBehaviour:
   minNumConnectedRoom: 0
   startPos: {fileID: 3640180365507742893}
   endPos: {fileID: 4130975698943080114}
+--- !u!65 &7038235812973356258
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839438898034802024}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.76, y: 1.17, z: 4.09}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6046535562229429798
 GameObject:
   m_ObjectHideFlags: 0
