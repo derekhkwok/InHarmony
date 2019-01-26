@@ -136,7 +136,7 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if (myPath.Last() != p.roomTargetID) // not reaching target
+            if (myPath.Count <= 0 || myPath.Last() != p.roomTargetID) // not reaching target
             {
                 isValid = false;
             }
