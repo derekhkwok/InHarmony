@@ -31,7 +31,7 @@ public class UI_Condition : MonoBehaviour
             GameObject _tempEmpty = Instantiate(emptyGamObject) as GameObject;
             _conditonGameObject.Add(_tempEmpty);
             _tempEmpty.transform.SetParent(conditonPointGO.transform);
-            _tempEmpty.transform.localPosition = new Vector3(0f, -30f * (_conditonGameObject.Count-1), 0f);
+            _tempEmpty.transform.localPosition = new Vector3(0f, -45f * (_conditonGameObject.Count-1), 0f);
             _tempEmpty.transform.localScale = Vector3.one;
             _tempEmpty.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
 
@@ -41,7 +41,7 @@ public class UI_Condition : MonoBehaviour
                 tempImage.gameObject.SetActive(true);
                 tempImage.sprite = UI_TextureHelper.Instance.GetSprite(_conStr[i]);
                 tempImage.transform.SetParent(_tempEmpty.transform);
-                tempImage.transform.localPosition = new Vector3(i * 27f, 0f, 0f);
+                tempImage.transform.localPosition = new Vector3(i * 55f, 0f, 0f);
                 tempImage.transform.localScale = Vector3.one;
                 tempImage.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
             }

@@ -512,6 +512,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SFXManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8723879486386131687, guid: 71301ad3f6fc3b34fba5e793c4076091,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8723879486386131738, guid: 71301ad3f6fc3b34fba5e793c4076091,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -644,6 +649,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 849937381}
+  - component: {fileID: 849937379}
   - component: {fileID: 849937378}
   m_Layer: 0
   m_Name: NavArea
@@ -666,6 +672,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Tracked: {fileID: 849937381}
   m_Size: {x: 100, y: 100, z: 100}
+--- !u!65 &849937379
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849937377}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &849937381
 Transform:
   m_ObjectHideFlags: 0
@@ -1503,21 +1522,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5839438898034802024, guid: dfc7ca67d3e9d470893ca14577a243ee,
         type: 3}
+    - target: {fileID: 7001302328631714204, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896638340921527211, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
         type: 3}
       propertyPath: targetCam
       value: 
       objectReference: {fileID: 1749862271}
-    - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
-        type: 3}
-      propertyPath: zoomMin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6795829922646631934, guid: 5dbd74291d0434ef7a5a9c64c2668efe,
-        type: 3}
-      propertyPath: zoomMax
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dbd74291d0434ef7a5a9c64c2668efe, type: 3}
 --- !u!1001 &1567027672676559549
@@ -1531,6 +1550,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI_RotateButton_BG
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936606045635295391, guid: 3073d0ce3aa3e471e9af058215da3b14,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6440680176418118726, guid: 3073d0ce3aa3e471e9af058215da3b14,
         type: 3}
@@ -1672,6 +1696,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Condition_Pos_Parent
       objectReference: {fileID: 0}
+    - target: {fileID: 7385247342022841149, guid: 1b91699f4c8164467bc79c970e7061ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7385247342022841148, guid: 1b91699f4c8164467bc79c970e7061ec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1777,15 +1806,30 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7385247341864178612, guid: 1b91699f4c8164467bc79c970e7061ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385247343162297089, guid: 1b91699f4c8164467bc79c970e7061ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7385247341974798391, guid: 1b91699f4c8164467bc79c970e7061ec,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 50
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7385247341974798391, guid: 1b91699f4c8164467bc79c970e7061ec,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385247341974798384, guid: 1b91699f4c8164467bc79c970e7061ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b91699f4c8164467bc79c970e7061ec, type: 3}

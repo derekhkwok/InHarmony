@@ -204,12 +204,10 @@ public partial class StageManager : MonoBehaviour
         foreach(KeyValuePair<int, Room> r in currentRooms) {
             r.Value.UpdateConnectedRoom();
         }
-<<<<<<< HEAD
 
-        UI_Condition.Instance.CheckingPassConditionUI();
-=======
         foreach (KeyValuePair<int, Player> p in currentPersons)
             p.Value.RoomUpdated();
->>>>>>> 256dc61ee95aa7fcd94c35a95b1ca459b6ffc4d0
+
+        UI_Condition.Instance.CheckingPassConditionUI();
     }
 }
