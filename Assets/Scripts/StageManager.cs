@@ -52,8 +52,6 @@ public partial class StageManager : MonoBehaviour
 
     public void InitStage(int stage)
     {
-        stage = 5;
-
         if (inited) return;
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
@@ -114,6 +112,8 @@ public partial class StageManager : MonoBehaviour
         }
 
         InputManager.Instance.SetCanDrag(true);
+
+        InitRoomSortingOrder();
         //foreach (Player _player in currentPersons.Values)
         //{
         //    _player.InitPlayer(currentRooms[_player.roomSourceID].startPos, currentRooms[_player.roomTargetID].startPos);
@@ -225,6 +225,27 @@ public partial class StageManager : MonoBehaviour
                 tempParent.position = d.transform.position;
                 foreach (Room r in roomNeedToMove) {
                     r.transform.parent = null;
+                }
+            }
+        }
+    }
+
+    public void InitRoomSortingOrder() {
+        for(int i = 0; i < currentRooms.Count; i++) {
+            currentRooms.Values.ToArray()[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = i;
+        }
+    }
+
+    public void PullRoomSortingToFront(int id) {
+        if (currentRooms.ContainsKey(id)) {
+            int start = currentRooms[id].GetComponentInChildren<SpriteRenderer>().sortingOrder;
+            currentRooms[id].GetComponentInChildren<SpriteRenderer>().sortingOrder = currentRooms.Count - 1;
+            for(int i = start + 1; i < currentRooms.Count; i++) {
+                foreach(Room r in currentRooms.Values.ToArray()) {
+                    if(r.GetComponentInChildren<SpriteRenderer>().sortingOrder == i && r.id != id) {
+                        r.GetComponentInChildren<SpriteRenderer>().sortingOrder = i - 1;
+                        break;
+                    }
                 }
             }
         }
