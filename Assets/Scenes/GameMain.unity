@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -511,11 +511,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SFXManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8723879486386131687, guid: 71301ad3f6fc3b34fba5e793c4076091,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8723879486386131738, guid: 71301ad3f6fc3b34fba5e793c4076091,
         type: 3}
@@ -1144,7 +1139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDrag: 0
-  raycastCam: {fileID: 1749862271}
+  targetCam: {fileID: 0}
+  zoomMin: 0
+  zoomMax: 0
 --- !u!1001 &260315079345781409
 PrefabInstance:
   m_ObjectHideFlags: 0

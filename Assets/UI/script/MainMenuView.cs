@@ -46,10 +46,12 @@ public class MainMenuView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentLv = GameManager.maxClearedLv;
+
         //navArea = GameObject.Find("NavArea").GetComponent<BoxCollider>() ;
         //navArea.enabled = false ;
 
-        SFXManager.instance.PlaySFX(SFXManager.SFX.WELCOME);
+        //SFXManager.instance.PlaySFX(SFXManager.SFX.WELCOME);
 
         Invoke("MoveCar1", UnityEngine.Random.Range(2f, 6f));
         Invoke("MoveCar2", UnityEngine.Random.Range(2f, 6f));
@@ -141,12 +143,18 @@ public class MainMenuView : MonoBehaviour
         tileSprs[currentLv - 1].gameObject.SetActive(true);
         iTween.MoveTo(tileSprs[currentLv - 1].gameObject, iTween.Hash(
             "z", lowestTilePosY + tilePadding * ( currentLv - 1),
-            "time", 0.2f * ( 7 - currentLv ),
+            "time", 0.15f * ( 7 - currentLv ) + 0.3f,
             "islocal", true,
             "easetype", iTween.EaseType.easeInCubic,
             "oncomplete", "Dust",
             "oncompletetarget", gameObject
             ));
+        Invoke("collapseSfx", 0.15f * ( 7 - currentLv ) + 0.3f - 0.15f);
+    }
+
+    private void collapseSfx()
+    {
+        SFXManager.instance.PlaySFX(SFXManager.SFX.buildingCollapse2);
     }
 
     public void Dust()
@@ -257,6 +265,7 @@ public class MainMenuView : MonoBehaviour
 
     public IEnumerator EnterStage(int id)
     {
+        SFXManager.instance.PlaySFX(SFXManager.SFX.powerUp2);
         iTween.MoveTo(parent, iTween.Hash(
             "z", -10f,
             "time", 0.5f,
