@@ -215,6 +215,10 @@ public partial class StageManager : MonoBehaviour
             r.Value.UpdateConnectedRoom();
         }
 
+        Invoke("DelayRoomUpdate", 0.2f);
+    }
+
+    void DelayRoomUpdate() {
         foreach (KeyValuePair<int, Player> p in currentPersons)
             p.Value.RoomUpdated();
     }

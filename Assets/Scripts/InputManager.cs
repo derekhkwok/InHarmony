@@ -102,8 +102,8 @@ public class InputManager : MonoBehaviour
                     } else {
                         camMove = true;
                         touchStartPos = Input.GetTouch(0).position;
-                        touchLastPos = Input.GetTouch(0).position;
                     }
+                    touchLastPos = Input.GetTouch(0).position;
                     break;
                 case TouchPhase.Moved:
                     if (!camMove) {
@@ -112,7 +112,23 @@ public class InputManager : MonoBehaviour
                         
                         Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
-                        UI_RotateButton.Instance.RemoveBtn();
+                        if (Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
+                            UI_RotateButton.Instance.RemoveBtn();
+                        } else {
+                            holdRoomTime += Time.deltaTime;
+                            if (holdRoomTime > 0.65f) {
+                                if (!holdRoom) {
+                                    UI_RotateButton.Instance.gameObject.SetActive(true);
+                                    UI_RotateButton.Instance.SetRotateAction(() => {
+                                        if (UI_RotateButton.Instance.targetRoom != null)
+                                            UI_RotateButton.Instance.targetRoom.transform.eulerAngles =
+                                                new Vector3(0f, 90f, 0f) + UI_RotateButton.Instance.targetRoom.transform.eulerAngles;
+                                    }, Input.GetTouch(0).position, currentRoom);
+                                }
+                                holdRoom = true;
+                            }
+                        }
+                        
                     } else {
                         if(Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
                             camMoving = true;
@@ -120,9 +136,8 @@ public class InputManager : MonoBehaviour
                         if (camMoving) {
                             camMoveSpeed = Input.GetTouch(0).position - touchLastPos;
                         }
-
-                        touchLastPos = Input.GetTouch(0).position;
                     }
+                    touchLastPos = Input.GetTouch(0).position;
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
