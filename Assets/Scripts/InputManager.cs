@@ -112,6 +112,7 @@ public class InputManager : MonoBehaviour
                         
                         Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
+                        UI_RotateButton.Instance.RemoveBtn();
                     } else {
                         if(Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
                             camMoving = true;
@@ -248,6 +249,8 @@ public class InputManager : MonoBehaviour
             } else {
                 holdRoomTime = 0f;
                 holdRoom = false;
+
+                UI_RotateButton.Instance.RemoveBtn();
             }
             lastMousePos = Input.mousePosition;
 

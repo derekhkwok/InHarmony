@@ -71,13 +71,13 @@ public class Player: MonoBehaviour {
             sadParticle.Play();
             playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
         } else {
-            playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
-
+            bool angryMan = false;
             for ( int i = 0; i < excludedPersonID.Count; i++)
             {
                if ( StageManager.instance.currentPersons[excludedPersonID[i]].currentRoomIn == currentRoomIn)
                 {
                     //angray
+                    angryMan = true;
                     angrayParticle.gameObject.SetActive(true);
                     sadParticle.gameObject.SetActive(false);
                     successParticle.gameObject.SetActive(false);
@@ -85,6 +85,14 @@ public class Player: MonoBehaviour {
                     playerFace.GetComponent<SpriteRenderer>().sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 6);
                     break;
                 }
+            }
+
+            if ( !angryMan)
+            {
+                playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
+                angrayParticle.gameObject.SetActive(false);
+                sadParticle.gameObject.SetActive(false);
+                successParticle.gameObject.SetActive(false);
             }
         }
 

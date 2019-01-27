@@ -173,16 +173,18 @@ public partial class StageManager : MonoBehaviour
 
         isWon = true;
 
+        UI_RotateButton.Instance.RemoveBtn();
+
         UI_Condition.Instance.WinDestoryObject();
         foreach ( Player player in currentPersons.Values) {
             player.Win();
         }
         Debug.LogWarning("[GAME] YOU WIN!");
-        Congret_Prefab congret = Congret_Prefab.Create(() => { OnClickEndStage(); });
+        Congret_Prefab.Instance.Create(() => { OnClickEndStage(); });
         return true;
     }
 
-    void OnClickEndStage() 
+    public void OnClickEndStage() 
     {
         if (currentRooms != null)
         {
