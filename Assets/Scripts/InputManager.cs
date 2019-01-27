@@ -176,6 +176,9 @@ public class InputManager : MonoBehaviour
                     break;
             }
         }else if(Input.touchCount > 1 && currentRoom == null) {
+            if (!canDrag)
+                return;
+
             switch (Input.GetTouch(1).phase) {
                 case TouchPhase.Began:
                     touchDisStart = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
