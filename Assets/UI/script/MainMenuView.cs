@@ -304,7 +304,7 @@ public class MainMenuView : MonoBehaviour
             ));
 
         iTween.MoveTo(clouds.gameObject, iTween.Hash(
-            "z", -25f,
+            "z", -26.5f,
             "time", 1.2f,
             "islocal", true,
             "easetype", iTween.EaseType.linear

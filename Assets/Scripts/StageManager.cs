@@ -55,6 +55,8 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
+        stage = 3;
+
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
@@ -74,7 +76,7 @@ public partial class StageManager : MonoBehaviour
             int tmpPersonID = int.Parse(info.Split('|')[1]);
 
             GameObject tempRoom = Instantiate(roomGO[tmpRoomID]);
-            tempRoom.transform.position = new Vector3(7.5f * (count%3), 0f, 3f * count/3);
+            tempRoom.transform.position = new Vector3(7.5f * (count%3), 0f, 9f * count/3);
             tempRoom.transform.eulerAngles = new Vector3(0f, Random.Range(0, 4) * 90f, 0f);
             Room _tempRoom = tempRoom.GetComponent<Room>();
             _tempRoom.SetID( tmpRoomID );
@@ -145,7 +147,7 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if (myPath.Count > 0 && myPath.Last() != p.roomTargetID && p.roomTargetID != -1) // not reaching target
+            if ((myPath.Count > 0 && myPath.Last() != p.roomTargetID && p.roomTargetID != -1) || (myPath.Count == 0 && p.roomTargetID != -1)) // not reaching target
             {
                 /*
                 Debug.LogError("11111");
@@ -161,8 +163,8 @@ public partial class StageManager : MonoBehaviour
                 foreach (int otherP in p.excludedPersonID)
                 {
                     List<int> otherPath = currentPersons[otherP].GetPath();
-                    myPath = (myPath.Count == 1 && p.roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
-                    otherPath = (otherPath.Count == 1 && currentPersons[otherP].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
+                    myPath = (p.roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
+                    otherPath = (currentPersons[otherP].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
                     if (myPath.Intersect(otherPath).Any())
                     {
                         //Debug.LogError("22222");
