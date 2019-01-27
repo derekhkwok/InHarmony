@@ -328,6 +328,7 @@ public class MainMenuView : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+
     private void UpdateColor( float val )
     {
         fogSpr.color = new Color(1f, 1f, 1f, val / 2f);
