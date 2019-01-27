@@ -55,7 +55,7 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
-
+        stage = 3;
 
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
@@ -180,11 +180,11 @@ public partial class StageManager : MonoBehaviour
             player.Win();
         }
         Debug.LogWarning("[GAME] YOU WIN!");
-        Congret_Prefab congret = Congret_Prefab.Create(() => { OnClickEndStage(); });
+        Congret_Prefab.Instance.Create(() => { OnClickEndStage(); });
         return true;
     }
 
-    void OnClickEndStage() 
+    public void OnClickEndStage() 
     {
         if (currentRooms != null)
         {
