@@ -55,6 +55,8 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
+        stage = 3;
+
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
@@ -145,7 +147,7 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if (myPath.Count > 0 && myPath.Last() != p.roomTargetID && p.roomTargetID != -1) // not reaching target
+            if ((myPath.Count > 0 && myPath.Last() != p.roomTargetID && p.roomTargetID != -1) || (myPath.Count == 0 && p.roomTargetID != -1)) // not reaching target
             {
                 /*
                 Debug.LogError("11111");
