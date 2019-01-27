@@ -173,6 +173,8 @@ public partial class StageManager : MonoBehaviour
 
         isWon = true;
 
+        UI_RotateButton.Instance.RemoveBtn();
+
         UI_Condition.Instance.WinDestoryObject();
         foreach ( Player player in currentPersons.Values) {
             player.Win();

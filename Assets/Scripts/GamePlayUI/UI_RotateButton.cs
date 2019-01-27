@@ -26,6 +26,10 @@ public class UI_RotateButton : MonoBehaviour
         targetRoom = inputRoom;
     }
 
+    public void RemoveBtn() {
+        this.gameObject.SetActive(false);
+    }
+
     public void onClick()
     {
         rotateAction();
