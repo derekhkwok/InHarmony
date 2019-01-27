@@ -58,8 +58,8 @@ public partial class StageManager : MonoBehaviour
                                 //for (int i = 0; i < intersect.Length; debug += otherPath[i], i++) ;
                                 //Debug.LogError("intersect: " + debug);
 
-                                myPath = (myPath.Count == 1 && currentPersons[ID].roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
-                                otherPath = (otherPath.Count == 1 && currentPersons[second.Item2].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
+                                myPath = (currentPersons[ID].roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
+                                otherPath = (currentPersons[second.Item2].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
 
 
                                 return !myPath.Intersect(otherPath).Any();
