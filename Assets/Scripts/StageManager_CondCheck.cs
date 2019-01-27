@@ -48,17 +48,21 @@ public partial class StageManager : MonoBehaviour
                             case "p":
                                 List<int> myPath = currentPersons[ID].GetPath();
                                 List<int> otherPath = currentPersons[second.Item2].GetPath();
-                                string debug = "";
-                                for (int i = 0; i < myPath.Count; debug += myPath[i], i++) ;
-                                Debug.LogError(ID.ToString() + "My Path: " + debug); debug = "";
-                                for (int i = 0; i < otherPath.Count; debug += otherPath[i], i++) ;
-                                Debug.LogError(second.Item2.ToString() + "Other path: " + debug);
-                                int[] intersect = myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).ToArray();
-                                debug = "";
-                                for (int i = 0; i < intersect.Length; debug += otherPath[i], i++) ;
-                                Debug.LogError("intersect: " + debug);
+                                //string debug = "";
+                                //for (int i = 0; i < myPath.Count; debug += myPath[i], i++) ;
+                                //Debug.LogError(ID.ToString() + "My Path: " + debug); debug = "";
+                                //for (int i = 0; i < otherPath.Count; debug += otherPath[i], i++) ;
+                                //Debug.LogError(second.Item2.ToString() + "Other path: " + debug);
+                                //int[] intersect = myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).ToArray();
+                                //debug = "";
+                                //for (int i = 0; i < intersect.Length; debug += otherPath[i], i++) ;
+                                //Debug.LogError("intersect: " + debug);
 
-                                return !myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any();
+                                myPath = (myPath.Count == 1 && currentPersons[ID].roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
+                                otherPath = (otherPath.Count == 1 && currentPersons[second.Item2].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
+
+
+                                return !myPath.Intersect(otherPath).Any();
                             case "r":
                                 List<int> myPath_1 = currentPersons[ID].GetPath();
                                 return !myPath_1.Contains(currentRooms[second.Item2].id);

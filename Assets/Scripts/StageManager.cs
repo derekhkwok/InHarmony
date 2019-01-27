@@ -61,7 +61,7 @@ public partial class StageManager : MonoBehaviour
         InputManager.Instance.ZoomCameraByStage(stage);
 
         InputManager.Instance.SetCanDrag(false);
-        isEnding = false;
+        isWon = false;
 
         currentRooms = new Dictionary<int, Room>();
         currentPersons = new Dictionary<int, Player>();
@@ -147,8 +147,15 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if ((myPath.Count > 0 && myPath.Last() != p.roomTargetID) || (myPath.Count == 0 && p.roomTargetID != -1)) // not reaching target
+            if (myPath.Count > 0 && myPath.Last() != p.roomTargetID && p.roomTargetID != -1) // not reaching target
             {
+                /*
+                Debug.LogError("11111");
+                Debug.LogError(p.playerID);
+                Debug.LogError(myPath.Count);
+                Debug.LogError(p.roomTargetID);
+                */               
+                               
                 isValid = false;
             }
             else // check if whether it overlap with its enemies
@@ -156,8 +163,11 @@ public partial class StageManager : MonoBehaviour
                 foreach (int otherP in p.excludedPersonID)
                 {
                     List<int> otherPath = currentPersons[otherP].GetPath();
-                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any())
+                    myPath = (myPath.Count == 1 && p.roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
+                    otherPath = (otherPath.Count == 1 && currentPersons[otherP].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
+                    if (myPath.Intersect(otherPath).Any())
                     {
+                        //Debug.LogError("22222");
                         isValid = false;
                         break;
                     }
@@ -166,6 +176,7 @@ public partial class StageManager : MonoBehaviour
 
             if (!isValid)
             {
+                //Debug.LogError("33333");
                 InputManager.Instance.SetCanDrag(true);
                 return false;
             }
