@@ -319,6 +319,8 @@ public class MainMenuView : MonoBehaviour
 
         sky.SetActive(false);
 
+        balloonAnim.gameObject.SetActive(false);
+
         yield return new WaitForSeconds(0.5f);
 
         iTween.ValueTo(this.gameObject, iTween.Hash(
