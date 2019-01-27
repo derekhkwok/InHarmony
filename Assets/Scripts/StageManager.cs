@@ -55,7 +55,7 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
-
+        stage = 3;
 
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
@@ -215,6 +215,10 @@ public partial class StageManager : MonoBehaviour
             r.Value.UpdateConnectedRoom();
         }
 
+        Invoke("DelayRoomUpdate", 0.2f);
+    }
+
+    void DelayRoomUpdate() {
         foreach (KeyValuePair<int, Player> p in currentPersons)
             p.Value.RoomUpdated();
     }

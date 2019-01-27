@@ -71,13 +71,13 @@ public class Player: MonoBehaviour {
             sadParticle.Play();
             playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID + 12);
         } else {
-            playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
-
+            bool angryMan = false;
             for ( int i = 0; i < excludedPersonID.Count; i++)
             {
                if ( StageManager.instance.currentPersons[excludedPersonID[i]].currentRoomIn == currentRoomIn)
                 {
                     //angray
+                    angryMan = true;
                     angrayParticle.gameObject.SetActive(true);
                     sadParticle.gameObject.SetActive(false);
                     successParticle.gameObject.SetActive(false);
@@ -86,12 +86,20 @@ public class Player: MonoBehaviour {
                     break;
                 }
             }
+
+            if ( !angryMan)
+            {
+                playerFace.sprite = UI_TextureHelper.Instance.GetPeopleFace(playerID);
+                angrayParticle.gameObject.SetActive(false);
+                sadParticle.gameObject.SetActive(false);
+                successParticle.gameObject.SetActive(false);
+            }
         }
 
         if (goal != null)
         {
             //Debug.Log(Vector3.Distance(goal.position, gameObject.transform.position));
-            if (Vector3.Distance(goal.position, gameObject.transform.position) < 2f)
+/*            if (Vector3.Distance(goal.position, gameObject.transform.position) < 2f)
             {
                 //time += Time.deltaTime;
                 Transform temp = start;
@@ -101,7 +109,7 @@ public class Player: MonoBehaviour {
                     RoomUpdated();
                     //time = 0f;
                 //}
-            }
+            }*/
         }
 
         //if middle rooms to destinations are removed; walk back to starting room
@@ -130,12 +138,14 @@ public class Player: MonoBehaviour {
 //        if(!agent.enabled) agent.enabled = true;
         Room currMovingRoom = InputManager.Instance.currentRoom;
         if(currMovingRoom != null) {
-            if(currMovingRoom.id == currentRoomIn) {
+ /*           if(currMovingRoom.id == currentRoomIn) {
                 gameObject.transform.position = start.position;
             } else if(currMovingRoom.id == roomSourceID) {
                 gameObject.transform.position = start.position;
-            }
+            }*/
+            
         }
+        gameObject.transform.position = start.position;
         if (!agent.enabled)
             return;
 
@@ -147,9 +157,8 @@ public class Player: MonoBehaviour {
         Debug.Log(NavMesh.CalculatePath(gameObject.transform.position, goal.position, 1, navMeshPath));
         Debug.Log(navMeshPath.status);
 
-        if (peparePath != null)
-            StopCoroutine(peparePath);
-        peparePath = StartCoroutine(PeparePath());
+        StopAllCoroutines();
+        StartCoroutine(PeparePath());
 
     }
 
@@ -162,6 +171,7 @@ public class Player: MonoBehaviour {
             (navMeshPath.status == NavMeshPathStatus.PathComplete)) {
             //Debug.Log(navMeshPath.status);
             agent.isStopped = false;
+            roomList.Add(roomSourceID);
             for (int i = 0; i < navMeshPath.corners.Length - 1; i++) {
                 Ray ray = new Ray(navMeshPath.corners[i], (navMeshPath.corners[i + 1] - navMeshPath.corners[i]).normalized);
                 RaycastHit hit;
@@ -177,7 +187,7 @@ public class Player: MonoBehaviour {
                     }
                 }
             }
-
+            Debug.Log(roomList.Count);
             SFXManager.instance.PlaySFX(SFXManager.SFX.Footstep01);
             //Debug.Log("POSSIBLE");
         } else {

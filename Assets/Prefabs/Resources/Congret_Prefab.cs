@@ -10,25 +10,28 @@ public class Congret_Prefab : MonoBehaviour
     public GameObject enterBtn;
     public ParticleSystem victoryPS;
     public Action onEnter;
-    public Vector3 oriPos;
+    Vector3 oriPos = new Vector3(0f, 40f, 0f);
 
     public void Create( Action _onEnter)
     {
         onEnter = _onEnter;
         enterBtn.SetActive(true);
         enterBtn.transform.localScale = new Vector3(0f, 0f, 0f);
-        enterBtn.transform.position = oriPos;
+        enterBtn.transform.localPosition = new Vector3(0f, 40f, 0f);
 
         SFXManager.instance.PlaySFX(SFXManager.SFX.victory);
+
+        iTween.Stop(enterBtn);
+
         Invoke("EnableEnterBtn", 0.5f);
     }
 
     private void Start()
     {
         Instance = this;
-        oriPos = enterBtn.transform.position;
         enterBtn.SetActive(false);
         enterBtn.transform.localScale = new Vector3(0f, 0f, 0f);
+        enterBtn.transform.localPosition = new Vector3(0f, 40f, 0f); 
     }
 
     private void EnableEnterBtn()
@@ -52,7 +55,6 @@ public class Congret_Prefab : MonoBehaviour
             //"easetype", iTween.EaseType.easeInCubic,
             //"oncomplete", "TerminateMyself"
             //));
-
         iTween.MoveTo(enterBtn.gameObject, iTween.Hash(
             "y", -1000f,
             "time", 1.2f,
@@ -70,7 +72,8 @@ public class Congret_Prefab : MonoBehaviour
         StageManager.instance.OnClickEndStage();
         enterBtn.SetActive(false);
         enterBtn.transform.localScale = new Vector3(0f, 0f, 0f);
-        enterBtn.transform.position = oriPos;
+        //enterBtn.transform.localPosition = oriPos;
+        enterBtn.transform.localPosition = new Vector3(0f, 40f, 0f);
 
     }
 }
