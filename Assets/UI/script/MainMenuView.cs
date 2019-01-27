@@ -18,7 +18,7 @@ public class MainMenuView : MonoBehaviour
     public Animation balloonAnim;
 
     public SpriteRenderer[] tileSprs;
-    public TextMesh[] tileText;
+    public TextMesh[] tileText  ;
     public Transform refText;
     public GameObject groundPS;
     public GameObject skyPS;
@@ -234,7 +234,7 @@ public class MainMenuView : MonoBehaviour
             "islocal", true,
             "easetype", iTween.EaseType.easeInOutQuad
             ));
-        tileText[currentLv - 1].color = Color.red;
+        //tileText[currentLv - 1].color = Color.red;
         tileText[currentLv - 1].fontSize = 115;
         for ( int i = 0; i < currentLv; i ++ )
         {
