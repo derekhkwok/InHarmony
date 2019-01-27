@@ -101,18 +101,18 @@ public class InputManager : MonoBehaviour
                         }
                     } else {
                         camMove = true;
-                        touchStartPos = Input.GetTouch(0).position;
                     }
+                    touchStartPos = Input.GetTouch(0).position;
                     touchLastPos = Input.GetTouch(0).position;
                     break;
                 case TouchPhase.Moved:
                     if (!camMove) {
-                        holdRoom = false;
-                        holdRoomTime = 0f;
                         
                         Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
-                        if (Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
+                        if (Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 2f) {
+                            holdRoom = false;
+                            holdRoomTime = 0f;
                             UI_RotateButton.Instance.RemoveBtn();
                         } else {
                             holdRoomTime += Time.deltaTime;
@@ -183,14 +183,20 @@ public class InputManager : MonoBehaviour
                 case TouchPhase.Began:
                     touchDisStart = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
                     zoomStart = targetCam.orthographicSize;
+                    
+                    touchLastPos = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f;
                     break;
                 case TouchPhase.Moved:
                     float touchDis = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
                     targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDisStart / touchDis, zoomMin, zoomMax);
+
+                    camMoveSpeed = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f - touchLastPos;
+                    camMoving = true;
+                    touchLastPos = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f;
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
-                    
+                    touchLastPos = Input.GetTouch(0).position;
                     break;
             }
         }
@@ -211,7 +217,7 @@ public class InputManager : MonoBehaviour
 
 
 
-
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0)) {
             if (!canDrag)
                 return;
@@ -250,7 +256,9 @@ public class InputManager : MonoBehaviour
             touchLastPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         }
 
-        if(currentRoom != null) {
+        targetCam.orthographicSize = Mathf.Clamp(targetCam.orthographicSize + Input.mouseScrollDelta.y, zoomMin, zoomMax);
+
+        if (currentRoom != null) {
             if(Vector3.Distance(Input.mousePosition, lastMousePos) < 1f) {
                 holdRoomTime += Time.deltaTime;
                 if (holdRoomTime > 0.65f) {
@@ -289,6 +297,7 @@ public class InputManager : MonoBehaviour
             }
             camMove = false;
         }
+#endif
         //var mousex : float = Input.GetAxis("Mouse X");
         //var mousey : float = Input.GetAxis("Mouse Y");
 
