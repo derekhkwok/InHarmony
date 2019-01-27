@@ -15,6 +15,7 @@ public class MainMenuView : MonoBehaviour
     public float tilePadding;
     public Animation startAnim;
     //public Animation towerAnim;
+    public Animation balloonAnim;
 
     public SpriteRenderer[] tileSprs;
     public TextMesh[] tileText;
@@ -33,8 +34,8 @@ public class MainMenuView : MonoBehaviour
 
     public GameObject parent;
 
-    public GameObject car1;
-    public GameObject car2;
+    //public GameObject car1;
+    //public GameObject car2;
 
     public GameObject title;
 
@@ -77,13 +78,13 @@ public class MainMenuView : MonoBehaviour
 
         //SFXManager.instance.PlaySFX(SFXManager.SFX.WELCOME);
 
-        Invoke("MoveCar1", UnityEngine.Random.Range(2f, 6f));
-        Invoke("MoveCar2", UnityEngine.Random.Range(2f, 6f));
+        //Invoke("MoveCar1", UnityEngine.Random.Range(2f, 6f));
+        //Invoke("MoveCar2", UnityEngine.Random.Range(2f, 6f));
 
         parent.transform.localPosition = new Vector3(0f, 0f, -10f);
         tileOriScale = tileSprs[0].transform.localScale;
 
-        iTween.MoveTo(car1, iTween.Hash(
+        /**iTween.MoveTo(car1, iTween.Hash(
             "x", -11f,
             "time", UnityEngine.Random.Range( 5f, 8f ),
             "easetype", iTween.EaseType.linear,
@@ -95,7 +96,7 @@ public class MainMenuView : MonoBehaviour
             "time", UnityEngine.Random.Range(6f, 9f),
             "easetype", iTween.EaseType.linear,
             "islocal", true
-            ));
+            ));*/
 
         for (int i = 0; i < currentLv - 1; i++)
         {
@@ -137,7 +138,7 @@ public class MainMenuView : MonoBehaviour
         }
     }
 
-    public void MoveCar1()
+    /*public void MoveCar1()
     {
         car1.transform.localPosition = new Vector3(11f, car1.transform.localPosition.y, car1.transform.localPosition.z);
         float time = UnityEngine.Random.Range(5f, 8f);
@@ -161,7 +162,7 @@ public class MainMenuView : MonoBehaviour
             "islocal", true
         ));
         Invoke("MoveCar2", time + UnityEngine.Random.Range(4f, 7f));
-    }
+    }*/
 
     public void DropTile()
     {
@@ -195,6 +196,10 @@ public class MainMenuView : MonoBehaviour
             skyPS.gameObject.SetActive(false);
             skyPS.gameObject.SetActive(true);
         }
+
+        balloonAnim.gameObject.SetActive(true);
+        balloonAnim.transform.localPosition = new Vector3( tileSprs[currentLv - 1].transform.localPosition.x + 2.7f, balloonAnim.transform.localPosition.y, tileSprs[currentLv - 1].transform.localPosition.z);
+        balloonAnim.Play();
         StartCoroutine(ShowFloorText());
     }
 
@@ -313,6 +318,8 @@ public class MainMenuView : MonoBehaviour
         StageManager.instance.InitStage(id);
 
         sky.SetActive(false);
+
+        balloonAnim.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
 
