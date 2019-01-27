@@ -55,7 +55,7 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
-        stage = 3;
+        //stage = 3;
 
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
@@ -156,7 +156,9 @@ public partial class StageManager : MonoBehaviour
                 foreach (int otherP in p.excludedPersonID)
                 {
                     List<int> otherPath = currentPersons[otherP].GetPath();
-                    if (myPath.Take(myPath.Count - 1).Intersect(otherPath.Take(otherPath.Count - 1)).Any())
+                    myPath = (myPath.Count == 1 && p.roomTargetID == -1) ? myPath : myPath.Take(myPath.Count - 1).ToList();
+                    otherPath = (otherPath.Count == 1 && currentPersons[otherP].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
+                    if (myPath.Intersect(otherPath).Any())
                     {
                         isValid = false;
                         break;
