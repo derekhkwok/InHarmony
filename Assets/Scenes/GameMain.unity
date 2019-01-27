@@ -251,8 +251,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Artist : \nSIO Kam Ian, Kimberly\nLEUNG Wing Yan, Daisy\n\nProgrammer:\nDouglus
-    Wong\nArthur Lam\nDerek Kowk\nKeith Leung\nAlan Tsang\n\nGlobal Game Jam 2019
+  m_Text: "Artist : \nSIO Kam Ian, Kimberly\nLEUNG Wing Yan, Daisy\n\nProgrammer:\nDouglas
+    Wong\nArthur Lam\nDerek Kwok\nKeith Leung\nAlan Tsang\n\nGlobal Game Jam 2019
     @ Hong Kong"
 --- !u!222 &42897808
 CanvasRenderer:
