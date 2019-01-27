@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -741,8 +741,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -35, y: -28}
-  m_SizeDelta: {x: 43, y: 43}
+  m_AnchoredPosition: {x: -40, y: -40}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312673373
 MonoBehaviour:
@@ -1712,7 +1712,23 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3176381284481721777, guid: 3073d0ce3aa3e471e9af058215da3b14,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176381284481721777, guid: 3073d0ce3aa3e471e9af058215da3b14,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8446786027468086958, guid: 3073d0ce3aa3e471e9af058215da3b14,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8446786027468086958, guid: 3073d0ce3aa3e471e9af058215da3b14, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3073d0ce3aa3e471e9af058215da3b14, type: 3}
 --- !u!224 &6440680176418118726 stripped
 RectTransform:
@@ -1805,12 +1821,12 @@ PrefabInstance:
     - target: {fileID: 7385247342022841148, guid: 1b91699f4c8164467bc79c970e7061ec,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7385247342022841148, guid: 1b91699f4c8164467bc79c970e7061ec,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7385247342022841148, guid: 1b91699f4c8164467bc79c970e7061ec,
         type: 3}
