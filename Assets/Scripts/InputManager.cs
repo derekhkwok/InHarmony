@@ -256,7 +256,9 @@ public class InputManager : MonoBehaviour
             touchLastPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         }
 
-        if(currentRoom != null) {
+        targetCam.orthographicSize = Mathf.Clamp(targetCam.orthographicSize + Input.mouseScrollDelta.y, zoomMin, zoomMax);
+
+        if (currentRoom != null) {
             if(Vector3.Distance(Input.mousePosition, lastMousePos) < 1f) {
                 holdRoomTime += Time.deltaTime;
                 if (holdRoomTime > 0.65f) {
