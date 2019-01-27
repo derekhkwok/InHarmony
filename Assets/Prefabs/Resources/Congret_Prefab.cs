@@ -55,13 +55,13 @@ public class Congret_Prefab : MonoBehaviour
 
         iTween.MoveTo(enterBtn.gameObject, iTween.Hash(
             "y", -1000f,
-            "time", 0.5f,
+            "time", 1.2f,
             "islocal", true,
             "easetype", iTween.EaseType.easeOutBack
             //"oncomplete", "TerminateMyself"
         ));
 
-        Invoke("TerminateMyself", 1f);
+        Invoke("TerminateMyself", 1.2f);
     }
 
     public void TerminateMyself()
