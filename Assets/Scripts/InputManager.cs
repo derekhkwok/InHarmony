@@ -107,12 +107,12 @@ public class InputManager : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     if (!camMove) {
-                        holdRoom = false;
-                        holdRoomTime = 0f;
                         
                         Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
                         if (Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
+                            holdRoom = false;
+                            holdRoomTime = 0f;
                             UI_RotateButton.Instance.RemoveBtn();
                         } else {
                             holdRoomTime += Time.deltaTime;
