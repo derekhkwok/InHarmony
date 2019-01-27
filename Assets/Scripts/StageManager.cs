@@ -55,8 +55,6 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
-        stage = 3;
-
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
