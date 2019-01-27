@@ -183,14 +183,19 @@ public class InputManager : MonoBehaviour
                 case TouchPhase.Began:
                     touchDisStart = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
                     zoomStart = targetCam.orthographicSize;
+                    
+                    touchLastPos = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f;
                     break;
                 case TouchPhase.Moved:
                     float touchDis = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
                     targetCam.orthographicSize = Mathf.Clamp(zoomStart * touchDisStart / touchDis, zoomMin, zoomMax);
+
+                    camMoveSpeed = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f - touchLastPos;
+                    camMoving = true;
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
-                    
+                    touchLastPos = Input.GetTouch(0).position;
                     break;
             }
         }
@@ -211,7 +216,7 @@ public class InputManager : MonoBehaviour
 
 
 
-
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0)) {
             if (!canDrag)
                 return;
@@ -289,6 +294,7 @@ public class InputManager : MonoBehaviour
             }
             camMove = false;
         }
+#endif
         //var mousex : float = Input.GetAxis("Mouse X");
         //var mousey : float = Input.GetAxis("Mouse Y");
 
