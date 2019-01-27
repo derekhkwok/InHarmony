@@ -7,16 +7,22 @@ public class MainMenuView : MonoBehaviour
 {
     public static bool isFirstEnter = true;
 
+    public bool isOverrideLv = false;
     public int currentLv = 1;
     public float tileStartY;
     public float lowestTilePosY;
+    public float[] tilePosY;
     public float tilePadding;
     public Animation startAnim;
+    //public Animation towerAnim;
+    public Animation balloonAnim;
 
     public SpriteRenderer[] tileSprs;
     public TextMesh[] tileText;
+    public Transform refText;
     public GameObject groundPS;
     public GameObject skyPS;
+    public GameObject sky;
 
     public SpriteRenderer rulerLow;
     public SpriteRenderer rulerMid;
@@ -28,10 +34,14 @@ public class MainMenuView : MonoBehaviour
 
     public GameObject parent;
 
-    public GameObject car1;
-    public GameObject car2;
+    //public GameObject car1;
+    //public GameObject car2;
 
     public GameObject title;
+
+    public GameObject clouds;
+    public SpriteRenderer fogSpr;
+    public TextMesh floorText;
 
     //private BoxCollider navArea;
 
@@ -58,20 +68,23 @@ public class MainMenuView : MonoBehaviour
 
         InputManager.Instance.ResetCamSetting();
 
-        currentLv = GameManager.maxClearedLv + 1;
+        if (!isOverrideLv)
+        {
+            currentLv = GameManager.maxClearedLv + 1;
+        }
 
         //navArea = GameObject.Find("NavArea").GetComponent<BoxCollider>() ;
         //navArea.enabled = false ;
 
         //SFXManager.instance.PlaySFX(SFXManager.SFX.WELCOME);
 
-        Invoke("MoveCar1", UnityEngine.Random.Range(2f, 6f));
-        Invoke("MoveCar2", UnityEngine.Random.Range(2f, 6f));
+        //Invoke("MoveCar1", UnityEngine.Random.Range(2f, 6f));
+        //Invoke("MoveCar2", UnityEngine.Random.Range(2f, 6f));
 
         parent.transform.localPosition = new Vector3(0f, 0f, -10f);
         tileOriScale = tileSprs[0].transform.localScale;
 
-        iTween.MoveTo(car1, iTween.Hash(
+        /**iTween.MoveTo(car1, iTween.Hash(
             "x", -11f,
             "time", UnityEngine.Random.Range( 5f, 8f ),
             "easetype", iTween.EaseType.linear,
@@ -83,12 +96,12 @@ public class MainMenuView : MonoBehaviour
             "time", UnityEngine.Random.Range(6f, 9f),
             "easetype", iTween.EaseType.linear,
             "islocal", true
-            ));
+            ));*/
 
         for (int i = 0; i < currentLv - 1; i++)
         {
             tileSprs[i].transform.localPosition = new Vector3(tileSprs[i].transform.localPosition.x,
-                tileSprs[i].transform.localPosition.y, lowestTilePosY + tilePadding * i);
+                tileSprs[i].transform.localPosition.y, tilePosY[ i ]);
         }
         for (int i = currentLv - 1; i < tileSprs.Length; i++)
         {
@@ -115,18 +128,17 @@ public class MainMenuView : MonoBehaviour
         else
         {
             title.SetActive(false);
+            Invoke("DropTile", 1f);
             iTween.MoveTo(parent, iTween.Hash(
                 "z", 0f,
                 "time", 1f,
                 "islocal", true,
-                "easetype", iTween.EaseType.easeOutCubic,
-                "oncomplete", "DropTile",
-                "oncompletetarget", gameObject
+                "easetype", iTween.EaseType.easeOutCubic
                 ));
         }
     }
 
-    public void MoveCar1()
+    /*public void MoveCar1()
     {
         car1.transform.localPosition = new Vector3(11f, car1.transform.localPosition.y, car1.transform.localPosition.z);
         float time = UnityEngine.Random.Range(5f, 8f);
@@ -150,13 +162,13 @@ public class MainMenuView : MonoBehaviour
             "islocal", true
         ));
         Invoke("MoveCar2", time + UnityEngine.Random.Range(4f, 7f));
-    }
+    }*/
 
     public void DropTile()
     {
         tileSprs[currentLv - 1].gameObject.SetActive(true);
         iTween.MoveTo(tileSprs[currentLv - 1].gameObject, iTween.Hash(
-            "z", lowestTilePosY + tilePadding * ( currentLv - 1),
+            "z", tilePosY[ currentLv - 1 ],
             "time", 0.15f * ( 7 - currentLv ) + 0.3f,
             "islocal", true,
             "easetype", iTween.EaseType.easeInCubic,
@@ -180,10 +192,14 @@ public class MainMenuView : MonoBehaviour
         }
         else
         {
-            skyPS.transform.localPosition = new Vector3(skyPS.transform.localPosition.x, skyPS.transform.localPosition.y, lowestTilePosY + tilePadding * (currentLv - 1) - tilePadding / 2f);
+            skyPS.transform.localPosition = new Vector3(skyPS.transform.localPosition.x, skyPS.transform.localPosition.y, tilePosY[ currentLv - 1 ] - tilePadding / 2f);
             skyPS.gameObject.SetActive(false);
             skyPS.gameObject.SetActive(true);
         }
+
+        balloonAnim.gameObject.SetActive(true);
+        balloonAnim.transform.localPosition = new Vector3( tileSprs[currentLv - 1].transform.localPosition.x + 2.7f, balloonAnim.transform.localPosition.y, tileSprs[currentLv - 1].transform.localPosition.z);
+        balloonAnim.Play();
         StartCoroutine(ShowFloorText());
     }
 
@@ -200,20 +216,20 @@ public class MainMenuView : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         iTween.MoveTo(rulerLow.gameObject, iTween.Hash(
-            "z", -1.8f,
+            "z", -2.5f,
             "time", 0.3f,
             "islocal", true,
             "easetype", iTween.EaseType.easeInOutQuad
             ));
 
         iTween.MoveTo(rulerHigh.gameObject, iTween.Hash(
-            "y", 5.7f / 6f * currentLv,
+            "y", 7.1f / 5f * currentLv,
             "time", 0.3f,
             "islocal", true,
             "easetype", iTween.EaseType.easeInOutQuad
             ));
         iTween.ScaleTo(rulerMidPt.gameObject, iTween.Hash(
-            "x", 40f / 6f * currentLv,
+            "x", 49f / 5f * currentLv,
             "time", 0.3f,
             "islocal", true,
             "easetype", iTween.EaseType.easeInOutQuad
@@ -223,9 +239,9 @@ public class MainMenuView : MonoBehaviour
         for ( int i = 0; i < currentLv; i ++ )
         {
             iTween.MoveTo(tileText[i].gameObject, iTween.Hash(
-                "x" , -5.77f,
+                "x" , refText.position.x,
                 "time", 0.3f,
-                "islocal", true,
+                "islocal", false,
                 "delay", 0.1f * i,
                 "easetype", iTween.EaseType.easeOutCubic
                 ));
@@ -286,11 +302,43 @@ public class MainMenuView : MonoBehaviour
             "islocal", true,
             "easetype", iTween.EaseType.easeInCubic
             ));
-        //navArea.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        // Enterstage
+
+        iTween.MoveTo(clouds.gameObject, iTween.Hash(
+            "z", -25f,
+            "time", 1.2f,
+            "islocal", true,
+            "easetype", iTween.EaseType.linear
+            ));
+        // 18.5,    13.5    = 32
+        // 7 -> -11.5 -> 25  
+        yield return new WaitForSeconds(1f * 18.5f / 32f);
+
+        fogSpr.gameObject.SetActive(true);
+
         StageManager.instance.InitStage(id);
+
+        sky.SetActive(false);
+
+        balloonAnim.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        iTween.ValueTo(this.gameObject, iTween.Hash(
+            "from", 1f,
+            "to", 0f,
+            "time", 1f,
+            "easetype", iTween.EaseType.linear,
+            "onupdate", "UpdateColor"
+            ));
+
+        yield return new WaitForSeconds(1.1f);
         Destroy(this.gameObject);
+    }
+
+    private void UpdateColor( float val )
+    {
+        fogSpr.color = new Color(1f, 1f, 1f, val / 2f);
+        //floorText.color = new Color(1f, 1f, 1f, val);
     }
 
 }

@@ -53,11 +53,14 @@ public partial class StageManager : MonoBehaviour
     public void InitStage(int stage)
     {
         if (inited) return;
+        inited = true;
+
+
+
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
         InputManager.Instance.SetCanDrag(false);
-        inited = true;
         isEnding = false;
 
         currentRooms = new Dictionary<int, Room>();
@@ -170,13 +173,18 @@ public partial class StageManager : MonoBehaviour
 
         isWon = true;
 
+        UI_RotateButton.Instance.RemoveBtn();
+
         UI_Condition.Instance.WinDestoryObject();
+        foreach ( Player player in currentPersons.Values) {
+            player.Win();
+        }
         Debug.LogWarning("[GAME] YOU WIN!");
-        Congret_Prefab congret = Congret_Prefab.Create(() => { OnClickEndStage(); });
+        Congret_Prefab.Instance.Create(() => { OnClickEndStage(); });
         return true;
     }
 
-    void OnClickEndStage() 
+    public void OnClickEndStage() 
     {
         if (currentRooms != null)
         {
@@ -211,7 +219,10 @@ public partial class StageManager : MonoBehaviour
             p.Value.RoomUpdated();
     }
 
-
+    public void SetPlayerAgent(int id, bool input) {
+        foreach (KeyValuePair<int, Player> p in currentPersons)
+            p.Value.SetAgent(id, input);
+    }
 
 
     Transform tempParent = null;
@@ -219,7 +230,7 @@ public partial class StageManager : MonoBehaviour
     public void RoomSniping(Room draggedRoom) {
         foreach(Door d in draggedRoom.doors) {
             if (d.connectedRoom != null) {
-                List<Room> roomNeedToMove = d.connectedRoom.SearchConnectedRooms(draggedRoom);
+                List<Room> roomNeedToMove = d.connectedRoom.SearchConnectedRooms(draggedRoom, new List<Room>() { draggedRoom });
                 roomNeedToMove.Add(d.connectedRoom);
                 if (tempParent == null)
                     tempParent = new GameObject().GetComponent<Transform>();

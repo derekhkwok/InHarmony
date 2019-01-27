@@ -51,6 +51,16 @@ public class InputManager : MonoBehaviour
         camOriPos = targetCam.transform.position;
     }
 
+    public float GetCamSize()
+    {
+        return targetCam.orthographicSize;
+    }
+
+    public Vector3 GetCamPos()
+    {
+        return targetCam.transform.position;
+    }
+
     public void ResetCamSetting()
     {
         targetCam.orthographicSize = camOriSize;
@@ -59,7 +69,7 @@ public class InputManager : MonoBehaviour
 
     public void ZoomCameraByStage(int stage)
     {
-        targetCam.orthographicSize = Mathf.Clamp(stage, zoomMin, zoomMax);
+        targetCam.orthographicSize = Mathf.Clamp(zoomMin + stage, zoomMin, zoomMax);
     }
 
     // Update is called once per frame
@@ -81,6 +91,8 @@ public class InputManager : MonoBehaviour
 
                             StageManager.instance.UpdateRoomConnection();
                             StageManager.instance.PullRoomSortingToFront(currentRoom.id);
+                            StageManager.instance.SetPlayerAgent(currentRoom.id, false);
+                            currentRoom.SetNavTag(false);
 
                             holdRoomTime = 0f;
                             holdRoom = false;
@@ -100,6 +112,7 @@ public class InputManager : MonoBehaviour
                         
                         Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
+                        UI_RotateButton.Instance.RemoveBtn();
                     } else {
                         if(Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
                             camMoving = true;
@@ -115,9 +128,14 @@ public class InputManager : MonoBehaviour
                 case TouchPhase.Ended:
                     if(currentRoom != null && holdRoom == false) {
                         currentRoom.SetMoveRoom(false);
+                        Room temp = currentRoom;
+                        currentRoom = null;
+                        StageManager.instance.SetPlayerAgent(temp.id, true);
+                        StageManager.instance.UpdateRoomConnection();
+                        StageManager.instance.RoomSniping(temp);
+                        temp.SetNavTag(true);
                         currentRoom = null;
 
-                        StageManager.instance.UpdateRoomConnection();
                         Invoke("DelayChecking", 0.5f);
                     }
                     camMove = false;
@@ -177,6 +195,9 @@ public class InputManager : MonoBehaviour
 
 
         if (Input.GetMouseButtonDown(0)) {
+            if (!canDrag)
+                return;
+
             Ray ray = targetCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit)) {
@@ -185,12 +206,14 @@ public class InputManager : MonoBehaviour
                     currentRoom = temp;
                     currentRoom.SetMoveRoom(true);
                     StageManager.instance.UpdateRoomConnection();
+                    StageManager.instance.SetPlayerAgent(currentRoom.id, false);
                     holdRoomTime = 0f;
                     holdRoom = false;
                     lastMousePos = Input.mousePosition;
                     offset = currentRoom.transform.position - targetCam.ScreenToWorldPoint(Input.mousePosition);
 
                     StageManager.instance.PullRoomSortingToFront(currentRoom.id);
+                    currentRoom.SetNavTag(false);
                 }
             } else {
                 camMove = true;
@@ -226,6 +249,8 @@ public class InputManager : MonoBehaviour
             } else {
                 holdRoomTime = 0f;
                 holdRoom = false;
+
+                UI_RotateButton.Instance.RemoveBtn();
             }
             lastMousePos = Input.mousePosition;
 
@@ -238,6 +263,8 @@ public class InputManager : MonoBehaviour
                 currentRoom.SetMoveRoom(false);
                 Room temp = currentRoom;
                 currentRoom = null;
+                temp.SetNavTag(true);
+                StageManager.instance.SetPlayerAgent(temp.id, true);
                 StageManager.instance.UpdateRoomConnection();
                 StageManager.instance.RoomSniping(temp);
                 Invoke("DelayChecking", 0.5f);
