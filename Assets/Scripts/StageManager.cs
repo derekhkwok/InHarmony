@@ -55,13 +55,11 @@ public partial class StageManager : MonoBehaviour
         if (inited) return;
         inited = true;
 
-        //stage = 3;
-
         currentLv = stage;
         InputManager.Instance.ZoomCameraByStage(stage);
 
         InputManager.Instance.SetCanDrag(false);
-        isEnding = false;
+        isWon = false;
 
         currentRooms = new Dictionary<int, Room>();
         currentPersons = new Dictionary<int, Player>();
@@ -147,8 +145,15 @@ public partial class StageManager : MonoBehaviour
             bool isValid = true;
             List<int> myPath = p.GetPath();
 
-            if ((myPath.Count > 0 && myPath.Last() != p.roomTargetID) || (myPath.Count == 0 && p.roomTargetID != -1)) // not reaching target
+            if (myPath.Count > 0 && myPath.Last() != p.roomTargetID && p.roomTargetID != -1) // not reaching target
             {
+                /*
+                Debug.LogError("11111");
+                Debug.LogError(p.playerID);
+                Debug.LogError(myPath.Count);
+                Debug.LogError(p.roomTargetID);
+                */               
+                               
                 isValid = false;
             }
             else // check if whether it overlap with its enemies
@@ -160,6 +165,7 @@ public partial class StageManager : MonoBehaviour
                     otherPath = (otherPath.Count == 1 && currentPersons[otherP].roomTargetID == -1) ? otherPath : otherPath.Take(otherPath.Count - 1).ToList();
                     if (myPath.Intersect(otherPath).Any())
                     {
+                        //Debug.LogError("22222");
                         isValid = false;
                         break;
                     }
@@ -168,6 +174,7 @@ public partial class StageManager : MonoBehaviour
 
             if (!isValid)
             {
+                //Debug.LogError("33333");
                 InputManager.Instance.SetCanDrag(true);
                 return false;
             }
