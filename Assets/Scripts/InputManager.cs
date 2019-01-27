@@ -101,8 +101,8 @@ public class InputManager : MonoBehaviour
                         }
                     } else {
                         camMove = true;
-                        touchStartPos = Input.GetTouch(0).position;
                     }
+                    touchStartPos = Input.GetTouch(0).position;
                     touchLastPos = Input.GetTouch(0).position;
                     break;
                 case TouchPhase.Moved:
@@ -110,7 +110,7 @@ public class InputManager : MonoBehaviour
                         
                         Vector3 camPos = targetCam.ScreenToWorldPoint(Input.GetTouch(0).position);
                         currentRoom.transform.position = new Vector3(camPos.x + offset.x, currentRoom.transform.position.y, camPos.z + offset.z);
-                        if (Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 0.5f) {
+                        if (Vector2.Distance(Input.GetTouch(0).position, touchStartPos) > 2f) {
                             holdRoom = false;
                             holdRoomTime = 0f;
                             UI_RotateButton.Instance.RemoveBtn();
@@ -192,6 +192,7 @@ public class InputManager : MonoBehaviour
 
                     camMoveSpeed = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f - touchLastPos;
                     camMoving = true;
+                    touchLastPos = (Input.GetTouch(0).position + Input.GetTouch(1).position) / 2f;
                     break;
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
